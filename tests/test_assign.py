@@ -1,5 +1,4 @@
-
-from ident_viewer.tools import PeptideHitAssigner
+import ident_viewer as iv
 import pyopenms as oms
 import os
 import sys
@@ -8,13 +7,8 @@ import cStringIO
 
 def test_0(data_path):
 
-    protein_ids = []
-    peptide_ids = []
-
-    oms.IdXMLFile().load(data_path("BSA1_OMSSA.idXML"), protein_ids, peptide_ids)
-
-    mse = oms.MSExperiment()
-    oms.FileHandler().loadExperiment(data_path("BSA1.mzML"), mse)
+    peptide_ids, protein_ids = iv.tools.io.load_idxml_file(data_path("BSA1_OMSSA.idXML"))
+    mse = iv.tools.io.load_experiment(data_path("BSA1.mzML"))
 
     mapper = oms.IDMapper()
     mapper.annotate(mse, peptide_ids, protein_ids)
@@ -22,7 +16,6 @@ def test_0(data_path):
     for s in mse.getSpectra():
         if s.getMSLevel() == 2 and s.getPeptideIdentifications():
             pi = s.getPeptideIdentifications()[0]
-            print pi.getMetaValue("MZ")
             peptide_hit = pi.getHits()[0]
             break
     else:
@@ -32,7 +25,7 @@ def test_0(data_path):
 
     sys.stdout = cStringIO.StringIO() 
     try:
-        for mz, ii, ion, info in  PeptideHitAssigner().compute_assignment(peptide_hit, s):
+        for mz, ii, ion, info in  iv.tools.assign.PeptideHitAssigner().compute_assignment(peptide_hit, s):
             print "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
     finally:
         output = sys.stdout.getvalue()
