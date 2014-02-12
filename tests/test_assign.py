@@ -4,8 +4,8 @@ import cStringIO
 
 
 def _read(data_path):
-    peptide_ids, protein_ids = iv.tools.io.load_idxml_file(data_path("BSA1_OMSSA.idXML"))
-    mse = iv.tools.io.load_experiment(data_path("BSA1.mzML"))
+    peptide_ids, protein_ids = iv.io.load_idxml_file(data_path("BSA1_OMSSA.idXML"))
+    mse = iv.io.load_experiment(data_path("BSA1.mzML"))
     return mse, peptide_ids, protein_ids
 
 
@@ -13,13 +13,13 @@ def test_0(data_path):
 
     mse, peptide_ids, protein_ids = _read(data_path)
 
-    score, seq, hit, spec = iv.tools.assign.extract_hits(mse, peptide_ids, protein_ids).next()
+    score, seq, hit, spec = iv.assign.extract_hits(mse, peptide_ids, protein_ids).next()
 
     assert seq == "SHC(Carbamidomethyl)IAEVEK"
 
     sys.stdout = cStringIO.StringIO()
     try:
-        for mz, ii, ion, info in iv.tools.assign.PeptideHitAssigner().compute_assignment(hit, spec):
+        for mz, ii, ion, info in iv.assign.PeptideHitAssigner().compute_assignment(hit, spec):
             print "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
     finally:
         output = sys.stdout.getvalue()
@@ -60,9 +60,8 @@ def test_0(data_path):
 
 def test_1(data_path):
 
-    mse, peptide_ids, protein_ids = _read(data_path)
-    sequences = [seq for score, seq, hit, spec in iv.tools.assign.extract_hits(mse,
-                                                                               peptide_ids, protein_ids)]
+    mse, pep_ids, prot_ids = _read(data_path)
+    sequences = [seq for score, seq, hit, spec in iv.assign.extract_hits(mse, pep_ids, prot_ids)]
 
     sequences.sort()
     assert sequences[:9] == ['AEFVEVTK', 'AEFVEVTK', 'AEFVEVTK', 'AGAFSLPK', 'AGAFSLPK',
