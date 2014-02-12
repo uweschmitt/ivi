@@ -4,7 +4,6 @@ import re
 
 class PeptideHitAssigner(object):
 
-
     def __init__(self, assign_b_ion=True, assign_y_ion=True, **config):
         self.config = dict(assign_b_ion=assign_b_ion,
                            assign_y_ion=assign_y_ion)
@@ -25,7 +24,7 @@ class PeptideHitAssigner(object):
             ion_name = theoretical_spectrum[j].getMetaValue("IonName")
             residue_info = self._residue_info(ion_name, aa_sequence)
             assignment.append((spectrum[i].getMZ(), spectrum[i].getIntensity(), ion_name,
-                residue_info))
+                               residue_info))
 
         return assignment
 
@@ -66,7 +65,7 @@ class PeptideHitAssigner(object):
             ion_number = int(ion_nr_str)
             info = []
             # ion residue for y is reverted:
-            for j in range(aa_sequence.size()-1, aa_sequence.size() - ion_number - 1, -1):
+            for j in range(aa_sequence.size() - 1, aa_sequence.size() - ion_number - 1, -1):
                 r = aa_sequence.getResidue(j)
                 info.append(r.getOneLetterCode())
                 if r.getModification() != "":
@@ -103,33 +102,18 @@ class PeptideHitAssigner(object):
         return aligner
 
 
-def main():
-    protein_ids = []
-    peptide_ids = []
-
-    oms.IdXMLFile().load("BSA1_OMSSA.idXML", protein_ids, peptide_ids)
-
-    mse = oms.MSExperiment()
-    oms.FileHandler().loadExperiment("BSA1.mzML", mse)
+def extract_hits(mse, peptide_ids, protein_ids):
 
     mapper = oms.IDMapper()
     mapper.annotate(mse, peptide_ids, protein_ids)
 
-    for s in mse.getSpectra():
-        if s.getMSLevel() == 2 and s.getPeptideIdentifications():
-            pi = s.getPeptideIdentifications()[0]
-            print pi.getMetaValue("MZ")
-            peptide_hit = pi.getHits()[0]
-            break
-    else:
-        raise Exception("no hit found")
-
-    print peptide_hit.getSequence().toString()
-    for mz, ii, ion, info in  PeptideHitAssigner().compute_assignment(peptide_hit, s):
-        print "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
-
-if __name__ == "__main__":
-    main()
-
-
-
+    for spec in mse.getSpectra():
+        if spec.getMSLevel() == 2 and spec.getPeptideIdentifications():
+            for pi in spec.getPeptideIdentifications():
+                lower_is_better = pi.isHigherScoreBetter()
+                hits = []
+                for hit in pi.getHits():
+                    hits.append((hit.getScore(), hit.getSequence().toString(), hit, spec))
+                hits.sort(reverse=not lower_is_better)
+                for hit in hits:
+                    yield hit

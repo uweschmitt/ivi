@@ -1,31 +1,25 @@
 import ident_viewer as iv
-import pyopenms as oms
-import os
 import sys
 import cStringIO
 
 
-def test_0(data_path):
-
+def _read(data_path):
     peptide_ids, protein_ids = iv.tools.io.load_idxml_file(data_path("BSA1_OMSSA.idXML"))
     mse = iv.tools.io.load_experiment(data_path("BSA1.mzML"))
+    return mse, peptide_ids, protein_ids
 
-    mapper = oms.IDMapper()
-    mapper.annotate(mse, peptide_ids, protein_ids)
 
-    for s in mse.getSpectra():
-        if s.getMSLevel() == 2 and s.getPeptideIdentifications():
-            pi = s.getPeptideIdentifications()[0]
-            peptide_hit = pi.getHits()[0]
-            break
-    else:
-        raise Exception("no hit found")
+def test_0(data_path):
 
-    assert peptide_hit.getSequence().toString() == "SHC(Carbamidomethyl)IAEVEK"
+    mse, peptide_ids, protein_ids = _read(data_path)
 
-    sys.stdout = cStringIO.StringIO() 
+    score, seq, hit, spec = iv.tools.assign.extract_hits(mse, peptide_ids, protein_ids).next()
+
+    assert seq == "SHC(Carbamidomethyl)IAEVEK"
+
+    sys.stdout = cStringIO.StringIO()
     try:
-        for mz, ii, ion, info in  iv.tools.assign.PeptideHitAssigner().compute_assignment(peptide_hit, s):
+        for mz, ii, ion, info in iv.tools.assign.PeptideHitAssigner().compute_assignment(hit, spec):
             print "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
     finally:
         output = sys.stdout.getvalue()
@@ -64,3 +58,19 @@ def test_0(data_path):
         assert t == i
 
 
+def test_1(data_path):
+
+    mse, peptide_ids, protein_ids = _read(data_path)
+    sequences = [seq for score, seq, hit, spec in iv.tools.assign.extract_hits(mse,
+                                                                               peptide_ids, protein_ids)]
+
+    sequences.sort()
+    assert sequences[:9] == ['AEFVEVTK', 'AEFVEVTK', 'AEFVEVTK', 'AGAFSLPK', 'AGAFSLPK',
+                             'AGDLLFFK', 'C(Carbamidomethyl)C(Carbamidomethyl)TESLVNR',
+                             'C(Carbamidomethyl)C(Carbamidomethyl)TESLVNR',
+                             'C(Carbamidomethyl)C(Carbamidomethyl)TESLVNR', ]
+
+    assert sequences[-10:] == ['YIC(Carbamidomethyl)DNQDTISSK', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR',
+                               'YLYEIAR', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR']
+
+    assert len(sequences) == 77
