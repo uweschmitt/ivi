@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ivi.ui'
 #
-# Created: Thu Feb 13 16:00:38 2014
+# Created: Thu Feb 13 17:48:47 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,12 +26,19 @@ class Ui_MainWindow(object):
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName(_fromUtf8("splitter"))
         self.peptide_hits = QtGui.QTableView(self.splitter)
+
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.peptide_hits.sizePolicy().hasHeightForWidth())
+        self.peptide_hits.setSizePolicy(sizePolicy)
+
         self.peptide_hits.setSortingEnabled(True)
         self.peptide_hits.setObjectName(_fromUtf8("peptide_hits"))
         self.peptide_hits.horizontalHeader().setStretchLastSection(True)
         self.spectrum_plotter = SpectrumPlotter(self.splitter)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(2)
+        sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.spectrum_plotter.sizePolicy().hasHeightForWidth())
         self.spectrum_plotter.setSizePolicy(sizePolicy)

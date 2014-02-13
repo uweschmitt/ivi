@@ -27,9 +27,23 @@ class IdentViewer(MainWindow):
                                                  self.protein_identifications)
 
         self.peptide_hits.setModel(self.peptide_hit_model)
+        self.setup_table_view_size()
+
+    def setup_table_view_size(self):
+
+        ph = self.peptide_hits
+        # set table with so that full content fits
+        vwidth = ph.verticalHeader().width()
+        hwidth = ph.horizontalHeader().length()
+        swidth = ph.style().pixelMetric(QtGui.QStyle.PM_ScrollBarExtent)
+        fwidth = ph.frameWidth() * 2
+        self.peptide_hits.setMinimumWidth(vwidth + hwidth + swidth + fwidth + 10)
+        self.peptide_hits.setMaximumWidth(vwidth + hwidth + swidth + fwidth + 300)
 
     def connect_signals(self):
-        connect(self.peptide_hits.verticalHeader(), QtCore.SIGNAL("sectionClicked(int)"), self.spectrum_plotter.update)
+        self.peptide_hits.verticalHeader().sectionClicked.connect(self.peptide_hit_model.select)
+        self.peptide_hit_model.peptide_selected.connect(self.spectrum_plotter.plot_spectrum)
+
 
 if __name__ == '__main__':
 
