@@ -2,20 +2,21 @@
 """
 Created on Wed Jul 17 10:50:56 2013
 
-@author: cmarshall
+@author: uwe schmitt
 """
 
 import sip
 sip.setapi('QString', 1)
 sip.setapi('QVariant', 1)
 
-import pandas as pd
 from PyQt4 import QtCore, QtGui
 
 from ..lib import extract_hits
 
 
 class PeptideHitModel(QtCore.QAbstractTableModel):
+
+    peptide_selected = QtCore.pyqtSignal(object)
 
     def __init__(self, parent, peakmaps, peptide_identifications, protein_identifications):
         super(PeptideHitModel, self).__init__()
@@ -39,7 +40,6 @@ class PeptideHitModel(QtCore.QAbstractTableModel):
         self.hits.sort(key=lambda row: row[column], reverse=reverse)
         self.dataChanged.emit(self.index(0, 0), self.index(self.rowCount()-1, self.columnCount()-1))
 
-
     def data(self, index, role=QtCore.Qt.DisplayRole):
         if role == QtCore.Qt.DisplayRole:
             i = index.row()
@@ -49,35 +49,9 @@ class PeptideHitModel(QtCore.QAbstractTableModel):
         else:
             return QtCore.QVariant()
 
-    def flags(self, index):
+    def flags(self, indexl):
         return QtCore.Qt.ItemIsEnabled
 
-
-
-if __name__=="__main__":
-    from sys import argv, exit
-
-    class Widget(QtGui.QWidget):
-        """
-        A simple test widget to contain and own the model and table.
-        """
-        def __init__(self, parent=None):
-            QtGui.QWidget.__init__(self, parent)
-
-            l=QtGui.QVBoxLayout(self)
-            cdf = self.get_data_frame()
-            self._tm=PeptideHitModel(self)
-            self._tv=TableView(self)
-            self._tv.setModel(self._tm)
-            l.addWidget(self._tv)
-
-        def get_data_frame(self):
-            df = pd.DataFrame({'Name':['a','b','c','d'],
-            'First':[2.3,5.4,3.1,7.7], 'Last':[23.4,11.2,65.3,88.8], 'Class':[1,1,2,1], 'Valid':[True, True, True, False]})
-            return df
-
-    a=QtGui.QApplication(argv)
-    w=Widget()
-    w.show()
-    w.raise_()
-    exit(a.exec_())
+    def select(self, index):
+        spec = self.hits[index][-1]
+        self.peptide_selected.emit(spec)

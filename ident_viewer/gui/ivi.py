@@ -3,6 +3,8 @@ from ivi_ui import MainWindow
 
 from peptide_hit_model import PeptideHitModel
 
+from helpers import widthOfTableWidget
+
 
 def connect(source, signal, slot):
     QtCore.QObject.connect(source, signal, slot)
@@ -27,9 +29,27 @@ class IdentViewer(MainWindow):
                                                  self.protein_identifications)
 
         self.peptide_hits.setModel(self.peptide_hit_model)
+        ph = self.peptide_hits
+
+        # set table with so that full content fits
+        vwidth = ph.verticalHeader().width()
+        hwidth = ph.horizontalHeader().length()
+        swidth = ph.style().pixelMetric(QtGui.QStyle.PM_ScrollBarExtent)
+        fwidth = ph.frameWidth() * 2
+        self.peptide_hits.setMinimumWidth(vwidth + hwidth + swidth + fwidth + 10)
+        self.peptide_hits.setMaximumWidth(vwidth + hwidth + swidth + fwidth + 300)
 
     def connect_signals(self):
-        connect(self.peptide_hits.verticalHeader(), QtCore.SIGNAL("sectionClicked(int)"), self.spectrum_plotter.update)
+        connect(self.peptide_hits.verticalHeader(),
+                QtCore.SIGNAL("sectionClicked(int)"),
+                self.peptide_hit_model.select)
+
+        connect(self.peptide_hit_model,
+                QtCore.SIGNAL("peptide_selected(PyQt_PyObject)"),
+                self.spectrum_plotter.plot_spectrum)
+
+    def test(self, *a):
+        print a
 
 if __name__ == '__main__':
 
