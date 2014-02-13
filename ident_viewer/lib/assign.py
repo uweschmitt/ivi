@@ -110,10 +110,12 @@ def extract_hits(mse, peptide_ids, protein_ids):
     for spec in mse.getSpectra():
         if spec.getMSLevel() == 2 and spec.getPeptideIdentifications():
             for pi in spec.getPeptideIdentifications():
+                mz = pi.getMetaValue("MZ")
+                rt = pi.getMetaValue("RT")
                 lower_is_better = pi.isHigherScoreBetter()
                 hits = []
                 for hit in pi.getHits():
-                    hits.append((hit.getScore(), hit.getSequence().toString(), hit, spec))
+                    hits.append((hit.getScore(), hit.getSequence().toString(), rt, mz, hit, spec))
                 hits.sort(reverse=not lower_is_better)
                 for hit in hits:
                     yield hit

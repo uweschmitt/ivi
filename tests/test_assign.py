@@ -13,7 +13,10 @@ def test_0(data_path):
 
     mse, peptide_ids, protein_ids = _read(data_path)
 
-    score, seq, hit, spec = iv.lib.extract_hits(mse, peptide_ids, protein_ids).next()
+    score, seq, rt, mz, hit, spec = iv.lib.extract_hits(mse, peptide_ids, protein_ids).next()
+
+    assert abs(mz - 358.17) < 0.01
+    assert abs(rt - 1554.49) < 0.01
 
     assert seq == "SHC(Carbamidomethyl)IAEVEK"
 
@@ -61,7 +64,7 @@ def test_0(data_path):
 def test_1(data_path):
 
     mse, pep_ids, prot_ids = _read(data_path)
-    sequences = [seq for score, seq, hit, spec in iv.lib.extract_hits(mse, pep_ids, prot_ids)]
+    sequences = [seq for score, seq, rt, mz, hit, spec in iv.lib.extract_hits(mse, pep_ids, prot_ids)]
 
     sequences.sort()
     assert sequences[:9] == ['AEFVEVTK', 'AEFVEVTK', 'AEFVEVTK', 'AGAFSLPK', 'AGAFSLPK',
