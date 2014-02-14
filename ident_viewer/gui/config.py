@@ -26,7 +26,7 @@ def setupCommonStyle(line, marker):
        "shape/drag/symbol/edgecolor": edgeColor,
        "shape/drag/symbol/facecolor": faceColor,
        "shape/drag/symbol/alpha": alpha,
-
+       "shape/drag/line/color": "#555555",
        }
    CONF.update_defaults(dict(plot=params))
    line.shapeparam.read_config(CONF, "plot", "shape/drag")

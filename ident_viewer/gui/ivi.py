@@ -4,9 +4,6 @@ from ivi_ui import MainWindow
 from peptide_hit_model import PeptideHitModel
 
 
-def connect(source, signal, slot):
-    QtCore.QObject.connect(source, signal, slot)
-
 
 class IdentViewer(MainWindow):
 

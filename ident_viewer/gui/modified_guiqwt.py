@@ -1,5 +1,6 @@
+import pdb
 from exceptions import Exception
-from PyQt4.QtCore import Qt, QPoint
+from PyQt4.QtCore import Qt, QPoint, pyqtSignal, QObject
 from PyQt4.QtGui import QPainter
 from guiqwt.curve import CurvePlot, CurveItem
 from guiqwt.events import ObjectHandler, KeyEventMatch, QtDragHandler
@@ -8,7 +9,7 @@ from guiqwt.signals import (SIG_MOVE, SIG_START_TRACKING, SIG_STOP_NOT_MOVING, S
 
 from guiqwt.events import ZoomHandler, PanHandler, MoveHandler
 
-from guiqwt.tools import InteractiveTool
+from guiqwt.tools import InteractiveTool, SelectTool
 
 from guiqwt.shapes import Marker, SegmentShape, XRangeSelection
 import numpy as np
@@ -17,7 +18,7 @@ from helpers import protect_signal_handler
 from emzed_optimizations import sample_peaks
 
 
-class ModifiedCurveItem(CurveItem):
+class CurveWithoutPointSelection(CurveItem):
     """ modification(s):
           selection (which plots a square at each (x,y) ) is turned off
     """
@@ -63,7 +64,7 @@ class RtSelectionTool(InteractiveTool):
 
         filter.add_event(start_state,
                          KeyEventMatch((Qt.Key_Backspace, Qt.Key_Escape)),
-                         baseplot.do_backspace_pressed, start_state)
+                         baseplot.reset_all_axes, start_state)
 
         # Bouton du milieu
         PanHandler(filter, Qt.MidButton, start_state=start_state)
@@ -85,29 +86,28 @@ class MzSelectionTool(InteractiveTool):
            - calling handlers for dragging with mouse
     """
 
-    TITLE = "mZ Selection"
+    TITLE = "mz Selection"
     ICON = "selection.png"
     CURSOR = Qt.CrossCursor
 
     def setup_filter(self, baseplot):
-        filter = baseplot.filter
+        filter_ = baseplot.filter
         # Initialisation du filtre
-        start_state = filter.new_state()
-        # Bouton gauche :
+        start_state = filter_.new_state()
 
-        # start_state = filter.new_state()
-        handler = QtDragHandler(filter, Qt.LeftButton, start_state=start_state)
+        # start_state = filter_.new_state()
+        handler = QtDragHandler(filter_, Qt.LeftButton, start_state=start_state)
 
-        filter.add_event(start_state,
-                         KeyEventMatch((Qt.Key_Space,)),
-                         baseplot.do_space_pressed, start_state)
-        filter.add_event(start_state,
-                         KeyEventMatch((Qt.Key_Backspace, Qt.Key_Escape)),
-                         baseplot.do_backspace_pressed, start_state)
+        filter_.add_event(start_state,
+                          KeyEventMatch((Qt.Key_Space,)),
+                          baseplot.do_space_pressed, start_state)
+        filter_.add_event(start_state,
+                          KeyEventMatch((Qt.Key_Backspace, Qt.Key_Escape)),
+                          baseplot.reset_all_axes, start_state)
 
-        filter.add_event(start_state,
-                         KeyEventMatch((Qt.Key_C,)),
-                         baseplot.do_c_pressed, start_state)
+        filter_.add_event(start_state,
+                          KeyEventMatch((Qt.Key_C,)),
+                          baseplot.do_c_pressed, start_state)
 
         self.connect(handler, SIG_MOVE, baseplot.move_in_drag_mode)
         self.connect(handler, SIG_START_TRACKING, baseplot.start_drag_mode)
@@ -115,7 +115,7 @@ class MzSelectionTool(InteractiveTool):
         self.connect(handler, SIG_STOP_MOVING, baseplot.stop_drag_mode)
 
         # Bouton du milieu
-        PanHandler(filter, Qt.MidButton, start_state=start_state)
+        PanHandler(filter_, Qt.MidButton, start_state=start_state)
 
         # Bouton droit
         class ZoomHandlerWithStopingEvent(ZoomHandler):
@@ -123,16 +123,18 @@ class MzSelectionTool(InteractiveTool):
                 x_state, y_state = self.get_move_state(filter_, event.pos())
                 filter_.plot.do_finish_zoom_view(x_state, y_state)
 
-        ZoomHandlerWithStopingEvent(filter, Qt.RightButton, start_state=start_state)
+        #ZoomHandlerWithStopingEvent(filter_, Qt.RightButton, start_state=start_state)
+        ZoomHandler(filter_, Qt.RightButton, start_state=start_state)
 
         # Autres (touches, move)
-        MoveHandler(filter, start_state=start_state)
-        MoveHandler(filter, start_state=start_state, mods=Qt.ShiftModifier)
-        MoveHandler(filter, start_state=start_state, mods=Qt.AltModifier)
+        MoveHandler(filter_, start_state=start_state)
+        MoveHandler(filter_, start_state=start_state, mods=Qt.ShiftModifier)
+        MoveHandler(filter_, start_state=start_state, mods=Qt.AltModifier)
         return start_state
 
 
-class ModifiedCurvePlot(CurvePlot):
+
+class CurvePlotWithModifiedZoomHandling(CurvePlot):
     """ modifications:
             - zooming preserves x asix at bottom of plot
             - panning is only in x direction
@@ -236,7 +238,7 @@ class ModifiedCurvePlot(CurvePlot):
         self.emit(SIG_PLOT_AXIS_CHANGED, self)
 
     @protect_signal_handler
-    def do_backspace_pressed(self, filter, evt):
+    def reset_all_axes(self, filter, evt):
         """ reset axes of plot """
         self.reset_x_limits()
 
@@ -310,7 +312,7 @@ class ModifiedCurvePlot(CurvePlot):
         self.replot()
 
 
-class RtPlot(ModifiedCurvePlot):
+class RtPlot(CurvePlotWithModifiedZoomHandling):
     """ modified behavior:
             - space zooms to selected rt range
             - enter puts range marker to middle of currenct rt plot view
@@ -392,7 +394,7 @@ class RtPlot(ModifiedCurvePlot):
         return self.current_peak
 
 
-class MzPlot(ModifiedCurvePlot):
+class MzPlot(CurvePlotWithModifiedZoomHandling):
 
     """ modifications:
             - showing marker at peak next to mouse cursor
@@ -400,11 +402,20 @@ class MzPlot(ModifiedCurvePlot):
             - showing information about current peak and distances if in drag mode
     """
 
-    # as we have constructor, we provide default values here:
+    # as we do not have a constructor, we provide default values here:
     data = []
     latest_mzmin = None
     latest_mzmax = None
     image_plot   = None
+
+    all_peaks = np.zeros((0, 2))
+
+    peakActivated = pyqtSignal(float, float)
+
+    startMeasuring = pyqtSignal(float, float)
+    moveMeasuring = pyqtSignal(float, float)
+    stopMeasuring = pyqtSignal()
+    moveMarker = pyqtSignal(int, QPoint)
 
     def label_info(self, x, y):
         # label next to cursor turned off:
@@ -413,12 +424,12 @@ class MzPlot(ModifiedCurvePlot):
     @protect_signal_handler
     def on_plot(self, x, y):
         """ callback for marker: determine marked point based on cursors coordinates """
-        self.current_peak = self.next_peak_to(x, y)
-        if self.image_plot is not None:
-            self.image_plot.set_mz(self.current_peak[0])
-        return self.current_peak
+        current_peak = self.next_peak_to(x, y)
+        self.peakActivated.emit(current_peak[0], current_peak[1])
+        return current_peak
 
     def set_mz(self, mz):
+        raise NotImplemented("refac this with signal/slots")
         mz, I = self.next_peak_to(mz)
         marker = self.get_unique_item(Marker)
         new_x = self.transform(self.xBottom, mz)
@@ -427,6 +438,10 @@ class MzPlot(ModifiedCurvePlot):
         self.replot()
 
     def do_finish_zoom_view(self, dx, dy):
+        return
+
+        """
+
         dx = (-1,) + dx  # adding direction to tuple dx
         dy = (1,) + dy  # adding direction to tuple dy
         axes_to_update = self.get_axes_to_update(dx, dy)
@@ -435,7 +450,6 @@ class MzPlot(ModifiedCurvePlot):
         mzmaxs = []
 
         axis_ids_horizontal = (self.get_axis_id("bottom"), self.get_axis_id("top"))
-        all_peaks = []
         for __, id_ in axes_to_update:
             if id_ in axis_ids_horizontal:
                 mzmin, mzmax = self.get_axis_limits(id_)
@@ -445,8 +459,13 @@ class MzPlot(ModifiedCurvePlot):
         self.update_plot_xlimits(min(mzmins), max(mzmaxs), rescale_y=False)
         self.replot()
 
-    def do_backspace_pressed(self, filter, evt):
+        """
+
+    def reset_all_axes(self, filter, evt):
         """ reset axes of plot """
+        self.reset_x_limits()
+        return 
+        """
         all_peaks = []
         for i, (pm, rtmin, rtmax, mzmin, mzmax, npeaks) in enumerate(self.data):
             peaks = sample_peaks(pm, rtmin, rtmax, mzmin, mzmax, npeaks)
@@ -458,6 +477,7 @@ class MzPlot(ModifiedCurvePlot):
         else:
             self.all_peaks = np.zeros((0, 2))
         self.reset_x_limits()
+        """
 
     def next_peak_to(self, mz, I=None):
         if self.all_peaks.shape[0] == 0:
@@ -479,65 +499,69 @@ class MzPlot(ModifiedCurvePlot):
 
     @protect_signal_handler
     def do_move_marker(self, evt):
-        marker = self.get_unique_item(Marker)
-        marker.move_local_point_to(0, evt.pos())
-        marker.setVisible(True)
+        """ this means: mouse has moved handle this ! """
+        self.moveMarker.emit(0, evt.pos())
         self.replot()
+
 
     @protect_signal_handler
     def do_space_pressed(self, filter, evt):
         """ finds 10 next (distance in mz) peaks tu current marker
             and zooms to them
         """
+        return
 
+        """
         if not hasattr(self, "centralMz") or self.centralMz is None:
             mz = self.get_unique_item(Marker).xValue()
+            mz = self.marker.xValue()
         else:
             mz = self.centralMz
 
         self.update_plot_xlimits(mz - self.halfWindowWidth,
                                  mz + self.halfWindowWidth)
+        """
 
-    def set_half_window_width(self, w2):
-        self.halfWindowWidth = w2
+    #def set_half_window_width(self, w2):
+        #self.halfWindowWidth = w2
 
-    def set_central_mz(self, mz):
-        self.centralMz = mz
+    #def set_central_mz(self, mz):
+        #self.centralMz = mz
 
-    def register_c_callback(self, cb):
-        self.c_call_back = cb
+    #def register_c_callback(self, cb):
+        #self.c_call_back = cb
 
     @protect_signal_handler
     def do_c_pressed(self, filter, evt):
-        self.current_peak
-        self.c_call_back
-        self.c_call_back(self.current_peak)
+        ##self.c_call_back(self.current_peak)
+        pass
 
     @protect_signal_handler
     def start_drag_mode(self, filter_, evt):
+        """ for measuring """
         mz = self.invTransform(self.xBottom, evt.x())
         I = self.invTransform(self.yLeft, evt.y())
-        self.start_coord = self.next_peak_to(mz, I)
+        mz, I = self.next_peak_to(mz, I)
+        self.startMeasuring.emit(mz, I)
+        #self.replot()
 
     @protect_signal_handler
     def move_in_drag_mode(self, filter_, evt):
+        """ for measuring """
         mz = self.invTransform(self.xBottom, evt.x())
         I = self.invTransform(self.yLeft, evt.y())
-        current_coord = self.next_peak_to(mz, I)
-
-        line = self.get_unique_item(SegmentShape)
-        line.set_rect(self.start_coord[0], self.start_coord[1], current_coord[0], current_coord[1])
-        line.setVisible(1)
-
+        mz, I = self.next_peak_to(mz, I)
+        self.moveMeasuring.emit(mz, I)
         self.replot()
 
     @protect_signal_handler
     def stop_drag_mode(self, filter_, evt):
-        line = self.get_unique_item(SegmentShape)
-        line.setVisible(0)
+        """ for measuring """
+        self.stopMeasuring.emit()
         self.replot()
 
     def resample_peaks(self, mzmin, mzmax):
+        raise NotImplemented("???")
         if mzmin == self.latest_mzmin and mzmax == self.latest_mzmax:
             return
         self.latest_mzmin = mzmin
@@ -556,7 +580,7 @@ class MzPlot(ModifiedCurvePlot):
     def update_plot_xlimits(self, xmin, xmax, rescale_y=True):
         _, _, ymin, ymax = self.get_plot_limits()
         self.set_plot_limits(xmin, xmax, ymin, ymax)
-        self.resample_peaks(xmin, xmax)
+        #self.resample_peaks(xmin, xmax)
         if rescale_y:
             self.setAxisAutoScale(self.yLeft)  # y-achse
         self.updateAxes()
@@ -564,19 +588,57 @@ class MzPlot(ModifiedCurvePlot):
 
     def update_plot_ylimits(self, ymin, ymax):
         xmin, xmax, _, _ = self.get_plot_limits()
-        self.resample_peaks(xmin, xmax)
+        #self.resample_peaks(xmin, xmax)
         self.set_plot_limits(xmin, xmax, ymin, ymax)
         self.updateAxes()
         self.replot()
 
 
-class ModifiedSegment(SegmentShape):
+class MeasurementLine(SegmentShape):
     """
         This is plottet as a line
         modifications are:
             - no point int the middle of the line
             - no antialising for the markers
     """
+
+
+    #####################################################################################
+    # the following trick simulates an event updated which is attached to MeasurementLine:
+    # (multiple inheritance incl QObject does not work)
+
+    class _Mediator(QObject):
+        updated = pyqtSignal()
+
+    @property
+    def updated(self):
+        return self._mediator.updated
+
+    #####################################################################################
+
+    def __init__(self):
+        super(MeasurementLine, self).__init__(0, 0, 0, 0)
+        self._mediator = MeasurementLine._Mediator()
+
+        self.start_x = None
+        self.start_y = None
+        self.setVisible(0)
+
+    def start_measuring(self, x, y):
+        self.start_x = x
+        self.start_y = y
+        self.setVisible(1)
+        self.updated.emit()
+
+    def move_measuring(self, x, y):
+        if self.start_x is not None and self.start_y is not None:
+            self.set_rect(self.start_x, self.start_y, x, y)
+        self.setVisible(1)
+        self.updated.emit()
+
+    def stop_measuring(self):
+        self.setVisible(0)
+        self.updated.emit()
 
     def set_rect(self, x1, y1, x2, y2):
         """
@@ -588,7 +650,7 @@ class ModifiedSegment(SegmentShape):
 
         self.set_points([(x1, y1), (x2, y2), (x1, y1)])
 
-    def draw(self, painter, xMap, yMap, canvasRect):
+    def _draw(self, painter, xMap, yMap, canvasRect):
         # code copied and rearanged such that line has antialiasing,
         # but symbols have not.
         pen, brush, symbol = self.get_pen_brush(xMap, yMap)
@@ -597,6 +659,7 @@ class ModifiedSegment(SegmentShape):
         painter.setBrush(brush)
 
         points = self.transform_points(xMap, yMap)
+        print points
         if self.ADDITIONNAL_POINTS:
             shape_points = points[:-self.ADDITIONNAL_POINTS]
             other_points = points[-self.ADDITIONNAL_POINTS:]
@@ -605,6 +668,7 @@ class ModifiedSegment(SegmentShape):
             other_points = []
 
         for i in xrange(points.size()):
+            print points[i].toPoint()
             symbol.draw(painter, points[i].toPoint())
 
         painter.setRenderHint(QPainter.Antialiasing)

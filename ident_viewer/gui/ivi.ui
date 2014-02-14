@@ -34,18 +34,12 @@
         <bool>true</bool>
        </attribute>
       </widget>
-      <widget class="SpectrumPlotter" name="spectrum_plotter">
+      <widget class="SpectrumPlotter" name="spectrum_plotter" native="true">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>2</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
        </property>
       </widget>
      </widget>
@@ -67,28 +61,11 @@
  <customwidgets>
   <customwidget>
    <class>SpectrumPlotter</class>
-   <extends>QFrame</extends>
+   <extends>QWidget</extends>
    <header>spectrumplotter.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>peptide_hits</sender>
-   <signal>clicked(QModelIndex)</signal>
-   <receiver>spectrum_plotter</receiver>
-   <slot>update()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>136</x>
-     <y>401</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>730</x>
-     <y>401</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
