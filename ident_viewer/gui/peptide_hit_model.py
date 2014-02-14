@@ -11,13 +11,13 @@ sip.setapi('QVariant', 1)
 
 from PyQt4 import QtCore
 
-from ..lib import extract_hits
+from ..lib import extract_hits, PeptideHitAssigner
 
 
 
 class PeptideHitModel(QtCore.QAbstractTableModel):
 
-    peptideSelected = QtCore.pyqtSignal(object)
+    peptideSelected = QtCore.pyqtSignal(object, object)
 
     def __init__(self, parent, peakmaps, peptide_identifications, protein_identifications):
         super(PeptideHitModel, self).__init__()
@@ -56,4 +56,6 @@ class PeptideHitModel(QtCore.QAbstractTableModel):
 
     def select(self, index):
         spec = self.hits[index][-1]
-        self.peptideSelected.emit(spec)
+        hit = self.hits[index][-2]
+        assignment =  PeptideHitAssigner().compute_assignment(hit, spec)
+        self.peptideSelected.emit(spec, assignment)

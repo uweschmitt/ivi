@@ -3,6 +3,7 @@ import pdb
 from guiqwt.plot import CurveWidget, PlotManager
 from guiqwt.builder import make
 from guiqwt.label import ObjectInfo
+from guiqwt.annotations import AnnotatedPoint
 
 from modified_guiqwt import *
 from config import setupStyleRangeMarker, setupCommonStyle, setupStyleRtMarker
@@ -31,7 +32,7 @@ class PlotWidget(QWidget):
     def __init__(self, parent, xlabel, ylabel, modified_parent_class=None):
         super(PlotWidget, self).__init__(parent)
 
-        self.layout = QtGui.QGridLayout(parent)
+        self.layout = QtGui.QGridLayout(self)
 
         self.widget = CurveWidget(parent, xlabel=xlabel, ylabel=ylabel)
         # inject modified behaviour of widgets plot:
@@ -96,6 +97,22 @@ def make_label(marker, line):
     return label
 
 
+
+class Annotation(AnnotatedPoint):
+
+    def __init__(self, x, y, text, color="white"):
+        super(Annotation, self).__init__(x, y)
+        self.label.labelparam.color = color
+        self.label.labelparam.bgalpha = 0.1
+        self.label.labelparam.font.size = 8
+        self.label.labelparam.border.width = 0
+        self.label.labelparam.update_label(self.label)
+        self.text = text
+
+    def get_text(self):
+        return self.text
+
+
 class MzPlotWidget(PlotWidget):
 
     def __init__(self, parent):
@@ -118,6 +135,8 @@ class MzPlotWidget(PlotWidget):
         tool.activate()
         manager.set_default_tool(tool)
 
+        #self.plot.add_item(Annotation(300.0, 100.0, "y++\nKAR(*)", "red"))
+
         self.plot.add_item(self.marker)
         self.plot.add_item(self.label)
         self.plot.add_item(self.line)
@@ -127,6 +146,14 @@ class MzPlotWidget(PlotWidget):
         self.plot.stopMeasuring.connect(self.line.stop_measuring)
         self.plot.moveMarker.connect(self.marker.move_local_point_to)
         self.line.updated.connect(self.plot.replot)
+
+        self.annotations = []
+
+    def set_annotations(self, annotations):
+        self.annotations = []
+        for (mz, I, text, color) in annotations:
+            self.annotations.append(Annotation(mz, I, text, color))
+
 
     def plot_spectra(self, spectra):
 
@@ -144,6 +171,11 @@ class MzPlotWidget(PlotWidget):
             self.plot.add_item(curve)
 
         self.plot.all_peaks = np.vstack(all_peaks)
+
+        for annotation in self.annotations:
+            self.plot.add_item(annotation)
+
+        self.plot.reset_all_axes()
         self.replot()
 
     def plot_spectrum(self, spectrum):

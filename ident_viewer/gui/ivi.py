@@ -4,7 +4,6 @@ from ivi_ui import MainWindow
 from peptide_hit_model import PeptideHitModel
 
 
-
 class IdentViewer(MainWindow):
 
     def __init__(self, peptide_identifications, protein_identifications, *peakmaps):
@@ -39,7 +38,7 @@ class IdentViewer(MainWindow):
 
     def connect_signals(self):
         self.peptide_hits.verticalHeader().sectionClicked.connect(self.peptide_hit_model.select)
-        self.peptide_hit_model.peptideSelected.connect(self.spectrum_plotter.plot_spectrum)
+        self.peptide_hit_model.peptideSelected.connect(self.spectrum_plotter.plot_hit)
 
 
 if __name__ == '__main__':

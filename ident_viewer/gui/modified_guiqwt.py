@@ -64,7 +64,7 @@ class RtSelectionTool(InteractiveTool):
 
         filter.add_event(start_state,
                          KeyEventMatch((Qt.Key_Backspace, Qt.Key_Escape)),
-                         baseplot.reset_all_axes, start_state)
+                         baseplot.reset_all_axes_evt, start_state)
 
         # Bouton du milieu
         PanHandler(filter, Qt.MidButton, start_state=start_state)
@@ -103,7 +103,7 @@ class MzSelectionTool(InteractiveTool):
                           baseplot.do_space_pressed, start_state)
         filter_.add_event(start_state,
                           KeyEventMatch((Qt.Key_Backspace, Qt.Key_Escape)),
-                          baseplot.reset_all_axes, start_state)
+                          baseplot.reset_all_axes_evt, start_state)
 
         filter_.add_event(start_state,
                           KeyEventMatch((Qt.Key_C,)),
@@ -461,8 +461,11 @@ class MzPlot(CurvePlotWithModifiedZoomHandling):
 
         """
 
-    def reset_all_axes(self, filter, evt):
+    def reset_all_axes_evt(self, filter, evt):
         """ reset axes of plot """
+        self.reset_all_axes()
+
+    def reset_all_axes(self):
         self.reset_x_limits()
         return 
         """
