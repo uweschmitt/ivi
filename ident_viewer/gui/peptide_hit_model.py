@@ -14,9 +14,10 @@ from PyQt4 import QtCore
 from ..lib import extract_hits
 
 
+
 class PeptideHitModel(QtCore.QAbstractTableModel):
 
-    peptide_selected = QtCore.pyqtSignal(object)
+    peptideSelected = QtCore.pyqtSignal(object)
 
     def __init__(self, parent, peakmaps, peptide_identifications, protein_identifications):
         super(PeptideHitModel, self).__init__()
@@ -55,4 +56,4 @@ class PeptideHitModel(QtCore.QAbstractTableModel):
 
     def select(self, index):
         spec = self.hits[index][-1]
-        self.peptide_selected.emit(spec)
+        self.peptideSelected.emit(spec)

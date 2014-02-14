@@ -42,7 +42,7 @@ class IdentViewer(MainWindow):
 
     def connect_signals(self):
         self.peptide_hits.verticalHeader().sectionClicked.connect(self.peptide_hit_model.select)
-        self.peptide_hit_model.peptide_selected.connect(self.spectrum_plotter.plot_spectrum)
+        self.peptide_hit_model.peptideSelected.connect(self.spectrum_plotter.plot_spectrum)
 
 
 if __name__ == '__main__':
