@@ -37,17 +37,17 @@ class PeptideHitAssigner(object):
 
         for charge in range(1, max_charge + 1):
             if self.config.get("assign_a_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.ResidueType.AIon, charge)
+                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.AIon, charge)
             if self.config.get("assign_b_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.ResidueType.BIon, charge)
+                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.BIon, charge)
             if self.config.get("assign_c_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.ResidueType.CIon, charge)
+                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.CIon, charge)
             if self.config.get("assign_x_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.ResidueType.XIon, charge)
+                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.XIon, charge)
             if self.config.get("assign_y_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.ResidueType.YIon, charge)
+                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.YIon, charge)
             if self.config.get("assign_z_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.ResidueType.ZIon, charge)
+                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.ZIon, charge)
             generator.addPrecursorPeaks(theoretical_spectrum, aa_sequence, charge)
 
         return theoretical_spectrum
