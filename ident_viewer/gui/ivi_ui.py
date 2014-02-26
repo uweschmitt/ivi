@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ivi.ui'
 #
-# Created: Fri Feb 14 17:56:02 2014
+# Created: Wed Feb 26 14:43:29 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,6 +31,9 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.peptide_hits.sizePolicy().hasHeightForWidth())
         self.peptide_hits.setSizePolicy(sizePolicy)
+        self.peptide_hits.setAlternatingRowColors(False)
+        self.peptide_hits.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self.peptide_hits.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
         self.peptide_hits.setSortingEnabled(True)
         self.peptide_hits.setObjectName(_fromUtf8("peptide_hits"))
         self.peptide_hits.horizontalHeader().setStretchLastSection(True)
@@ -46,16 +49,39 @@ class Ui_MainWindow(object):
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1200, 25))
         self.menubar.setObjectName(_fromUtf8("menubar"))
+        self.menuIdent_Viewer = QtGui.QMenu(self.menubar)
+        self.menuIdent_Viewer.setObjectName(_fromUtf8("menuIdent_Viewer"))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)
         self.statusbar.setObjectName(_fromUtf8("statusbar"))
         MainWindow.setStatusBar(self.statusbar)
+        self.action_preferences = QtGui.QAction(MainWindow)
+        self.action_preferences.setObjectName(_fromUtf8("action_preferences"))
+        self.action_quit = QtGui.QAction(MainWindow)
+        self.action_quit.setObjectName(_fromUtf8("action_quit"))
+        self.action_open_file = QtGui.QAction(MainWindow)
+        self.action_open_file.setObjectName(_fromUtf8("action_open_file"))
+        self.menuIdent_Viewer.addSeparator()
+        self.menuIdent_Viewer.addAction(self.action_open_file)
+        self.menuIdent_Viewer.addSeparator()
+        self.menuIdent_Viewer.addAction(self.action_preferences)
+        self.menuIdent_Viewer.addSeparator()
+        self.menuIdent_Viewer.addAction(self.action_quit)
+        self.menubar.addAction(self.menuIdent_Viewer.menuAction())
 
         self.retranslateUi(MainWindow)
+        QtCore.QObject.connect(self.action_quit, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtGui.QApplication.translate("MainWindow", "MainWindow", None, QtGui.QApplication.UnicodeUTF8))
+        self.menuIdent_Viewer.setTitle(QtGui.QApplication.translate("MainWindow", "Ident Viewer", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_preferences.setText(QtGui.QApplication.translate("MainWindow", "Preferences", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_preferences.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+P", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_quit.setText(QtGui.QApplication.translate("MainWindow", "Quit", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_quit.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+Q", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_open_file.setText(QtGui.QApplication.translate("MainWindow", "Open File", None, QtGui.QApplication.UnicodeUTF8))
+        self.action_open_file.setShortcut(QtGui.QApplication.translate("MainWindow", "Ctrl+O", None, QtGui.QApplication.UnicodeUTF8))
 
 from spectrumplotter import SpectrumPlotter
 

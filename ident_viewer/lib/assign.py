@@ -4,10 +4,8 @@ import re
 
 class PeptideHitAssigner(object):
 
-    def __init__(self, assign_b_ion=True, assign_y_ion=True, **config):
-        self.config = dict(assign_b_ion=assign_b_ion,
-                           assign_y_ion=assign_y_ion)
-        self.config.update(config)
+    def __init__(self, preferences):
+        self.preferences = preferences
 
     def compute_assignment(self, peptide_hit, spectrum):
 
@@ -36,17 +34,17 @@ class PeptideHitAssigner(object):
         max_charge = max(1, peptide_hit.getCharge())
 
         for charge in range(1, max_charge + 1):
-            if self.config.get("assign_a_ion"):
+            if self.preferences.get("show_a_ion"):
                 generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.AIon, charge)
-            if self.config.get("assign_b_ion"):
+            if self.preferences.get("show_b_ion"):
                 generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.BIon, charge)
-            if self.config.get("assign_c_ion"):
+            if self.preferences.get("show_c_ion"):
                 generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.CIon, charge)
-            if self.config.get("assign_x_ion"):
+            if self.preferences.get("show_x_ion"):
                 generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.XIon, charge)
-            if self.config.get("assign_y_ion"):
+            if self.preferences.get("show_y_ion"):
                 generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.YIon, charge)
-            if self.config.get("assign_z_ion"):
+            if self.preferences.get("show_z_ion"):
                 generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.ZIon, charge)
             generator.addPrecursorPeaks(theoretical_spectrum, aa_sequence, charge)
 
@@ -62,6 +60,7 @@ class PeptideHitAssigner(object):
 
         if ion_name.startswith("y"):
             ion_nr_str = ion_name.replace("y", "").replace("+", "")
+            ion_nr_str, __ , __ = ion_nr_str.partition("-")
             ion_number = int(ion_nr_str)
             info = []
             # ion residue for y is reverted:
@@ -73,6 +72,7 @@ class PeptideHitAssigner(object):
             return "".join(info)
         elif ion_name.startswith("b"):
             ion_nr_str = ion_name.replace("b", "").replace("+", "")
+            ion_nr_str, __ , __ = ion_nr_str.partition("-")
             ion_number = int(ion_nr_str)
             sub_seq = aa_sequence.getSubsequence(0, ion_number).toString()
             return re.sub("[(].*[)]", "*", sub_seq)  # replaces "(Modification)" to "*"
@@ -85,9 +85,15 @@ class PeptideHitAssigner(object):
         params = generator.getDefaults()
         params["add_metainfo"] = "true"
 
-        # overwrite defaults if given:
-        for name in ("max_isotope", "add_losses", "add_isotopes", "relative_loss_intensity"):
-            params[name] = self.config.get(name, params[name])
+        # bool param values -> str, overwrite defaults if given
+        for name in ("add_losses", "add_isotopes"):
+            default = 1 if params[name] == "true" else 0
+            value = "true" if self.preferences.get(name, default) else "false"
+            params[name] = value
+
+        # other param values  overwrite defaults if given:
+        for name in ("max_isotope", "relative_loss_intensity"):
+            params[name] = self.preferences.get(name, params[name])
 
         generator.setParameters(params)
         return generator
@@ -96,7 +102,7 @@ class PeptideHitAssigner(object):
         aligner = oms.SpectrumAlignment()
 
         params = aligner.getDefaults()
-        tolerance = 3e-1
+        tolerance = self.preferences.get("tolerance")
         params["tolerance"] = tolerance
         aligner.setParameters(params)
         return aligner

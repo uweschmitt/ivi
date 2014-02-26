@@ -20,13 +20,16 @@ def test_0(data_path):
 
     assert seq == "SHC(Carbamidomethyl)IAEVEK"
 
+    preferences = iv.lib.default_preferences()
     sys.stdout = cStringIO.StringIO()
     try:
-        for mz, ii, ion, info in iv.lib.PeptideHitAssigner().compute_assignment(hit, spec):
+        for mz, ii, ion, info in iv.lib.PeptideHitAssigner(preferences).compute_assignment(hit, spec):
             print "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
     finally:
         output = sys.stdout.getvalue()
         sys.stdout = sys.__stdout__
+
+    print output
 
     tobe = [line.strip() for line in """
                 129.11508 5.574852e+00 b3+++      SHC*

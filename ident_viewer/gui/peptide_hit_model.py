@@ -54,5 +54,8 @@ class PeptideHitModel(QtCore.QAbstractTableModel):
     def select(self, index):
         spec = self.hits[index][-1]
         hit = self.hits[index][-2]
-        assignment =  PeptideHitAssigner().compute_assignment(hit, spec)
+        assignment =  PeptideHitAssigner(self.preferences).compute_assignment(hit, spec)
         self.peptideSelected.emit(spec, assignment)
+
+    def set_preferences(self, preferences):
+        self.preferences = preferences
