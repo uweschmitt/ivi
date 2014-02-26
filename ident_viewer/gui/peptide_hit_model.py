@@ -51,9 +51,6 @@ class PeptideHitModel(QtCore.QAbstractTableModel):
         else:
             return QtCore.QVariant()
 
-    def flags(self, indexl):
-        return QtCore.Qt.ItemIsEnabled
-
     def select(self, index):
         spec = self.hits[index][-1]
         hit = self.hits[index][-2]

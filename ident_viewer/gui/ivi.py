@@ -38,7 +38,13 @@ class IdentViewer(MainWindow):
 
     def connect_signals(self):
         self.peptide_hits.verticalHeader().sectionClicked.connect(self.peptide_hit_model.select)
+        self.peptide_hits.verticalHeader().sectionClicked.connect(self.row_chosen)
         self.peptide_hit_model.peptideSelected.connect(self.spectrum_plotter.plot_hit)
+
+    def row_chosen(self, i):
+        self.peptide_hits.selectRow(i)
+
+
 
 
 if __name__ == '__main__':
