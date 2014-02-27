@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'preferences_dialog.ui'
 #
-# Created: Wed Feb 26 14:09:31 2014
+# Created: Thu Feb 27 10:30:29 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -24,19 +24,21 @@ class Ui_PreferencesDialog(object):
         sizePolicy.setHeightForWidth(PreferencesDialog.sizePolicy().hasHeightForWidth())
         PreferencesDialog.setSizePolicy(sizePolicy)
         PreferencesDialog.setMaximumSize(QtCore.QSize(310, 208))
+        PreferencesDialog.setAutoFillBackground(False)
         PreferencesDialog.setSizeGripEnabled(False)
         self.gridLayout = QtGui.QGridLayout(PreferencesDialog)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.buttonBox = QtGui.QDialogButtonBox(PreferencesDialog)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Maximum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(1)
         sizePolicy.setHeightForWidth(self.buttonBox.sizePolicy().hasHeightForWidth())
         self.buttonBox.setSizePolicy(sizePolicy)
         self.buttonBox.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.buttonBox.setAutoFillBackground(True)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setCenterButtons(False)
+        self.buttonBox.setCenterButtons(True)
         self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
         self.gridLayout.addWidget(self.buttonBox, 1, 0, 1, 1)
         self.frame = QtGui.QFrame(PreferencesDialog)
