@@ -8,10 +8,11 @@ setup(name="ident_viewer",
       version="%d.%d.%d" % version,
       entry_points={
           "gui_scripts": ["ivi = ident_viewer.cmdline:main",
+                          "ivi.prepare = ident_viewer.cmdline:prepare",
                          ]
 
       },
       include_package_data=True,
       zip_safe=False,
-      install_requires=[]
+      install_requires=["tables"]
     )
