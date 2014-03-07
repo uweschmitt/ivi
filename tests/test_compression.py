@@ -28,6 +28,8 @@ def test_0(data_path, tmpdir):
     # as we reduced the peakmap a lot we only have one hit, which is tested below:
     assert "VVAPGNANDAK" in aa_sequences
 
+    assert reader.get_number_of_hits_for("VVAPGNANDAK") == 1
+
     hits = reader.get_hits_for_aa_sequence("VVAPGNANDAK")
     assert len(hits) == 1
     hit = hits[0]

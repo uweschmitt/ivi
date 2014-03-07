@@ -137,7 +137,7 @@ class CollectHitsData(object):
         hits = self._extract_hits(peps)
         logger.info("extracted %d peptide hits" % len(hits))
 
-        writer.add_aa_sequences(set(h.aa_sequence for h in hits))
+        writer.add_aa_sequences(hits)   #set(h.aa_sequence for h in hits))
         logger.info("wrote aa sequences")
         writer.add_base_names(set(h.base_name for h in hits))
         logger.info("wrote base names")

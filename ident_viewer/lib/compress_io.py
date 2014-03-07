@@ -1,4 +1,4 @@
-from collections import defaultdict, namedtuple
+from collections import defaultdict, namedtuple, Counter
 import pyopenms as oms
 
 from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, Float64Atom,
@@ -32,6 +32,13 @@ class CompressedDataWriter(object):
         aa_seq_id = Int64Col()
         segment_id = Int8Col()
         segment = StringCol(CHUNKLEN)
+
+    class HitsPerAASequenceCounter(IsDescription):
+
+        """ counts number of hits per aa sequenc
+        """
+        aa_seq_id = Int64Col()
+        hit_count = UInt64Col()
 
     class BaseName(IsDescription):
 
@@ -77,6 +84,12 @@ class CompressedDataWriter(object):
                                                          self.AASequence,
                                                          "AASequences",
                                                          filters=filters)
+
+        self.hit_counts_table = self.file_.create_table(group,
+                                                        'hit_counts',
+                                                        self.HitsPerAASequenceCounter,
+                                                        "HitsPerAASequenceCounter",
+                                                        filters=filters)
 
         """ pytables has no variable length string arrays, so we split strings into chunks """
         self.base_name_table = self.file_.create_table(group,
@@ -127,6 +140,7 @@ class CompressedDataWriter(object):
 
     def finish_writing_aa_sequences(self):
         self.aa_sequence_table.flush()
+        self.hit_counts_table.flush()
 
     def add_base_name(self, id_, name):
         CompressedDataWriter.add_string(self.base_name_table, "base_name_id", id_, name)
@@ -135,9 +149,20 @@ class CompressedDataWriter(object):
     def finish_writing_base_names(self):
         self.base_name_table.flush()
 
-    def add_aa_sequences(self, aa_sequences):
-        for id_, aa_sequence in enumerate(set(aa_sequences)):
+    def add_aa_sequences(self, hits):
+        aa_sequences = dict(enumerate(set(h.aa_sequence for h in hits)))
+        for id_, aa_sequence in aa_sequences.iteritems():  # enumerate(set(aa_sequences)):
             self.add_aa_sequence(id_, aa_sequence)
+
+        aa_sequence_to_id = invert_dict(aa_sequences)
+        counts = Counter((aa_sequence_to_id[h.aa_sequence] for h in hits))
+
+        for aa_seq_id, count in counts.iteritems():
+            row = self.hit_counts_table.row
+            row["aa_seq_id"] = aa_seq_id
+            row["hit_count"] = count
+            row.append()
+
         self.finish_writing_aa_sequences()
 
     def add_base_names(self, base_names):
@@ -200,6 +225,7 @@ class CompressedDataReader(object):
         self.base_name_table = self.file_.root.hits.base_names
         self.aa_sequence_table = self.file_.root.hits.aa_sequences
         self.hit_data_table = self.file_.root.hits.hit_data
+        self.hit_counts_table = self.file_.root.hits.hit_counts
 
         self._read_base_names()
         self._read_aa_sequences()
@@ -227,9 +253,18 @@ class CompressedDataReader(object):
     def _read_aa_sequences(self):
         self.id_to_aa_sequence = CompressedDataReader.fetch_strings(self.aa_sequence_table, "aa_seq_id")
         self.aa_sequence_to_id = invert_dict(self.id_to_aa_sequence)
+        self.no_hits_per_aa_sequence = dict()
+        for row in self.hit_counts_table:
+            id_ = row["aa_seq_id"]
+            counts = row["hit_count"]
+            self.no_hits_per_aa_sequence[id_] = counts
 
     def get_aa_sequences(self):
         return self.id_to_aa_sequence.values()
+
+    def get_number_of_hits_for(self, aa_sequence):
+        id_ = self.aa_sequence_to_id.get(aa_sequence)
+        return self.no_hits_per_aa_sequence.get(id_, 0)
 
     def get_hits_for_aa_sequence(self, aa_sequence):
         hits = []
