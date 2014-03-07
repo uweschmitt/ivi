@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msms_pipeline_analysis date="2007-12-05T17:49:46" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://regis-web.systemsbiology.net/pepXML http://www.matrixscience.com/xmlns/schema/pepXML_v18/pepXML_v18.xsd" summary_xml=".xml">
+<msms_run_summary base_name="reduced.pep.xml" raw_data_type="raw" raw_data=".mzXML" search_engine="X! Tandem (k-score)">
+<sample_enzyme name="trypsin">
+<specificity cut="KR" no_cut="P" sense="C"/>
+</sample_enzyme>
+<search_summary base_name="reduced.pep.xml" search_engine="X! Tandem (k-score)" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="" out_data="" search_id="1">
+		<search_database local_path="/cluster/scratch_xl/shareholder/imsb_ra/datasets/PERSONAL_DB-MALARS-DDB_167-20130905113927/ddb_167.fasta" type="AA"/>
+    </search_summary>
+    <analysis_timestamp analysis="peptideprophet" time="2007-12-05T17:49:52" id="1"/>
+		<spectrum_query spectrum="1" start_scan="1" end_scan="1" precursor_neutral_mass="794.537812233" assumed_charge="2" index="1" retention_time_sec="8109.16" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="LLPAIIR" peptide_prev_aa="-" peptide_next_aa="V" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="794.537812233" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0" all_ntt_prob="(0,0,0)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="2" start_scan="2" end_scan="2" precursor_neutral_mass="807.5330612011" assumed_charge="2" index="2" retention_time_sec="1507.72" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="ALVKHIK" peptide_prev_aa="R" peptide_next_aa="G" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="807.5330612011" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="9.22919e-06" all_ntt_prob="(9.22919e-06,9.22919e-06,9.22919e-06)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="3" start_scan="3" end_scan="3" precursor_neutral_mass="811.4915910735" assumed_charge="2" index="3" retention_time_sec="1410.48" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="IRPADLK" peptide_prev_aa="R" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="811.4915910735" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0" all_ntt_prob="(0,0,0)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="4" start_scan="4" end_scan="4" precursor_neutral_mass="829.4909231373" assumed_charge="2" index="4" retention_time_sec="1270.32" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="EITGLGLK" peptide_prev_aa="R" peptide_next_aa="E" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="829.4909231373" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.961718" all_ntt_prob="(0.961718,0.961718,0.961718)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="5" start_scan="5" end_scan="5" precursor_neutral_mass="843.4814210735" assumed_charge="2" index="5" retention_time_sec="1651.91" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="AENAKAIK" peptide_prev_aa="K" peptide_next_aa="R" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="843.4814210735" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00128354" all_ntt_prob="(0.00128354,0.00128354,0.00128354)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="6" start_scan="6" end_scan="6" precursor_neutral_mass="843.5429583287" assumed_charge="2" index="6" retention_time_sec="2337.87" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="LSGLITIK" peptide_prev_aa="R" peptide_next_aa="D" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="843.5429583287" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.964088" all_ntt_prob="(0.964088,0.964088,0.964088)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="7" start_scan="7" end_scan="7" precursor_neutral_mass="848.5007591692" assumed_charge="2" index="7" retention_time_sec="990.72" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="TILDFLK" peptide_prev_aa="K" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="848.5007591692" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000433589" all_ntt_prob="(0.000433589,0.000433589,0.000433589)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="8" start_scan="8" end_scan="8" precursor_neutral_mass="854.4974051054" assumed_charge="2" index="8" retention_time_sec="1554.27" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="GPIDIKGR" peptide_prev_aa="K" peptide_next_aa="L" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="854.4974051054" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000303915" all_ntt_prob="(0.000303915,0.000303915,0.000303915)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="9" start_scan="9" end_scan="9" precursor_neutral_mass="866.4974051054" assumed_charge="2" index="9" retention_time_sec="355.81" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="EHILLSR" peptide_prev_aa="R" peptide_next_aa="Q" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="866.4974051054" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.999999" all_ntt_prob="(0.999999,0.999999,0.999999)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="10" start_scan="10" end_scan="10" precursor_neutral_mass="867.4239058183" assumed_charge="2" index="10" retention_time_sec="1271.29" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="FGDFLNR" peptide_prev_aa="R" peptide_next_aa="F" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="867.4239058183" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.990694" all_ntt_prob="(0.990694,0.990694,0.990694)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="11" start_scan="11" end_scan="11" precursor_neutral_mass="896.3988147864" assumed_charge="2" index="11" retention_time_sec="2065.41" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="AAFSSDSGR" peptide_prev_aa="K" peptide_next_aa="T" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="896.3988147864" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00184909" all_ntt_prob="(0.00184909,0.00184909,0.00184909)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="12" start_scan="12" end_scan="12" precursor_neutral_mass="899.4501209459" assumed_charge="2" index="12" retention_time_sec="326.81" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="DFHGVPTK" peptide_prev_aa="R" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="899.4501209459" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.999999" all_ntt_prob="(0.999999,0.999999,0.999999)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="13" start_scan="13" end_scan="13" precursor_neutral_mass="900.441347914" assumed_charge="2" index="13" retention_time_sec="6731.48" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="IQDNAQGR" peptide_prev_aa="K" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="900.441347914" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00442026" all_ntt_prob="(0.00442026,0.00442026,0.00442026)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="14" start_scan="14" end_scan="14" precursor_neutral_mass="911.5440213287" assumed_charge="2" index="14" retention_time_sec="6758.88" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="EPGLKGALK" peptide_prev_aa="K" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="911.5440213287" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="1.14507e-05" all_ntt_prob="(1.14507e-05,1.14507e-05,1.14507e-05)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="15" start_scan="15" end_scan="15" precursor_neutral_mass="918.484457963" assumed_charge="2" index="15" retention_time_sec="1074.5" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="SMIALEAGK" peptide_prev_aa="K" peptide_next_aa="Y" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="918.484457963" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.31816" all_ntt_prob="(0.31816,0.31816,0.31816)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="16" start_scan="16" end_scan="16" precursor_neutral_mass="925.5345192649" assumed_charge="2" index="16" retention_time_sec="2055.86" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="ALSSHGKVK" peptide_prev_aa="K" peptide_next_aa="N" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="925.5345192649" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0" all_ntt_prob="(0,0,0)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="17" start_scan="17" end_scan="17" precursor_neutral_mass="934.4508499778" assumed_charge="2" index="17" retention_time_sec="5938.34" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="FEGEGAAVR" peptide_prev_aa="K" peptide_next_aa="T" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="934.4508499778" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00244881" all_ntt_prob="(0.00244881,0.00244881,0.00244881)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="18" start_scan="18" end_scan="18" precursor_neutral_mass="934.5600053606" assumed_charge="2" index="18" retention_time_sec="6574.1" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="GVYKSLIR" peptide_prev_aa="R" peptide_next_aa="G" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="934.5600053606" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0" all_ntt_prob="(0,0,0)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="19" start_scan="19" end_scan="19" precursor_neutral_mass="950.4531578354" assumed_charge="2" index="19" retention_time_sec="583.68" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="GIGPAYMDK" peptide_prev_aa="K" peptide_next_aa="A" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="950.4531578354" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000609266" all_ntt_prob="(0.000609266,0.000609266,0.000609266)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="20" start_scan="20" end_scan="20" precursor_neutral_mass="950.518535233" assumed_charge="2" index="20" retention_time_sec="4005.99" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="ISDYIGRK" peptide_prev_aa="K" peptide_next_aa="L" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="950.518535233" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00820104" all_ntt_prob="(0.00820104,0.00820104,0.00820104)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="21" start_scan="21" end_scan="21" precursor_neutral_mass="963.5389363287" assumed_charge="2" index="21" retention_time_sec="5908.82" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="IINFSDKK" peptide_prev_aa="K" peptide_next_aa="T" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="963.5389363287" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.613628" all_ntt_prob="(0.613628,0.613628,0.613628)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="22" start_scan="22" end_scan="22" precursor_neutral_mass="999.6076845839" assumed_charge="2" index="22" retention_time_sec="2345.41" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="DISVGRLIK" peptide_prev_aa="R" peptide_next_aa="D" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="999.6076845839" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="2.19362e-06" all_ntt_prob="(2.19362e-06,2.19362e-06,2.19362e-06)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="23" start_scan="23" end_scan="23" precursor_neutral_mass="1005.4443680097" assumed_charge="2" index="23" retention_time_sec="138.39" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="EAFYGYEK" peptide_prev_aa="K" peptide_next_aa="Y" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1005.4443680097" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000721447" all_ntt_prob="(0.000721447,0.000721447,0.000721447)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="24" start_scan="24" end_scan="24" precursor_neutral_mass="1015.5046772011" assumed_charge="2" index="24" retention_time_sec="4963.1" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="DSRALSDPR" peptide_prev_aa="K" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1015.5046772011" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00296441" all_ntt_prob="(0.00296441,0.00296441,0.00296441)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="25" start_scan="25" end_scan="25" precursor_neutral_mass="1016.5324711544" assumed_charge="2" index="25" retention_time_sec="1150.11" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="QAAEMGVAIK" peptide_prev_aa="K" peptide_next_aa="V" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1016.5324711544" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000244113" all_ntt_prob="(0.000244113,0.000244113,0.000244113)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="26" start_scan="26" end_scan="26" precursor_neutral_mass="1016.5324711544" assumed_charge="2" index="26" retention_time_sec="1102.4" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="QAAEMGVAIK" peptide_prev_aa="K" peptide_next_aa="V" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1016.5324711544" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000332515" all_ntt_prob="(0.000332515,0.000332515,0.000332515)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="27" start_scan="27" end_scan="27" precursor_neutral_mass="1016.5403332968" assumed_charge="2" index="27" retention_time_sec="437.45" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="DLNAPGFRK" peptide_prev_aa="K" peptide_next_aa="G" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1016.5403332968" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.530719" all_ntt_prob="(0.530719,0.530719,0.530719)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="28" start_scan="28" end_scan="28" precursor_neutral_mass="1016.5614634244" assumed_charge="2" index="28" retention_time_sec="5769.68" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="KTVTGLAGDR" peptide_prev_aa="R" peptide_next_aa="T" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1016.5614634244" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0" all_ntt_prob="(0,0,0)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="29" start_scan="29" end_scan="29" precursor_neutral_mass="1020.5240152968" assumed_charge="2" index="29" retention_time_sec="650.87" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="YSNQPLATK" peptide_prev_aa="K" peptide_next_aa="A" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1020.5240152968" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00824757" all_ntt_prob="(0.00824757,0.00824757,0.00824757)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="30" start_scan="30" end_scan="30" precursor_neutral_mass="1020.5352482968" assumed_charge="2" index="30" retention_time_sec="1198.37" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="TSFGQNVLR" peptide_prev_aa="R" peptide_next_aa="H" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1020.5352482968" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.122897" all_ntt_prob="(0.122897,0.122897,0.122897)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="31" start_scan="31" end_scan="31" precursor_neutral_mass="1023.6117065839" assumed_charge="2" index="31" retention_time_sec="3051.08" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="VYKINLFK" peptide_prev_aa="R" peptide_next_aa="A" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1023.6117065839" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000323979" all_ntt_prob="(0.000323979,0.000323979,0.000323979)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="32" start_scan="32" end_scan="32" precursor_neutral_mass="1027.4974662011" assumed_charge="2" index="32" retention_time_sec="1200.44" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="FLFASGDSGK" peptide_prev_aa="K" peptide_next_aa="L" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1027.4974662011" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0" all_ntt_prob="(0,0,0)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="33" start_scan="33" end_scan="33" precursor_neutral_mass="1038.469202963" assumed_charge="2" index="33" retention_time_sec="535.52" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="LMEEQFDK" peptide_prev_aa="R" peptide_next_aa="L" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1038.469202963" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000248165" all_ntt_prob="(0.000248165,0.000248165,0.000248165)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="34" start_scan="34" end_scan="34" precursor_neutral_mass="1043.5433701863" assumed_charge="2" index="34" retention_time_sec="645.83" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="GAMVLPNGTGK" peptide_prev_aa="R" peptide_next_aa="T" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1043.5433701863" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.992577" all_ntt_prob="(0.992577,0.992577,0.992577)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="35" start_scan="35" end_scan="35" precursor_neutral_mass="1042.5658804882" assumed_charge="2" index="35" retention_time_sec="3465.05" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="NLIDVVENK" peptide_prev_aa="R" peptide_next_aa="M" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1042.5658804882" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="4.75454e-06" all_ntt_prob="(4.75454e-06,4.75454e-06,4.75454e-06)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="36" start_scan="36" end_scan="36" precursor_neutral_mass="1043.5723624563" assumed_charge="2" index="36" retention_time_sec="2727.83" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="NARVSLAGEK" peptide_prev_aa="K" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1043.5723624563" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="3.36203e-06" all_ntt_prob="(3.36203e-06,3.36203e-06,3.36203e-06)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="37" start_scan="37" end_scan="37" precursor_neutral_mass="1044.5273861544" assumed_charge="2" index="37" retention_time_sec="409.82" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="KQGEPMLDK" peptide_prev_aa="R" peptide_next_aa="R" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1044.5273861544" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.00445603" all_ntt_prob="(0.00445603,0.00445603,0.00445603)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="38" start_scan="38" end_scan="38" precursor_neutral_mass="1052.4637228992" assumed_charge="2" index="38" retention_time_sec="1437.4" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="AMPYWEEK" peptide_prev_aa="R" peptide_next_aa="L" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1052.4637228992" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.986756" all_ntt_prob="(0.986756,0.986756,0.986756)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="39" start_scan="39" end_scan="39" precursor_neutral_mass="1054.5407283606" assumed_charge="2" index="39" retention_time_sec="136.25" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="VVAPGNANDAK" peptide_prev_aa="K" peptide_next_aa="G" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1054.5407283606" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.997355" all_ntt_prob="(0.997355,0.997355,0.997355)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="40" start_scan="40" end_scan="40" precursor_neutral_mass="1055.5763844563" assumed_charge="2" index="40" retention_time_sec="670.17" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="ITIAHTWSK" peptide_prev_aa="K" peptide_next_aa="W" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1055.5763844563" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.980469" all_ntt_prob="(0.980469,0.980469,0.980469)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="41" start_scan="41" end_scan="41" precursor_neutral_mass="1055.5804064563" assumed_charge="2" index="41" retention_time_sec="2761.38" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="KYPFINFK" peptide_prev_aa="R" peptide_next_aa="A" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1055.5804064563" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.998743" all_ntt_prob="(0.998743,0.998743,0.998743)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="42" start_scan="42" end_scan="42" precursor_neutral_mass="1057.4788571373" assumed_charge="2" index="42" retention_time_sec="716.05" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="SQTDNHQTK" peptide_prev_aa="K" peptide_next_aa="T" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1057.4788571373" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.000205078" all_ntt_prob="(0.000205078,0.000205078,0.000205078)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="43" start_scan="43" end_scan="43" precursor_neutral_mass="1059.5746703139" assumed_charge="2" index="43" retention_time_sec="2349.83" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="MLAVEQTLR" peptide_prev_aa="K" peptide_next_aa="K" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1059.5746703139" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.342195" all_ntt_prob="(0.342195,0.342195,0.342195)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="44" start_scan="44" end_scan="44" precursor_neutral_mass="1060.576445552" assumed_charge="2" index="44" retention_time_sec="228.08" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="AALEKVDSTK" peptide_prev_aa="R" peptide_next_aa="A" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1060.576445552" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.999971" all_ntt_prob="(0.999971,0.999971,0.999971)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="45" start_scan="45" end_scan="45" precursor_neutral_mass="1063.6025995839" assumed_charge="2" index="45" retention_time_sec="801.21" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="LAEKVYVSR" peptide_prev_aa="K" peptide_next_aa="Q" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1063.6025995839" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.0107355" all_ntt_prob="(0.0107355,0.0107355,0.0107355)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="46" start_scan="46" end_scan="46" precursor_neutral_mass="1066.4567251054" assumed_charge="2" index="46" retention_time_sec="912.37" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="GEDDDTFLR" peptide_prev_aa="K" peptide_next_aa="G" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1066.4567251054" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.0813215" all_ntt_prob="(0.0813215,0.0813215,0.0813215)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="47" start_scan="47" end_scan="47" precursor_neutral_mass="1066.504343233" assumed_charge="2" index="47" retention_time_sec="206.62" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="GLEPETHER" peptide_prev_aa="K" peptide_next_aa="L" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1066.504343233" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.932831" all_ntt_prob="(0.932831,0.932831,0.932831)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="48" start_scan="48" end_scan="48" precursor_neutral_mass="1067.5723624563" assumed_charge="2" index="48" retention_time_sec="862.22" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="DLVLNPQNR" peptide_prev_aa="R" peptide_next_aa="S" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1067.5723624563" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.999834" all_ntt_prob="(0.999834,0.999834,0.999834)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="49" start_scan="49" end_scan="49" precursor_neutral_mass="1068.592763552" assumed_charge="2" index="49" retention_time_sec="1536.31" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="VDPGQVISVR" peptide_prev_aa="R" peptide_next_aa="E" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1068.592763552" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.992466" all_ntt_prob="(0.992466,0.992466,0.992466)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+		<spectrum_query spectrum="50" start_scan="50" end_scan="50" precursor_neutral_mass="1071.4846100735" assumed_charge="2" index="50" retention_time_sec="572.2" >
+      <search_result>
+			<search_hit hit_rank="1" peptide="DFNAHNAQR" peptide_prev_aa="K" peptide_next_aa="Y" protein="Protein1" num_tot_proteins="1" num_matched_ions="0" tot_num_ions="0" calc_neutral_pep_mass="1071.4846100735" massdiff="0.0" num_tol_term="0" num_missed_cleavages="0" is_rejected="0" protein_descr="Protein No. 1">
+          <analysis_result analysis="peptideprophet">
+			<peptideprophet_result probability="0.0743258" all_ntt_prob="(0.0743258,0.0743258,0.0743258)">
+			</peptideprophet_result>
+			</analysis_result>
+			</search_hit>
+		</search_result>
+		</spectrum_query>
+	</msms_run_summary>
+</msms_pipeline_analysis>

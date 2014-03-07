@@ -1,7 +1,6 @@
 from collections import defaultdict
-import os
 
-from tables import (IsDescription, StringCol, UInt64Col, UInt8Col, UInt16Col, Float32Col, Int64Col,
+from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col,
                     Int16Col, Int8Col, open_file, Filters, Float32Atom, Float64Col, BoolCol)
 
 
@@ -11,8 +10,8 @@ def invert_dict(d):
 
 CHUNKLEN = 32
 
-class PyTablesAccessor(object):
 
+class PyTablesAccessor(object):
 
     class AASequence(IsDescription):
 
@@ -20,20 +19,17 @@ class PyTablesAccessor(object):
         segment_id = Int8Col()
         segment = StringCol(CHUNKLEN)
 
-
     class BaseName(IsDescription):
 
         base_name_id = Int16Col()
         segment_id = Int8Col()
         segment = StringCol(CHUNKLEN)
 
-
     class Spectrum(IsDescription):
 
         spec_id = Int64Col()
         i_low = UInt64Col()
         i_high = UInt64Col()
-
 
     class HitData(IsDescription):
 
@@ -62,16 +58,19 @@ class PyTablesWriter(PyTablesAccessor):
                                                          self.AASequence,
                                                          "AASequences",
                                                          filters=filters)
+
         self.base_name_table = self.file_.create_table(group,
                                                        'base_names',
                                                        self.BaseName,
                                                        "BaseNames",
                                                        filters=filters)
+
         self.spectrum_table = self.file_.create_table(group,
                                                       'spectra',
                                                       self.Spectrum,
                                                       "Spectra",
                                                       filters=filters)
+
         self.hit_data_table = self.file_.create_table(group,
                                                       "hit_data",
                                                       self.HitData,
@@ -177,8 +176,6 @@ def fetch_spectrum(spec_table, peaks_array, id_):
         return spec
 
 
-
-
 def assemble_strings(table, id_col):
     collected = defaultdict(list)
     for row in table.iterrows():
@@ -208,10 +205,10 @@ def fetch_hit(hit_id, hit_data_table, spec_table, peaks_array, base_names):
         return mz, rt, base_name, spec
 
 
-def fetch_hits(aa_seq,  aa_sequence_to_hit_ids, hit_data_table, spec_table, peaks_array, base_names):
+def fetch_hits(aa_seq, aa_sequence_to_hit_ids, hit_data_table, spec_table, peaks_array,
+               base_names):
     hit_ids = aa_sequence_to_hit_ids[aa_seq]
     for hit_id in hit_ids:
-        mz, rt, base_name, spec = fetch_hit(hit_id, hit_data_table, spec_table, peaks_array, base_names)
+        mz, rt, base_name, spec = fetch_hit(hit_id, hit_data_table, spec_table, peaks_array,
+                                            base_names)
         yield aa_seq, hit_id, mz, rt, base_name, spec.shape
-
-

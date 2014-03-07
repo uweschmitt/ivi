@@ -2,7 +2,6 @@
 
 import pyopenms as oms
 from collections import namedtuple, defaultdict
-import time
 import glob
 import os
 
@@ -63,7 +62,6 @@ class Consumer(object):
                     # mz_tolerance has unit ppm:
                     if abs(hit.mz - mz) / mz <= self.mz_tolerance * 1e-6:
                         matched_hits.append(hit)
-
             if matched_hits:
                 self.writer.add_spec_with_hits(spec, matched_hits)
                 self.num_collected += 1
@@ -77,7 +75,6 @@ class Consumer(object):
 
     def setExpectedSize(self, n, m):
         pass
-
 
 
 class CollectHitsData(object):
@@ -125,6 +122,10 @@ class CollectHitsData(object):
         return hits
 
     def collect(self, out_file, mz_tolerance=20.0, rt_tolerance=5.0):
+        with measure_time("collecting and compressing data for visualisation"):
+            self._collect(out_file, mz_tolerance, rt_tolerance)
+
+    def _collect(self, out_file, mz_tolerance, rt_tolerance):
         with measure_time("reading identifcations"):
             writer = PyTablesWriter(out_file)
             fh = oms.PepXMLFile()
@@ -146,7 +147,6 @@ class CollectHitsData(object):
                 mzml_file = oms.MzMLFile()
                 mzml_file.transform(path, consumer)
 
-        writer.close()
         final_bytes = os.stat(out_file).st_size
         logger.info("target file %s written and closed" % out_file)
         logger.info("size of all input files: %s" % (format_bytes(self.summed_sizes)))
@@ -158,9 +158,4 @@ class CollectHitsData(object):
 if __name__ == "__main__":
 
     collector = CollectHitsData("/data/dose/")
-    collector.collect()
-
-# todo:
-
-#  - multiprocessing ??
-
+    collector.collect("out.ivi")

@@ -61,6 +61,5 @@ def _prepare():
 
     from lib import CollectHitsData
 
-    with measure_time("collecting and compressing data for visualisation"):
-        collector = CollectHitsData(root)
-        collector.collect(out_file, mz_tolerance, rt_tolerance)
+    collector = CollectHitsData(root)
+    collector.collect(out_file, mz_tolerance, rt_tolerance)
