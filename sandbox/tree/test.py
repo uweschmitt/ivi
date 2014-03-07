@@ -5,16 +5,66 @@ from treeview_ui import *
 
 import sys
 
-class TreeItem(object):
+class HitItem(object):
 
-    def __init__(self, data):
+    def __init__(self, parent, a, row):
+        self.parent = parent
+        self.a = a
+        self._row = row
+
+    def childCount(self):
+        return 0
+
+    def columnCount(self):
+        return 1
+
+    def data(self):
+        return self.a
+
+    def row(self):
+        return self._row
+
+    def get_child(self, row):
+        assert False
+
+
+def fetch_hits(aaseq, parent):
+    return [HitItem(parent, h+"_"+aaseq, i) for i, h in enumerate("hit1 hit2 hit3".split())]
+
+
+class AASeqItem(object):
+
+    def __init__(self, parent, seq, row):
+        self.parent = parent
+        self.seq = seq
+        self._row = row
+        self.children = None
+
+    def childCount(self):
+        print "childCount"
+        return len(fetch_hits(self.seq, self))
+
+    def columnCount(self):
+        return 1
+
+    def data(self):
+        return self.seq
+
+    def row(self):
+        return self._row
+
+    def get_child(self, row):
+        print "get_child"
+        if self.children is None:
+            self.children = fetch_hits(self.seq, self)
+        return self.children[row]
+
+
+class RootItem(object):
+
+    def __init__(self):
         self.parent = None
-        self.children = []
-        self.data = data
-
-    def addChild(self, child):
-        self.children.append(child)
-        child.parent = self
+        self.children = [AASeqItem(self, "abcdef"[i], i) for i in range(6)]
 
     def childCount(self):
         return len(self.children)
@@ -22,13 +72,10 @@ class TreeItem(object):
     def columnCount(self):
         return 1
 
-    def data(self, column):
-        assert column == 0
-        return self.data
+    def data(self):
+        return ""
 
     def row(self):
-        if self.parent:
-            return self.parent.children.index(self)
         return 0
 
 
@@ -36,17 +83,7 @@ class TreeModel(QAbstractItemModel):
 
     def __init__(self, parent=None):
         super(TreeModel, self).__init__(parent)
-        self.root_item = TreeItem("root")
-        for i in range(10):
-            child = TreeItem("aas %d" % i)
-            self.root_item.addChild(child)
-            for j in range(20):
-                sub = TreeItem("sub %d of %d" % (j, i))
-                child.addChild(sub)
-                for k in range(20):
-                    sub2 = TreeItem("sub %d of %d and %d" % (k, j, i))
-                    sub.addChild(sub2)
-
+        self.root_item = RootItem()
 
     def data(self, index, role):
         if not index.isValid():
@@ -55,7 +92,7 @@ class TreeModel(QAbstractItemModel):
             return QVariant()
 
         item = index.internalPointer()
-        return item.data #  [index.column()]
+        return item.data() #  [index.column()]()
 
     def flags(self, index):
         if not index.isValid():
@@ -66,11 +103,12 @@ class TreeModel(QAbstractItemModel):
         if not self.hasIndex(row, column, parent):
             return QModelIndex()
         if not parent.isValid():
-            parent_item = self.root_item
+            child_item = self.root_item.children[row]
         else:
             parent_item = parent.internalPointer()
+            # should be aa seq !
+            child_item = parent_item.get_child(row)
 
-        child_item = parent_item.children[row]
         return self.createIndex(row, column, child_item)
 
     def parent(self, index):
