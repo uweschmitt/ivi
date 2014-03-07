@@ -5,12 +5,12 @@ from treeview_ui import *
 
 import sys
 
-class HitItem(object):
+class TreeItem(object):
 
-    def __init__(self, parent, a, row):
+    def __init__(self, parent, row, data):
         self.parent = parent
-        self.a = a
-        self._row = row
+        self.row_ = row
+        self.data_ = data
 
     def childCount(self):
         return 0
@@ -19,52 +19,47 @@ class HitItem(object):
         return 1
 
     def data(self):
-        return self.a
+        return self.data_
 
     def row(self):
-        return self._row
+        return self.row_
 
     def get_child(self, row):
-        assert False
+        assert False, "should be implmented"
+
+
+
+class HitItem(TreeItem):
+
+    def __init__(self, parent, row, a):
+        super(HitItem, self).__init__(parent, row, a)
 
 
 def fetch_hits(aaseq, parent):
-    return [HitItem(parent, h+"_"+aaseq, i) for i, h in enumerate("hit1 hit2 hit3".split())]
+    return [HitItem(parent, i, h+"_"+aaseq) for i, h in enumerate("hit1 hit2 hit3".split())]
 
 
-class AASeqItem(object):
 
-    def __init__(self, parent, seq, row):
-        self.parent = parent
-        self.seq = seq
-        self._row = row
+class AASeqItem(TreeItem):
+
+    def __init__(self, parent, row, seq):
+        super(AASeqItem, self).__init__(parent, row, seq)
         self.children = None
 
     def childCount(self):
-        print "childCount"
-        return len(fetch_hits(self.seq, self))
-
-    def columnCount(self):
-        return 1
-
-    def data(self):
-        return self.seq
-
-    def row(self):
-        return self._row
+        return len(fetch_hits(self.data_, self))
 
     def get_child(self, row):
-        print "get_child"
         if self.children is None:
-            self.children = fetch_hits(self.seq, self)
+            self.children = fetch_hits(self.data_, self)
         return self.children[row]
 
 
-class RootItem(object):
+class RootItem(TreeItem):
 
     def __init__(self):
-        self.parent = None
-        self.children = [AASeqItem(self, "abcdef"[i], i) for i in range(6)]
+        super(RootItem, self).__init__(None, 0, "")
+        self.children = [AASeqItem(self, i, "abcdef"[i]) for i in range(6)]
 
     def childCount(self):
         return len(self.children)
@@ -77,6 +72,9 @@ class RootItem(object):
 
     def row(self):
         return 0
+
+    def get_child(self, row):
+        return self.children[row]
 
 
 class TreeModel(QAbstractItemModel):
@@ -106,7 +104,6 @@ class TreeModel(QAbstractItemModel):
             child_item = self.root_item.children[row]
         else:
             parent_item = parent.internalPointer()
-            # should be aa seq !
             child_item = parent_item.get_child(row)
 
         return self.createIndex(row, column, child_item)
