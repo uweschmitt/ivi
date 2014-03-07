@@ -1,11 +1,11 @@
 #encoding: utf-8
 
 import pyopenms as oms
-from collections import namedtuple, defaultdict
+from collections import defaultdict
 import glob
 import os
 
-from compress_io import PyTablesWriter
+from compress_io import CompressedDataWriter, Hit
 from ..std_logger import logger
 
 from ..helpers import measure_time, format_bytes
@@ -23,28 +23,29 @@ def _find_mz_ml_files(root_dir):
     return rv
 
 
-Hit = namedtuple("Hit", "aa_sequence, base_name, mz, rt, score, is_higher_score_better")
-
-
 class Consumer(object):
 
     def __init__(self, writer, base_name, hits, rt_tolerance, mz_tolerance):
         self.writer = writer
         hits = [h for h in hits if h.base_name == base_name]
-        self.binned_hits = defaultdict(list)
-        for h in hits:
-            bin_id = int(h.rt / rt_tolerance)
-            #self.binned_hits[bin_id - 1].append(h)
-            self.binned_hits[bin_id].append(h)
-            #self.binned_hits[bin_id + 1].append(h)
-        self.imin = 0
-        self.imax = 0
         self.rt_tolerance = rt_tolerance
         self.mz_tolerance = mz_tolerance
+        self.binned_hits = defaultdict(list)
+        for h in hits:
+            bin_id = self._bin_id(h.rt)
+            self.binned_hits[bin_id].append(h)
+        self.imin = 0
+        self.imax = 0
         self.num_collected = 0
 
+    def _bin_id(self, rt):
+        return int(rt / self.rt_tolerance)
+
     def _hits_in_bins_for(self, rt):
-        bin_id = int(rt / self.rt_tolerance)
+        """ yields candidates for rt hits up to given tolerance """
+        # as a rt value might be next to a multiple of rt_tolerance we have to look up
+        # the neighbouring bins to:
+        bin_id = self._bin_id(rt)
         for h in self.binned_hits[bin_id - 1]:
             yield h
         for h in self.binned_hits[bin_id]:
@@ -117,7 +118,7 @@ class CollectHitsData(object):
             for ph in pep.getHits():
                 aa_sequence = ph.getSequence().toString()
                 score = ph.getScore()
-                hit = Hit(aa_sequence, base_name, mz, rt, score, is_higher_score_better)
+                hit = Hit(aa_sequence, base_name, mz, rt, score, is_higher_score_better, None)
                 hits.append(hit)
         return hits
 
@@ -126,8 +127,8 @@ class CollectHitsData(object):
             self._collect(out_file, mz_tolerance, rt_tolerance)
 
     def _collect(self, out_file, mz_tolerance, rt_tolerance):
+        writer = CompressedDataWriter(out_file)
         with measure_time("reading identifcations"):
-            writer = PyTablesWriter(out_file)
             fh = oms.PepXMLFile()
             prots, peps = [], []
             fh.load(self.pep_file, prots, peps)
@@ -153,6 +154,8 @@ class CollectHitsData(object):
         logger.info("size of compressed file: %s" % (format_bytes(final_bytes)))
         factor = self.summed_sizes / final_bytes
         logger.info("compression factor is %.1f" % factor)
+
+        writer.close()
 
 
 if __name__ == "__main__":

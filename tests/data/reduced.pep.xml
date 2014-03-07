@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <msms_pipeline_analysis date="2007-12-05T17:49:46" xmlns="http://regis-web.systemsbiology.net/pepXML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://regis-web.systemsbiology.net/pepXML http://www.matrixscience.com/xmlns/schema/pepXML_v18/pepXML_v18.xsd" summary_xml=".xml">
-<msms_run_summary base_name="reduced.pep.xml" raw_data_type="raw" raw_data=".mzXML" search_engine="X! Tandem (k-score)">
+<msms_run_summary base_name="reduced~000.mzML" raw_data_type="raw" raw_data=".mzXML" search_engine="X! Tandem (k-score)">
 <sample_enzyme name="trypsin">
 <specificity cut="KR" no_cut="P" sense="C"/>
 </sample_enzyme>
-<search_summary base_name="reduced.pep.xml" search_engine="X! Tandem (k-score)" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="" out_data="" search_id="1">
+<search_summary base_name="reduced~000.mzML" search_engine="X! Tandem (k-score)" precursor_mass_type="monoisotopic" fragment_mass_type="monoisotopic" out_data_type="" out_data="" search_id="1">
 		<search_database local_path="/cluster/scratch_xl/shareholder/imsb_ra/datasets/PERSONAL_DB-MALARS-DDB_167-20130905113927/ddb_167.fasta" type="AA"/>
     </search_summary>
     <analysis_timestamp analysis="peptideprophet" time="2007-12-05T17:49:52" id="1"/>

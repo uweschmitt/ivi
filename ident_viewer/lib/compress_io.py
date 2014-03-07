@@ -1,4 +1,5 @@
-from collections import defaultdict
+from collections import defaultdict, namedtuple
+import pyopenms as oms
 
 from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col,
                     Int16Col, Int8Col, open_file, Filters, Float32Atom, Float64Col, BoolCol)
@@ -7,13 +8,26 @@ from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col,
 def invert_dict(d):
     return dict((v, k) for (k, v) in d.items())
 
+def invert_non_injective_dict(d):
+    inv_dict = defaultdict(list)
+    for k, v in d.iteritems():
+        inv_dict[v].append(k)
+    return inv_dict
+
+
+Hit = namedtuple("Hit", "aa_sequence, base_name, mz, rt, score, is_higher_score_better, spec_id")
+
 
 CHUNKLEN = 32
 
 
-class PyTablesAccessor(object):
+class CompressedDataWriter(object):
 
     class AASequence(IsDescription):
+
+        """ pytables has no variable length string arrays, so we split strings into segments
+            of size CHUNKLEN indexed by segment_id
+        """
 
         aa_seq_id = Int64Col()
         segment_id = Int8Col()
@@ -21,11 +35,19 @@ class PyTablesAccessor(object):
 
     class BaseName(IsDescription):
 
+        """ pytables has no variable length string arrays, so we split strings into segments
+            of size CHUNKLEN indexed by segment_id
+        """
+
         base_name_id = Int16Col()
         segment_id = Int8Col()
         segment = StringCol(CHUNKLEN)
 
     class Spectrum(IsDescription):
+
+        """ we keep all peaks in one huge peaks_array of size (N, 2).
+            this table references a spectrum with id 'spec_id' to peaks_array[i_low:ihigh, :]
+        """
 
         spec_id = Int64Col()
         i_low = UInt64Col()
@@ -43,8 +65,6 @@ class PyTablesAccessor(object):
         is_higher_score_better = BoolCol()
 
 
-class PyTablesWriter(PyTablesAccessor):
-
     def __init__(self, path):
         self.path = path
         self.file_ = open_file(path, mode="w")
@@ -59,6 +79,7 @@ class PyTablesWriter(PyTablesAccessor):
                                                          "AASequences",
                                                          filters=filters)
 
+        """ pytables has no variable length string arrays, so we split strings into chunks """
         self.base_name_table = self.file_.create_table(group,
                                                        'base_names',
                                                        self.BaseName,
@@ -92,6 +113,7 @@ class PyTablesWriter(PyTablesAccessor):
 
     @staticmethod
     def add_string(table, id_col, id_, string):
+        """ pytables has no variable length string arrays, so we split strings into chunks """
         row = table.row
         for i, imin in enumerate(xrange(0, len(string), CHUNKLEN)):
             segment = string[imin:imin + CHUNKLEN]
@@ -101,14 +123,14 @@ class PyTablesWriter(PyTablesAccessor):
             row.append()
 
     def add_aa_sequence(self, id_, sequence):
-        PyTablesWriter.add_string(self.aa_sequence_table, "aa_seq_id", id_, sequence)
+        CompressedDataWriter.add_string(self.aa_sequence_table, "aa_seq_id", id_, sequence)
         self.aa_sequence_to_id[sequence] = id_
 
     def finish_writing_aa_sequences(self):
         self.aa_sequence_table.flush()
 
     def add_base_name(self, id_, name):
-        PyTablesWriter.add_string(self.base_name_table, "base_name_id", id_, name)
+        CompressedDataWriter.add_string(self.base_name_table, "base_name_id", id_, name)
         self.base_name_to_id[name] = id_
 
     def finish_writing_base_names(self):
@@ -162,53 +184,77 @@ class PyTablesWriter(PyTablesAccessor):
         self.spectrum_table.cols.spec_id.create_index()
         self.spectrum_table.close()
         self.hit_data_table.cols.hit_id.create_index()
+        self.hit_data_table.cols.aa_seq_id.create_index()
         self.hit_data_table.close()
         self.peaks_array.close()
         self.file_.close()
 
 
-def fetch_spectrum(spec_table, peaks_array, id_):
-    rows = spec_table.where("spec_id == %d" % id_)
-    for row in rows:
-        i_low = row["i_low"]
-        i_high = row["i_high"]
-        spec = peaks_array[i_low:i_high, :]
-        return spec
+class CompressedDataReader(object):
 
+    def __init__(self, path):
+        self.file_ = open_file(path, mode="r")
 
-def assemble_strings(table, id_col):
-    collected = defaultdict(list)
-    for row in table.iterrows():
-        id_ = row[id_col]
-        segment_id = row["segment_id"]
-        segment = row["segment"]
-        collected[id_].append((segment_id, segment))
+        # shortcuts
+        self.spec_table = self.file_.root.hits.spectra
+        self.peaks_array = self.file_.root.hits.peaks_array
+        self.base_name_table = self.file_.root.hits.base_names
+        self.aa_sequence_table = self.file_.root.hits.aa_sequences
+        self.hit_data_table = self.file_.root.hits.hit_data
 
-    result = dict()
-    for id_, segments in collected.iteritems():
-        segments.sort()  # sorts by segment_id
-        full_str = "".join(s for (segment_id, s) in segments)
-        result[id_] = full_str
+        self._read_base_names()
+        self._read_aa_sequences()
 
-    return result
+    @staticmethod
+    def fetch_strings(table, id_col):
+        collected_segments = defaultdict(list)
+        for row in table.iterrows():
+            id_ = row[id_col]
+            segment_id = row["segment_id"]
+            segment = row["segment"]
+            collected_segments[id_].append((segment_id, segment))
 
+        strings = dict()
+        for id_, segments in collected_segments.iteritems():
+            segments.sort()  # sorts by segment_id
+            full_str = "".join(s for (segment_id, s) in segments)
+            strings[id_] = full_str
 
-def fetch_hit(hit_id, hit_data_table, spec_table, peaks_array, base_names):
-    rows = hit_data_table.where("hit_id == %d" % hit_id)
-    for row in rows:
-        mz = row["mz"]
-        rt = row["rt"]
-        spec_id = row["spec_id"]
-        base_name_id = row["base_name_id"]
-        spec = fetch_spectrum(spec_table, peaks_array, spec_id)
-        base_name = base_names[base_name_id]
-        return mz, rt, base_name, spec
+        return strings
 
+    def _read_base_names(self):
+        self.id_to_base_name = CompressedDataReader.fetch_strings(self.base_name_table, "base_name_id")
 
-def fetch_hits(aa_seq, aa_sequence_to_hit_ids, hit_data_table, spec_table, peaks_array,
-               base_names):
-    hit_ids = aa_sequence_to_hit_ids[aa_seq]
-    for hit_id in hit_ids:
-        mz, rt, base_name, spec = fetch_hit(hit_id, hit_data_table, spec_table, peaks_array,
-                                            base_names)
-        yield aa_seq, hit_id, mz, rt, base_name, spec.shape
+    def _read_aa_sequences(self):
+        self.id_to_aa_sequence = CompressedDataReader.fetch_strings(self.aa_sequence_table, "aa_seq_id")
+        self.aa_sequence_to_id = invert_dict(self.id_to_aa_sequence)
+
+    def get_aa_sequences(self):
+        return self.id_to_aa_sequence.values()
+
+    def get_hits_for_aa_sequence(self, aa_sequence):
+        hits = []
+        aa_seq_id = self.aa_sequence_to_id.get(aa_sequence)
+        if aa_seq_id is None:
+            return hits
+        rows = self.hit_data_table.where("aa_seq_id == %d" % aa_seq_id)
+        for row in rows:
+            base_name = self.id_to_base_name.get(row["base_name_id"])
+            hit = Hit(aa_sequence, base_name, row["mz"], row["rt"], row["score"],
+                      row["is_higher_score_better"], row["spec_id"])
+            hits.append(hit)
+        return hits
+
+    def fetch_spectrum(self, hit):
+        rows = self.spec_table.where("spec_id == %d" % hit.spec_id)
+        for row in rows:
+            i_low = row["i_low"]
+            i_high = row["i_high"]
+            peaks = self.peaks_array[i_low:i_high, :]
+            spec = oms.MSSpectrum()
+            spec.set_peaks(peaks)
+            spec.setRT(hit.rt)
+            precursor = oms.Precursor()
+            precursor.setMZ(hit.mz)
+            spec.setPrecursors([precursor])
+            return spec
