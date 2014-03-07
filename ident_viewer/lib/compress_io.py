@@ -1,7 +1,7 @@
 from collections import defaultdict, namedtuple
 import pyopenms as oms
 
-from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col,
+from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, Float64Atom,
                     Int16Col, Int8Col, open_file, Filters, Float32Atom, Float64Col, BoolCol)
 
 
@@ -57,13 +57,12 @@ class CompressedDataWriter(object):
 
         hit_id = Int64Col()
         base_name_id = Int16Col()
-        mz = Float32Col()
+        mz = Float64Col()
         rt = Float32Col()
         spec_id = Int64Col()
         aa_seq_id = Int64Col()
         score = Float64Col()
         is_higher_score_better = BoolCol()
-
 
     def __init__(self, path):
         self.path = path
@@ -100,7 +99,7 @@ class CompressedDataWriter(object):
 
         self.peaks_array = self.file_.create_earray(group,
                                                     'peaks_array',
-                                                    Float32Atom(),
+                                                    Float64Atom(),
                                                     (0, 2),
                                                     filters=filters,)
 
