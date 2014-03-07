@@ -1,6 +1,7 @@
 import pdb
 import tables
 import numpy
+import random
 
 class MS1Peak(tables.IsDescription):
     rt = tables.Float32Col()
@@ -21,10 +22,13 @@ peak = table.row
 
 for rt in range(1000):
     for ii in range(1000):
-        peak["rt"] = rt
-        peak["mz"] = ii
-        peak["intensity"] = ii 
+        peak["rt"] = random.random()
+        peak["mz"] = random.random()
+        peak["intensity"] = random.random()
         peak.append()
 
 table.cols.rt.create_csindex()
+table.flush()
+
+h5file.close()
 

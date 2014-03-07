@@ -23,7 +23,8 @@ class TreeItem(object):
         return 1
 
     def data(self, column):
-        return self.data[column]
+        assert column == 0
+        return self.data
 
     def row(self):
         if self.parent:
@@ -35,15 +36,15 @@ class TreeModel(QAbstractItemModel):
 
     def __init__(self, parent=None):
         super(TreeModel, self).__init__(parent)
-        self.root_item = TreeItem(["root", "test"])
+        self.root_item = TreeItem("root")
         for i in range(10):
-            child = TreeItem(["aas %d" % i])
+            child = TreeItem("aas %d" % i)
             self.root_item.addChild(child)
             for j in range(20):
-                sub = TreeItem(["sub %d of %d" % (j, i)])
+                sub = TreeItem("sub %d of %d" % (j, i))
                 child.addChild(sub)
                 for k in range(20):
-                    sub2 = TreeItem(["sub %d of %d and %d" % (k, j, i)])
+                    sub2 = TreeItem("sub %d of %d and %d" % (k, j, i))
                     sub.addChild(sub2)
 
 
@@ -54,7 +55,7 @@ class TreeModel(QAbstractItemModel):
             return QVariant()
 
         item = index.internalPointer()
-        return item.data[index.column()]
+        return item.data #  [index.column()]
 
     def flags(self, index):
         if not index.isValid():
