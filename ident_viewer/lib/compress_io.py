@@ -74,43 +74,42 @@ class CompressedDataWriter(object):
     def __init__(self, path):
         self.path = path
         self.file_ = open_file(path, mode="w")
-
-        group = self.file_.create_group("/", 'hits', 'peptide hits')
+        self.root = self.file_.root
 
         filters = Filters(complib='blosc', complevel=9)
 
-        self.aa_sequence_table = self.file_.create_table(group,
+        self.aa_sequence_table = self.file_.create_table(self.root,
                                                          'aa_sequences',
                                                          self.AASequence,
                                                          "AASequences",
                                                          filters=filters)
 
-        self.hit_counts_table = self.file_.create_table(group,
+        self.hit_counts_table = self.file_.create_table(self.root,
                                                         'hit_counts',
                                                         self.HitsPerAASequenceCounter,
                                                         "HitsPerAASequenceCounter",
                                                         filters=filters)
 
         """ pytables has no variable length string arrays, so we split strings into chunks """
-        self.base_name_table = self.file_.create_table(group,
+        self.base_name_table = self.file_.create_table(self.root,
                                                        'base_names',
                                                        self.BaseName,
                                                        "BaseNames",
                                                        filters=filters)
 
-        self.spectrum_table = self.file_.create_table(group,
+        self.spectrum_table = self.file_.create_table(self.root,
                                                       'spectra',
                                                       self.Spectrum,
                                                       "Spectra",
                                                       filters=filters)
 
-        self.hit_data_table = self.file_.create_table(group,
+        self.hit_data_table = self.file_.create_table(self.root,
                                                       "hit_data",
                                                       self.HitData,
                                                       "HitData",
                                                       filters=filters)
 
-        self.peaks_array = self.file_.create_earray(group,
+        self.peaks_array = self.file_.create_earray(self.root,
                                                     'peaks_array',
                                                     Float64Atom(),
                                                     (0, 2),
@@ -220,12 +219,12 @@ class CompressedDataReader(object):
         self.file_ = open_file(path, mode="r")
 
         # shortcuts
-        self.spec_table = self.file_.root.hits.spectra
-        self.peaks_array = self.file_.root.hits.peaks_array
-        self.base_name_table = self.file_.root.hits.base_names
-        self.aa_sequence_table = self.file_.root.hits.aa_sequences
-        self.hit_data_table = self.file_.root.hits.hit_data
-        self.hit_counts_table = self.file_.root.hits.hit_counts
+        self.spec_table = self.file_.root.spectra
+        self.peaks_array = self.file_.root.peaks_array
+        self.base_name_table = self.file_.root.base_names
+        self.aa_sequence_table = self.file_.root.aa_sequences
+        self.hit_data_table = self.file_.root.hit_data
+        self.hit_counts_table = self.file_.root.hit_counts
 
         self._read_base_names()
         self._read_aa_sequences()
