@@ -36,11 +36,12 @@ def test_0(data_path, tmpdir):
     assert hit.mz is not None
     assert hit.rt is not None
     assert hit.is_higher_score_better is True
-    assert hit.spec_id == 0
 
-    spec = reader.fetch_spectrum(hit)
-    assert spec.getRT() == hit.rt
-    assert spec.getPrecursors()[0].getMZ() == hit.mz
-    assert spec.size() == 425
+    spectra = list(reader.fetch_spectra(hit))
+    assert len(spectra) == 1
+    spectrum = spectra[0]
+    assert spectrum.getRT() == hit.rt
+    assert spectrum.getPrecursors()[0].getMZ() == hit.mz
+    assert spectrum.size() == 425
     # check if not alls peaks are zero:
-    assert spec.get_peaks().sum() > 0
+    assert spectrum.get_peaks().sum() > 0

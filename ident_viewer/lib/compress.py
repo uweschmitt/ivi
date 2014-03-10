@@ -64,8 +64,10 @@ class Consumer(object):
                     if abs(hit.mz - mz) / mz <= self.mz_tolerance * 1e-6:
                         matched_hits.append(hit)
             if matched_hits:
-                self.writer.add_spec_with_hits(spec, matched_hits)
-                self.num_collected += 1
+                spec_id = self.writer.add_spectrum(spec)
+                for hit in matched_hits:
+                    self.writer.link_spec_with_hit(spec_id, hit.id_)
+                    self.num_collected += 1
 
     def consumeChromatogram(self, chromo):
         pass
@@ -106,6 +108,7 @@ class CollectHitsData(object):
     def _extract_hits(self, peps):
 
         hits = []
+        hit_id = 0
         for pep in peps:
             li = []
             pep.getKeys(li)
@@ -118,13 +121,15 @@ class CollectHitsData(object):
             for ph in pep.getHits():
                 aa_sequence = ph.getSequence().toString()
                 score = ph.getScore()
-                hit = Hit(aa_sequence, base_name, mz, rt, score, is_higher_score_better, None)
+                hit = Hit(hit_id, aa_sequence, base_name, mz, rt, score, is_higher_score_better)
+                hit_id += 1
                 hits.append(hit)
         return hits
 
     def collect(self, out_file, mz_tolerance=20.0, rt_tolerance=5.0):
         with measure_time("collecting and compressing data for visualisation"):
             self._collect(out_file, mz_tolerance, rt_tolerance)
+
 
     def _collect(self, out_file, mz_tolerance, rt_tolerance):
         writer = CompressedDataWriter(out_file)
@@ -137,10 +142,8 @@ class CollectHitsData(object):
         hits = self._extract_hits(peps)
         logger.info("extracted %d peptide hits" % len(hits))
 
-        writer.add_aa_sequences(hits)   #set(h.aa_sequence for h in hits))
-        logger.info("wrote aa sequences")
-        writer.add_base_names(set(h.base_name for h in hits))
-        logger.info("wrote base names")
+        writer.add_hits(hits)
+        logger.info("wrote hits")
 
         for base_name, path in self.peak_map_files.items():
             with measure_time("fetching peaks from %s" % path):
