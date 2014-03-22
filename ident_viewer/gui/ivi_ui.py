@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ivi.ui'
 #
-# Created: Thu Feb 27 10:30:29 2014
+# Created: Mon Mar 10 11:09:39 2014
 #      by: PyQt4 UI code generator 4.9.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
         self.splitter = QtGui.QSplitter(self.centralwidget)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
         self.splitter.setObjectName(_fromUtf8("splitter"))
-        self.peptide_hits = QtGui.QTableView(self.splitter)
+        self.peptide_hits = QtGui.QTreeView(self.splitter)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -34,9 +34,7 @@ class Ui_MainWindow(object):
         self.peptide_hits.setAlternatingRowColors(False)
         self.peptide_hits.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
         self.peptide_hits.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
-        self.peptide_hits.setSortingEnabled(True)
         self.peptide_hits.setObjectName(_fromUtf8("peptide_hits"))
-        self.peptide_hits.horizontalHeader().setStretchLastSection(True)
         self.spectrum_plotter = SpectrumPlotter(self.splitter)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(2)

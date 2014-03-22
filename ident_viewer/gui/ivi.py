@@ -1,52 +1,47 @@
+import pdb
 from PyQt4 import QtGui, QtCore
 from ivi_ui import MainWindow
 from preferences_dialog import PreferencesDialog
 
-from peptide_hit_model import PeptideHitModel
+# from peptide_hit_model import PeptideHitModel
+
+from tree_model import TreeModel
 
 from ..lib import default_preferences
 
 
 class IdentViewer(MainWindow):
 
-    def __init__(self, peptide_identifications, protein_identifications, *peakmaps):
+    def __init__(self, reader):
         super(IdentViewer, self).__init__()
-
-        self.peptide_identifications = peptide_identifications
-        self.protein_identifications = protein_identifications
-        self.peakmaps = peakmaps
-
-
+        # todo: path -> reader
+        # todo: load other .ivi file 
+        self.reader = reader
         self.setup()
         self.connect_signals()
 
     def setup(self):
+        """
         self.peptide_hit_model = PeptideHitModel(self,
                                                  self.peakmaps,
                                                  self.peptide_identifications,
                                                  self.protein_identifications)
+        """
 
         self.preferences = default_preferences()
-        self.peptide_hits.setModel(self.peptide_hit_model)
-        self.peptide_hit_model.set_preferences(self.preferences)
-        self.setup_table_view_size()
+        self.setup_tree_view_size()
 
-    def setup_table_view_size(self):
+        self.tree_model = TreeModel(self.reader)
+        self.tree_model.set_preferences(self.preferences)
+        self.peptide_hits.setModel(self.tree_model)
 
-        ph = self.peptide_hits
-        # set table with so that full content fits
-        vwidth = ph.verticalHeader().width()
-        hwidth = ph.horizontalHeader().length()
-        swidth = ph.style().pixelMetric(QtGui.QStyle.PM_ScrollBarExtent)
-        fwidth = ph.frameWidth() * 2
-        self.peptide_hits.setMinimumWidth(vwidth + hwidth + swidth + fwidth + 10)
-        self.peptide_hits.setMaximumWidth(vwidth + hwidth + swidth + fwidth + 300)
+    def setup_tree_view_size(self):
+        self.peptide_hits.setMinimumWidth(400)
 
     def connect_signals(self):
-        self.peptide_hits.verticalHeader().sectionClicked.connect(self.row_chosen)
-        self.peptide_hits.verticalHeader().sectionClicked.connect(self.peptide_hit_model.select)
-        self.peptide_hit_model.peptideSelected.connect(self.spectrum_plotter.plot_hit)
-
+        #self.peptide_hits.verticalHeader().sectionClicked.connect(self.row_chosen)
+        #self.peptide_hits.verticalHeader().sectionClicked.connect(self.tree_model.select)
+        #self.tree_model.peptideSelected.connect(self.spectrum_plotter.plot_hit)
         self.action_preferences.triggered.connect(self.edit_preferences)
         self.action_open_file.triggered.connect(self.open_file)
 
@@ -58,7 +53,7 @@ class IdentViewer(MainWindow):
         closed_as = dlg.exec_()
         if closed_as == QtGui.QDialog.Accepted:
             self.preferences = dlg.get_preferences()
-            self.peptide_hit_model.set_preferences(self.preferences)
+            self.tree_model.set_preferences(self.preferences)
 
     def open_file(self):
         pass

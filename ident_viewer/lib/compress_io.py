@@ -146,6 +146,7 @@ class CompressedDataWriter(object):
             row['segment_id'] = i
             row['segment'] = segment
             row.append()
+        table.flush()
 
     def add_aa_sequence(self, id_, sequence):
         CompressedDataWriter.add_string(self.aa_sequence_table, "aa_seq_id", id_, sequence)
@@ -183,6 +184,7 @@ class CompressedDataWriter(object):
         self.finish_writing_base_names()
 
     def _add_hit(self, hit):
+        aa_seq_id = self.aa_sequence_to_id[hit.aa_sequence]
         row = self.hit_data_table.row
         row["hit_id"] = hit.id_
         row["base_name_id"] = self.base_name_to_id[hit.base_name]
@@ -223,16 +225,28 @@ class CompressedDataWriter(object):
         row.append()
 
     def close(self):
+        self.aa_sequence_table.flush()
         self.aa_sequence_table.close()
+
+        self.spectrum_table.flush()
         self.spectrum_table.cols.spec_id.create_index()
+        self.spectrum_table.flush()
         self.spectrum_table.close()
+
+        self.hit_data_table.flush()
         self.hit_data_table.cols.hit_id.create_index()
         self.hit_data_table.cols.aa_seq_id.create_index()
         self.hit_data_table.close()
+
+        self.hit_spectrum_link_table.flush()
         self.hit_spectrum_link_table.cols.hit_id.create_index()
         self.hit_spectrum_link_table.cols.spec_id.create_index()
+        self.hit_spectrum_link_table.flush()
         self.hit_spectrum_link_table.close()
+
+        self.peaks_array.flush()
         self.peaks_array.close()
+
         self.file_.close()
 
 
@@ -293,17 +307,17 @@ class CompressedDataReader(object):
 
         hits = []
         aa_seq_id = self.aa_sequence_to_id.get(aa_sequence)
-        if aa_seq_id is None:
-            return hits
         rows = self.hit_data_table.where("aa_seq_id == %d" % aa_seq_id)
-        matched_basenames = set()
         for row in rows:
             base_name = self.id_to_base_name.get(row["base_name_id"])
-            matched_basenames.add(base_name)
             hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["score"],
                       row["is_higher_score_better"])
             hits.append(hit)
         return hits
+
+    def count_spectra_for(self, hit):
+        rows = self.hit_spectrum_link_table.where("hit_id == %d" % hit.id_)
+        return len(list(rows))
 
     def fetch_spectra(self, hit):
         rows0 = self.hit_spectrum_link_table.where("hit_id == %d" % hit.id_)
@@ -324,6 +338,6 @@ class CompressedDataReader(object):
 
 if __name__ == "__main__":
     r = CompressedDataReader("/data/dose_minimized/collected.ivi")
-    aaseq = "TGSTPMVGAIAVWNDGGYGHVAVVVEVQSASSIRVMESNYSGR"
+    aaseq = "YYVPDTFLLQR"
     print r.get_number_of_hits_for(aaseq)
     print r.get_hits_for_aa_sequence(aaseq)
