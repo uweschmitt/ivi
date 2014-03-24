@@ -1,9 +1,11 @@
-import pdb
 from collections import defaultdict, namedtuple, Counter
 import pyopenms as oms
 
 from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, Float64Atom,
-                    Int16Col, Int8Col, open_file, Filters, Float32Atom, Float64Col, BoolCol)
+                    Int16Col, Int8Col, open_file, Filters, Float16Atom, Float32Atom, Float64Col,
+                    BoolCol)
+
+import numpy as np
 
 
 def invert_dict(d):
@@ -53,13 +55,27 @@ class CompressedDataWriter(object):
 
     class Spectrum(IsDescription):
 
-        """ we keep all peaks in one huge peaks_array of size (N, 2).
-            this table references a spectrum with id 'spec_id' to peaks_array[i_low:ihigh, :]
+        """ we keep all peaks in two huge arrays for mz and intensities.
+            this table references a spectrum with id 'spec_id' to mz[i_low:ihigh, :]
+            and intensity[i_low:i_high, :]
         """
 
         spec_id = Int64Col()
         i_low = UInt64Col()
         i_high = UInt64Col()
+
+    class ConvexHull(IsDescription):
+
+        convex_hull_id = Int64Col()
+        rt_min = Float32Col()
+        rt_max = Float32Col()
+        mz_min = Float32Col()
+        mz_max = Float32Col()
+
+    class HitConvexHullLink(IsDescription):
+
+        hit_id = Int64Col()
+        convex_hull_id = Int64Col()
 
     class HitData(IsDescription):
 
@@ -112,6 +128,18 @@ class CompressedDataWriter(object):
                                                       "Spectra",
                                                       filters=filters)
 
+        self.convex_hull_table = self.file_.create_table(self.root,
+                                                      'convex_hulls',
+                                                      self.ConvexHull,
+                                                      "ConvexHulls",
+                                                      filters=filters)
+
+        self.hit_convex_hull_link_table = self.file_.create_table(self.root,
+                                                                'hit_convex_hulls_links',
+                                                                self.HitConvexHullLink,
+                                                                "HitConvexHullLink",
+                                                                filters=filters)
+
         self.hit_data_table = self.file_.create_table(self.root,
                                                       "hit_data",
                                                       self.HitData,
@@ -121,13 +149,19 @@ class CompressedDataWriter(object):
         self.hit_spectrum_link_table = self.file_.create_table(self.root,
                                                                "hit_spectrum_links",
                                                                self.HitSpectrumLink,
-                                                               "HitSpectrumLink",
+                                                               "HitSpectrumLinks",
                                                                filters=filters)
 
-        self.peaks_array = self.file_.create_earray(self.root,
-                                                    'peaks_array',
+        self.mz_array = self.file_.create_earray(self.root,
+                                                    'mzs',
                                                     Float64Atom(),
-                                                    (0, 2),
+                                                    (0,),
+                                                    filters=filters,)
+
+        self.intensity_array = self.file_.create_earray(self.root,
+                                                    'intensities',
+                                                    Float16Atom(),
+                                                    (0,),
                                                     filters=filters,)
 
         self.base_name_to_id = dict()
@@ -135,6 +169,7 @@ class CompressedDataWriter(object):
         self.peak_imin = 0
         self.peak_imax = 0
         self.spec_id = 0
+        self.convex_hull_id = 0
 
     @staticmethod
     def add_string(table, id_col, id_, string):
@@ -204,9 +239,10 @@ class CompressedDataWriter(object):
             self._add_hit(hit)
 
     def add_spectrum(self, spec):
-        peaks = spec.get_peaks()
-        self.peaks_array.append(peaks)
-        self.peak_imax += peaks.shape[0]
+        mzs, intensities = spec.get_peaks()
+        self.mz_array.append(mzs)
+        self.intensity_array.append(intensities)
+        self.peak_imax += mzs.shape[0]
         # register peaks
         row = self.spectrum_table.row
         row["spec_id"] = self.spec_id
@@ -222,6 +258,28 @@ class CompressedDataWriter(object):
         row = self.hit_spectrum_link_table.row
         row["spec_id"] = spec_id
         row["hit_id"] = hit_id
+        row.append()
+
+    def add_convex_hull(self, hull):
+        assert isinstance(hull, np.ndarray)
+        assert hull.shape == (4, 2)   # 4 points, 2 coordinates
+        rt_min, mz_min = hull.min(axis=0)
+        rt_max, mz_max = hull.max(axis=0)
+        row = self.convex_hull_table.row
+        row["convex_hull_id"] = self.convex_hull_id
+        row["rt_min"] = rt_min
+        row["rt_max"] = rt_max
+        row["mz_min"] = mz_min
+        row["mz_max"] = mz_max
+        row.append()
+        last_hull_id = self.convex_hull_id
+        self.convex_hull_id += 1
+        return last_hull_id
+
+    def link_convex_hull_with_hit(self, hull_id, hit_id):
+        row = self.hit_convex_hull_link_table.row
+        row["hit_id"] = hit_id
+        row["convex_hull_id"] = hull_id
         row.append()
 
     def close(self):
@@ -244,8 +302,22 @@ class CompressedDataWriter(object):
         self.hit_spectrum_link_table.flush()
         self.hit_spectrum_link_table.close()
 
-        self.peaks_array.flush()
-        self.peaks_array.close()
+        self.convex_hull_table.flush()
+        self.convex_hull_table.cols.convex_hull_id.create_index()
+        self.convex_hull_table.flush()
+        self.convex_hull_table.close()
+
+        self.hit_convex_hull_link_table.flush()
+        self.hit_convex_hull_link_table.cols.hit_id.create_index()
+        self.hit_convex_hull_link_table.cols.convex_hull_id.create_index()
+        self.hit_convex_hull_link_table.flush()
+        self.hit_convex_hull_link_table.close()
+
+        self.mz_array.flush()
+        self.mz_array.close()
+
+        self.intensity_array.flush()
+        self.intensity_array.close()
 
         self.file_.close()
 
@@ -257,12 +329,15 @@ class CompressedDataReader(object):
 
         # shortcuts
         self.spectrum_table = self.file_.root.spectra
-        self.peaks_array = self.file_.root.peaks_array
+        self.mz_array = self.file_.root.mzs
+        self.intensity_array = self.file_.root.intensities
         self.base_name_table = self.file_.root.base_names
         self.aa_sequence_table = self.file_.root.aa_sequences
+        self.convex_hull_table = self.file_.root.convex_hulls
         self.hit_data_table = self.file_.root.hit_data
         self.hit_counts_table = self.file_.root.hit_counts
         self.hit_spectrum_link_table = self.file_.root.hit_spectrum_links
+        self.hit_convex_hull_link_table = self.file_.root.hit_convex_hulls_links
 
         self._read_base_names()
         self._read_aa_sequences()
@@ -327,14 +402,27 @@ class CompressedDataReader(object):
             for row1 in rows1:
                 i_low = row1["i_low"]
                 i_high = row1["i_high"]
-                peaks = self.peaks_array[i_low:i_high, :]
+                mzs = self.mz_array[i_low:i_high]
+                intensities = self.intensity_array[i_low:i_high]
                 spec = oms.MSSpectrum()
-                spec.set_peaks(peaks)
+                spec.set_peaks((mzs, intensities))
                 spec.setRT(hit.rt)
                 precursor = oms.Precursor()
                 precursor.setMZ(hit.mz)
                 spec.setPrecursors([precursor])
                 yield spec
+
+    def fetch_convex_hulls(self, hit):
+        rows0 = self.hit_convex_hull_link_table.where("hit_id == %d" % hit.id_)
+        for row0 in rows0:
+            hull_id = row0["convex_hull_id"]
+            rows = self.convex_hull_table.where("convex_hull_id == %d" % hull_id)
+            for row in rows:
+                rt_min = row["rt_min"]
+                rt_max = row["rt_max"]
+                mz_min = row["mz_min"]
+                mz_max = row["mz_max"]
+                yield rt_min, rt_max, mz_min, mz_max
 
 if __name__ == "__main__":
     r = CompressedDataReader("/data/dose_minimized/collected.ivi")

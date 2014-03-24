@@ -15,52 +15,68 @@ def _find_pep_xml_files(root_dir):
     return glob.glob(os.path.join(root_dir, "*", "*.pep.xml"))
 
 
-def _find_mz_ml_files(root_dir):
+def _find_xxx_files(root_dir, pattern):
     rv = dict()
-    for p in glob.glob(os.path.join(root_dir, "*", "*.mzML")):
+    for p in glob.glob(os.path.join(root_dir, "*", pattern)):
         base_name, __ = os.path.splitext(os.path.basename(p))
         rv[base_name] = p
     return rv
 
+
+def _find_mz_ml_files(root_dir):
+    return _find_xxx_files(root_dir, "*.mzML")
+
+
 def _find_mz_xml_files(root_dir):
-    rv = dict()
-    for p in glob.glob(os.path.join(root_dir, "*", "*.mzXML")):
-        base_name, __ = os.path.splitext(os.path.basename(p))
-        rv[base_name] = p
-    return rv
+    return _find_xxx_files(root_dir, "*.mzXML")
+
+
+def _find_feature_xml_files(root_dir):
+    return _find_xxx_files(root_dir, "*.featureXML")
+
+
+class HitFinder(object):
+
+    def __init__(self, rt_tolerance_s, mz_tolerance_ppm):
+        self.rt_tolerance_s = rt_tolerance_s
+        self.mz_tolerance_ppm = mz_tolerance_ppm
+        self.max_mz_tol_abs = 5000.0 * mz_tolerance_ppm * 1e-6
+        self.binned_hits = dict()
+
+    def add_hit(self, hit):
+        bin_id_rt, bin_id_mz = self._bin_id(hit.rt, hit.mz)
+        self.binned_hits.setdefault(bin_id_rt, dict()).setdefault(bin_id_mz, []).append(hit)
+
+    def _bin_id(self, rt, mz):
+        return int(rt / self.rt_tolerance_s), int(mz / self.max_mz_tol_abs)
+
+    def find_hits(self, rt, mz):
+        """ yields candidates for rt hits up to given tolerance """
+        # as a rt value might be next to a multiple of rt_tolerance we have to look up
+        # the neighbouring bins to:
+        bin_id_rt, bin_id_mz = self._bin_id(rt, mz)
+        for i in (-1, 0, 1):
+            sub_dict = self.binned_hits.get(bin_id_rt + i)
+            if sub_dict is None:
+                continue
+            for j in (-1, 0, 1):
+                for h in sub_dict.get(bin_id_mz + j, ()):
+                    if abs(h.rt - rt) <= self.rt_tolerance_s:
+                        if abs(h.mz - mz) / mz <= self.mz_tolerance_ppm * 1.0e-6:
+                            yield h
+
 
 class Consumer(object):
 
-    def __init__(self, writer, base_name, hits, rt_tolerance, mz_tolerance, matched_hit_ids):
+    def __init__(self, writer, hit_finder, matched_hit_ids):
         self.writer = writer
-        hits = [h for h in hits if h.base_name == base_name]
-        self.rt_tolerance = rt_tolerance
-        self.mz_tolerance = mz_tolerance
-        self.binned_hits = defaultdict(list)
-        for h in hits:
-            bin_id = self._bin_id(h.rt)
-            self.binned_hits[bin_id].append(h)
+        self.hit_finder = hit_finder
         self.imin = 0
         self.imax = 0
         self.num_collected = 0
         self.matched_hit_ids = matched_hit_ids
         self.min_rt = None
         self.max_rt = None
-
-    def _bin_id(self, rt):
-        return int(rt / self.rt_tolerance)
-
-    def _hits_in_bins_for(self, rt):
-        """ yields candidates for rt hits up to given tolerance """
-        # as a rt value might be next to a multiple of rt_tolerance we have to look up
-        # the neighbouring bins to:
-        bin_id = self._bin_id(rt)
-        for h in self.binned_hits[bin_id - 1]:
-            yield h
-        for h in self.binned_hits[bin_id]:
-            yield h
-        for h in self.binned_hits[bin_id + 1]:
-            yield h
 
     def consumeSpectrum(self, spec):
         if spec.getMSLevel() == 2:
@@ -73,11 +89,8 @@ class Consumer(object):
                 self.min_rt = min(self.min_rt, rt)
                 self.max_rt = max(self.max_rt, rt)
             mz = float(spec.getPrecursors()[0].getMZ())
-            for hit in self._hits_in_bins_for(rt):
-                if abs(hit.rt - rt) <= self.rt_tolerance:
-                    # mz_tolerance has unit ppm:
-                    if abs(hit.mz - mz) / mz <= self.mz_tolerance * 1e-6:
-                        matching_hits.append(hit)
+            for hit in self.hit_finder.find_hits(rt, mz):
+                matching_hits.append(hit)
             if matching_hits:
                 spec_id = self.writer.add_spectrum(spec)
                 for hit in matching_hits:
@@ -107,11 +120,13 @@ class CollectHitsData(object):
                                                                        path_root_dir))
 
         self.summed_sizes = 0
+        self.next_hit_id = 0
         self.pep_file = pep_files[0]
 
         self.summed_sizes += os.stat(self.pep_file).st_size
 
         logger.info("input pep.xml file is %s" % self.pep_file)
+
         self.peak_map_files = _find_mz_xml_files(path_root_dir)
         if self.peak_map_files:
             for f in self.peak_map_files.values():
@@ -121,10 +136,19 @@ class CollectHitsData(object):
             logger.error("found no peak map files below %s" % path_root_dir)
             raise Exception("no peak maps found below %s" % path_root_dir)
 
-    def _extract_hits(self, peps):
+        self.feature_map_files = _find_feature_xml_files(path_root_dir)
+        if self.feature_map_files:
+            for f in self.feature_map_files.values():
+                self.summed_sizes += os.stat(f).st_size
+                logger.info("found feature map file %s" % f)
+        else:
+            logger.error("found no feature map files below %s" % path_root_dir)
+            raise Exception("no feature maps found below %s" % path_root_dir)
+
+    def _extract_hits(self, peps, mz_tolerance_ppm, rt_tolerance_s):
 
         hits = []
-        hit_id = 0
+        hit_finders = defaultdict(lambda: HitFinder(rt_tolerance_s, mz_tolerance_ppm))
         for pep in peps:
             li = []
             pep.getKeys(li)
@@ -139,38 +163,100 @@ class CollectHitsData(object):
             for ph in pep.getHits():
                 aa_sequence = ph.getSequence().toString()
                 score = ph.getScore()
+                hit_id = self.next_hit_id
+                self.next_hit_id += 1
                 hit = Hit(hit_id, aa_sequence, base_name, mz, rt, score, is_higher_score_better)
-                hit_id += 1
                 hits.append(hit)
-        return hits
-
-    def collect(self, out_file, unmatched_hits_file, mz_tolerance=20.0, rt_tolerance=5.0):
-        with measure_time("collecting and compressing data for visualisation"):
-            self._collect(out_file, unmatched_hits_file, mz_tolerance, rt_tolerance)
-
-
-    def _collect(self, out_file, unmatched_hits_file, mz_tolerance, rt_tolerance):
-        writer = CompressedDataWriter(out_file)
-        with measure_time("reading identifcations"):
-            fh = oms.PepXMLFile()
-            prots, peps = [], []
-            s = oms.String()
-            e = oms.MSExperiment()
-            fh.load(self.pep_file, prots, peps, "", e, 1)     # use precursor data
-        logger.info("got %d protein and %d peptide identifications" % (len(prots), len(peps),))
-
-        hits = self._extract_hits(peps)
+                hit_finders[base_name].add_hit(hit)
         logger.info("extracted %d peptide hits" % len(hits))
+        return hits, hit_finders
+
+    def collect(self, out_file, unmatched_hits_file, mz_tolerance_ppm=20.0, rt_tolerance_s=5.0):
+        with measure_time("collecting and compressing data for visualisation"):
+            self._collect(out_file, unmatched_hits_file, mz_tolerance_ppm, rt_tolerance_s)
+
+    def _collect(self, out_file, unmatched_hits_file, mz_tolerance_ppm, rt_tolerance_s):
+        writer = CompressedDataWriter(out_file)
+
+        prots, peps = self._read_identifcations()
+
+        hits, hit_finders = self._extract_hits(peps, mz_tolerance_ppm, rt_tolerance_s)
 
         writer.add_hits(hits)
         logger.info("wrote hits")
 
-        matched_hit_ids = set()
+        self._match_and_write_features(hits, hit_finders, writer)
 
+        # todo:
+        # consumer for ms1 spectra
+        # visualisation
+
+        self._collect_ms2_spectra(hits, hit_finders, unmatched_hits_file, writer)
+
+        writer.close()
+
+        self._report_size_of_final_file(out_file)
+
+    def _read_identifcations(self):
+        prots, peps = [], []
+        with measure_time("reading identifcations"):
+            fh = oms.PepXMLFile()
+            e = oms.MSExperiment()
+            fh.load(self.pep_file, prots, peps, "", e, 1)     # use precursor data
+        logger.info("got %d protein and %d peptide identifications" % (len(prots), len(peps),))
+        return prots, peps
+
+    def _match_and_write_features(self, hits, hit_finders, writer):
+        for p in self.feature_map_files.values():
+            with measure_time("match features from %s" % p):
+                feature_map = oms.FeatureMap()
+                oms.FeatureXMLFile().load(p, feature_map)
+                base_file_name, __, __ = os.path.basename(p).partition("~")
+                base_name, __ = os.path.splitext(base_file_name)
+                hit_finder = hit_finders.get(base_name)
+                if hit_finder is None:
+                    logger.warn("no hits in .pep.xml for features in %s" % p)
+                    continue
+                for feature in feature_map:
+                    hull_points = [hull.getHullPoints() for hull in feature.getConvexHulls()]
+                    hull_ids = [writer.add_convex_hull(points) for points in hull_points]
+                    for pep_id in feature.getPeptideIdentifications():
+                        rt = pep_id.getMetaValue("RT")
+                        mz = pep_id.getMetaValue("MZ")
+                        is_higher_score_better = pep_id.isHigherScoreBetter()
+                        for oms_hit in pep_id.getHits():
+                            for hit in hit_finder.find_hits(rt, mz):
+                                if hit.aa_sequence == oms_hit.getSequence().toString():
+                                    break
+                            else:
+                                # create new hit
+                                hit_id = self.next_hit_id
+                                self.next_hit_id += 1
+                                aa_sequence = oms_hit.getSequence().toString()
+                                score = oms_hit.getScore()
+                                hit = Hit(hit_id, aa_sequence, base_name, mz, rt, score,
+                                          is_higher_score_better)
+                                hits.append(hit)
+                                writer.add_hits([hit])
+                            # write convex hull for this hit
+                            for hull_id in hull_ids:
+                                writer.link_convex_hull_with_hit(hull_id, hit.id_)
+
+    def _report_size_of_final_file(self, out_file):
+
+        final_bytes = os.stat(out_file).st_size
+        logger.info("target file %s written and closed" % out_file)
+        logger.info("size of all input files: %s" % (format_bytes(self.summed_sizes)))
+        logger.info("size of compressed file: %s" % (format_bytes(final_bytes)))
+        factor = self.summed_sizes / final_bytes
+        logger.info("compression factor is %.1f" % factor)
+
+    def _collect_ms2_spectra(self, hits, hit_finders, unmatched_hits_file, writer):
+        matched_hit_ids = set()
         for base_name, path in self.peak_map_files.items():
+            hit_finder = hit_finders[base_name]
             with measure_time("fetching peaks from %s" % path):
-                consumer = Consumer(writer, base_name, hits, rt_tolerance, mz_tolerance,
-                                    matched_hit_ids)
+                consumer = Consumer(writer, hit_finder, matched_hit_ids)
                 mzxml_file = oms.MzXMLFile()
                 mzxml_file.transform(path, consumer)
                 logger.info("rt range in this file is %.1f ... %.1f seconds" % (consumer.min_rt,
@@ -196,15 +282,6 @@ class CollectHitsData(object):
                 logger.info("wrote unmatched hits to %s" % unmatched_hits_file)
         else:
             logger.info("found ms2 spectrum for all hits")
-
-        final_bytes = os.stat(out_file).st_size
-        logger.info("target file %s written and closed" % out_file)
-        logger.info("size of all input files: %s" % (format_bytes(self.summed_sizes)))
-        logger.info("size of compressed file: %s" % (format_bytes(final_bytes)))
-        factor = self.summed_sizes / final_bytes
-        logger.info("compression factor is %.1f" % factor)
-
-        writer.close()
 
 
 if __name__ == "__main__":

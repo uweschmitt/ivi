@@ -1,0 +1,3884 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<featureMap version="1.6" xsi:noNamespaceSchemaLocation="http://open-ms.sourceforge.net/schemas/FeatureXML_1_6.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<IdentificationRun id="PI_0" date="2014-02-17T06:11:11" search_engine="X! Tandem (k-score)" search_engine_version="">
+		<SearchParameters db="/cluster/scratch_xl/shareholder/imsb_ra/datasets/PERSONAL_DB-MALARS-DDB_167-20130905113927/ddb_167.fasta" db_version="" taxonomy="" mass_type="monoisotopic" charges="" enzyme="trypsin" missed_cleavages="0" precursor_peak_tolerance="0" peak_mass_tolerance="0" >
+			<FixedModification name="C+57.0215" />
+			<VariableModification name="C-17.0265" />
+			<VariableModification name="E-18.0106" />
+			<VariableModification name="Q-17.0265" />
+			<VariableModification name="+42.0106" />
+		</SearchParameters>
+		<ProteinIdentification score_type="" higher_score_better="true" significance_threshold="0">
+			<ProteinHit id="PH_0" accession="ddb000324818" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1" accession="ddb000514982" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_2" accession="ddb000326565" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_3" accession="ddb000514830" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_4" accession="ddb000514851" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_5" accession="ddb000325072" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_6" accession="ddb000325999" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_7" accession="ddb000324827" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_8" accession="ddb000350748" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_9" accession="ddb000324985" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_10" accession="ddb000515146" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_11" accession="ddb000515409" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_12" accession="ddb000326211" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_13" accession="ddb000325290" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_14" accession="ddb000515686" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_15" accession="ddb000514848" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_16" accession="ddb000326200" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_17" accession="ddb000514907" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_18" accession="ddb000514909" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_19" accession="ddb000325124" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_20" accession="ddb000515076" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_21" accession="ddb000514908" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_22" accession="ddb000325496" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_23" accession="ddb000515056" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_24" accession="ddb000514844" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_25" accession="ddb000325029" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_26" accession="ddb000324832" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_27" accession="ddb000324816" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_28" accession="ddb000326331" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_29" accession="ddb002474543" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_30" accession="ddb000515252" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_31" accession="ddb000515549" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_32" accession="ddb000325813" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_33" accession="ddb000324822" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_34" accession="ddb000326326" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_35" accession="ddb000325356" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_36" accession="ddb018083465" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_37" accession="ddb000515275" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_38" accession="ddb000514840" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_39" accession="ddb000514859" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_40" accession="ddb000326589" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_41" accession="ddb000515215" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_42" accession="ddb000515038" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_43" accession="DECOY_ddb018083465" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_44" accession="ddb000324838" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_45" accession="ddb000514834" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_46" accession="ddb000515131" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_47" accession="ddb000350744" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_48" accession="ddb000515185" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_49" accession="ddb000515154" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_50" accession="DECOY_ddb000515500" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_51" accession="ddb000515519" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_52" accession="ddb000514838" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_53" accession="ddb000350754" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_54" accession="ddb000515194" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_55" accession="ddb000514941" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_56" accession="ddb000515170" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_57" accession="ddb000515514" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_58" accession="ddb000515825" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_59" accession="ddb018083340" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_60" accession="ddb000324734" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_61" accession="ddb000325215" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_62" accession="ddb000514893" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_63" accession="ddb000515099" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_64" accession="ddb000515161" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_65" accession="DECOY_ddb000514880" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_66" accession="ddb000325315" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_67" accession="ddb000515259" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_68" accession="ddb000326593" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_69" accession="ddb000325064" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_70" accession="ddb000326176" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_71" accession="ddb000324841" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_72" accession="ddb000515036" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_73" accession="ddb000324977" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_74" accession="ddb000515119" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_75" accession="ddb000515229" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_76" accession="ddb000515744" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_77" accession="ddb000515242" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_78" accession="ddb000514999" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_79" accession="ddb000644227" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_80" accession="ddb002474911" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_81" accession="ddb000515236" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_82" accession="ddb017981988" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_83" accession="ddb000515227" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_84" accession="ddb000515010" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_85" accession="ddb000515427" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_86" accession="ddb000520031" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_87" accession="ddb000515296" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_88" accession="ddb000326150" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_89" accession="ddb000515031" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_90" accession="ddb000515093" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_91" accession="ddb000515361" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_92" accession="ddb000326368" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_93" accession="ddb000515163" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_94" accession="ddb000350763" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_95" accession="ddb000515445" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_96" accession="ddb000515298" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_97" accession="ddb000325480" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_98" accession="ddb000326090" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_99" accession="ddb023629764" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_100" accession="ddb000515412" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_101" accession="ddb000325121" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_102" accession="ddb000325473" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_103" accession="ddb000520030" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_104" accession="ddb000325320" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_105" accession="ddb000514833" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_106" accession="ddb000514882" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_107" accession="ddb002134983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_108" accession="ddb000514906" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_109" accession="ddb000515083" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_110" accession="ddb000515124" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_111" accession="ddb000520036" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_112" accession="ddb000515474" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_113" accession="ddb000324955" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_114" accession="ddb000514916" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_115" accession="ddb000514926" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_116" accession="ddb000325357" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_117" accession="ddb000514902" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_118" accession="ddb000350761" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_119" accession="ddb000350747" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_120" accession="ddb000514829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_121" accession="ddb000515868" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_122" accession="ddb000325285" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_123" accession="ddb000514831" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_124" accession="ddb000515499" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_125" accession="ddb000515380" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_126" accession="DECOY_ddb000515250" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_127" accession="ddb000514877" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_128" accession="ddb000417288" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_129" accession="ddb000324983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_130" accession="ddb000325981" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_131" accession="ddb001709452" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_132" accession="DECOY_ddb000515693" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_133" accession="ddb000324830" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_134" accession="ddb000324821" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_135" accession="ddb000350743" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_136" accession="ddb000514949" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_137" accession="ddb000515381" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_138" accession="ddb000515072" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_139" accession="ddb000515675" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_140" accession="ddb023629817" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_141" accession="DECOY_ddb000515582" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_142" accession="ddb000515778" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_143" accession="ddb000325762" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_144" accession="ddb000515921" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_145" accession="ddb000514837" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_146" accession="ddb000515355" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_147" accession="ddb000515655" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_148" accession="ddb000324817" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_149" accession="ddb000326185" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_150" accession="ddb000514913" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_151" accession="ddb000515402" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_152" accession="ddb000326391" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_153" accession="ddb000325451" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_154" accession="ddb000325370" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_155" accession="ddb000326205" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_156" accession="ddb005342790" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_157" accession="ddb000325962" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_158" accession="ddb000514870" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_159" accession="ddb000324842" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_160" accession="ddb000326322" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_161" accession="ddb000514900" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_162" accession="DECOY_ddb000325635" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_163" accession="ddb000515167" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_164" accession="ddb000326466" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_165" accession="ddb000515585" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_166" accession="ddb000515084" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_167" accession="ddb000514835" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_168" accession="ddb000514983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_169" accession="ddb000515490" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_170" accession="ddb000325989" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_171" accession="ddb000324814" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_172" accession="ddb000515478" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_173" accession="ddb000514836" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_174" accession="ddb000515900" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_175" accession="ddb000515323" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_176" accession="ddb000515746" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_177" accession="ddb000515305" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_178" accession="ddb000514890" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_179" accession="ddb000515615" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_180" accession="ddb000343041" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_181" accession="ddb000515109" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_182" accession="ddb000515098" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_183" accession="ddb000325379" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_184" accession="ddb000514856" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_185" accession="ddb000515481" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_186" accession="ddb000325238" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_187" accession="ddb000515535" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_188" accession="ddb000515363" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_189" accession="ddb000344022" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_190" accession="ddb000325588" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_191" accession="ddb000520026" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_192" accession="ddb000350750" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_193" accession="ddb000514905" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_194" accession="ddb000326255" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_195" accession="ddb000515432" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_196" accession="DECOY_ddb000386423" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_197" accession="ddb000628937" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_198" accession="ddb000515028" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_199" accession="ddb000515506" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_200" accession="ddb000325386" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_201" accession="ddb000515468" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_202" accession="ddb000515503" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_203" accession="ddb000325163" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_204" accession="ddb000324829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_205" accession="ddb000515225" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_206" accession="ddb000515783" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_207" accession="ddb000520032" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_208" accession="ddb000514972" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_209" accession="ddb000325336" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_210" accession="ddb000515345" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_211" accession="ddb000515738" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_212" accession="ddb000325167" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_213" accession="ddb000515218" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_214" accession="ddb000515502" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_215" accession="ddb000515356" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_216" accession="DECOY_ddb000515001" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_217" accession="ddb000515899" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_218" accession="ddb000350764" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_219" accession="ddb000324994" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_220" accession="ddb000325123" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_221" accession="ddb002474592" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_222" accession="DECOY_ddb000325413" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_223" accession="ddb000515261" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_224" accession="ddb000515189" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_225" accession="ddb000326506" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_226" accession="ddb000515071" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_227" accession="DECOY_ddb023629811" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_228" accession="ddb000514958" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_229" accession="ddb000324833" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_230" accession="ddb000515444" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_231" accession="ddb000325355" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_232" accession="ddb000515512" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_233" accession="ddb003695451" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_234" accession="ddb000386422" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_235" accession="ddb000350746" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_236" accession="ddb000514889" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_237" accession="ddb000515606" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_238" accession="DECOY_ddb000515385" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_239" accession="ddb018083017" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_240" accession="ddb000514973" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_241" accession="ddb000325169" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_242" accession="ddb000326107" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_243" accession="ddb000515617" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_244" accession="ddb000350753" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_245" accession="ddb000515802" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_246" accession="ddb000324839" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_247" accession="ddb000520027" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_248" accession="ddb000348631" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_249" accession="ddb000514929" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_250" accession="ddb000515466" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_251" accession="DECOY_ddb000515018" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_252" accession="ddb000326372" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_253" accession="ddb000515300" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_254" accession="ddb000325698" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_255" accession="ddb000514846" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_256" accession="ddb000515812" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_257" accession="ddb000325360" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_258" accession="ddb000515645" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_259" accession="ddb000515249" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_260" accession="ddb000326334" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_261" accession="ddb000514832" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_262" accession="ddb023629763" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_263" accession="ddb000515425" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_264" accession="ddb000520078" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_265" accession="ddb000515650" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_266" accession="ddb000515418" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_267" accession="ddb000515761" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_268" accession="ddb000515408" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_269" accession="ddb000514852" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_270" accession="ddb000515262" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_271" accession="ddb000326282" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_272" accession="ddb000515939" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_273" accession="ddb000386426" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_274" accession="ddb000325984" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_275" accession="ddb000515861" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_276" accession="ddb000515916" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_277" accession="ddb000520039" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_278" accession="ddb000515160" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_279" accession="ddb002474879" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_280" accession="ddb000520028" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_281" accession="ddb000514911" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_282" accession="ddb000325188" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_283" accession="ddb000515190" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_284" accession="ddb003870652" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_285" accession="ddb023629774" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_286" accession="ddb000515176" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_287" accession="ddb000514928" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_288" accession="ddb000515935" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_289" accession="ddb000325026" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_290" accession="ddb000515382" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_291" accession="ddb000325681" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_292" accession="ddb000515207" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_293" accession="ddb000325372" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_294" accession="ddb000350745" score="0" sequence="">
+			</ProteinHit>
+		</ProteinIdentification>
+	</IdentificationRun>
+	<IdentificationRun id="PI_1" date="2014-02-17T06:11:11" search_engine="OMSSA" search_engine_version="">
+		<SearchParameters db="/cluster/scratch_xl/shareholder/imsb_ra/workflows//1402170549/0/5/Omssa/ddb_167.fasta" db_version="" taxonomy="" mass_type="monoisotopic" charges="" enzyme="trypsin" missed_cleavages="0" precursor_peak_tolerance="0" peak_mass_tolerance="0" >
+			<FixedModification name="Carbamidomethyl" />
+		</SearchParameters>
+		<ProteinIdentification score_type="" higher_score_better="true" significance_threshold="0">
+			<ProteinHit id="PH_295" accession="ddb000324842" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_296" accession="ddb000324818" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_297" accession="ddb000350754" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_298" accession="ddb000324825" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_299" accession="ddb000514900" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_300" accession="ddb000326331" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_301" accession="ddb000514982" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_302" accession="ddb000325999" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_303" accession="ddb000514831" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_304" accession="ddb000326326" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_305" accession="ddb000514907" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_306" accession="ddb000514838" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_307" accession="ddb000325681" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_308" accession="ddb000515076" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_309" accession="ddb000514909" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_310" accession="ddb000514830" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_311" accession="ddb000515010" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_312" accession="ddb000514851" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_313" accession="ddb000326176" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_314" accession="ddb000324841" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_315" accession="ddb000326211" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_316" accession="ddb000350765" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_317" accession="ddb000324821" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_318" accession="ddb000514999" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_319" accession="ddb000520029" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_320" accession="ddb000326391" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_321" accession="ddb000325451" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_322" accession="ddb000326565" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_323" accession="ddb000325124" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_324" accession="ddb000324822" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_325" accession="ddb000515296" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_326" accession="ddb000515686" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_327" accession="ddb000514890" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_328" accession="ddb000324829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_329" accession="ddb000325989" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_330" accession="ddb000515163" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_331" accession="ddb000324827" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_332" accession="ddb000515980" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_333" accession="ddb000514913" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_334" accession="ddb000515356" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_335" accession="ddb000515158" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_336" accession="ddb000515381" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_337" accession="ddb000514958" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_338" accession="ddb000324834" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_339" accession="ddb000324832" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_340" accession="ddb018083340" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_341" accession="ddb000514846" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_342" accession="ddb000325121" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_343" accession="ddb000324983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_344" accession="ddb000514829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_345" accession="ddb000324839" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_346" accession="ddb000326593" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_347" accession="ddb000325962" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_348" accession="ddb000350764" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_349" accession="ddb000515422" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_350" accession="ddb000324985" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_351" accession="ddb000350748" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_352" accession="ddb000326368" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_353" accession="ddb000515829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_354" accession="ddb000350747" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_355" accession="ddb000325357" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_356" accession="ddb000514882" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_357" accession="ddb000515490" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_358" accession="ddb000350744" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_359" accession="ddb000514877" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_360" accession="ddb018083465" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_361" accession="ddb000325026" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_362" accession="ddb000325072" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_363" accession="ddb000349206" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_364" accession="ddb000514941" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_365" accession="ddb000515698" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_366" accession="ddb000515124" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_367" accession="ddb000326549" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_368" accession="ddb000514949" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_369" accession="ddb000514916" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_370" accession="ddb000515047" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_371" accession="ddb000325353" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_372" accession="ddb000344020" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_373" accession="ddb000515872" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_374" accession="ddb000515146" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_375" accession="ddb000324734" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_376" accession="ddb000325290" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_377" accession="ddb000326282" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_378" accession="ddb000514897" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_379" accession="ddb000515481" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_380" accession="ddb000324830" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_381" accession="ddb000325336" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_382" accession="ddb000515746" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_383" accession="ddb000350750" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_384" accession="ddb000514835" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_385" accession="ddb000515468" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_386" accession="ddb000514956" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_387" accession="ddb000515161" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_388" accession="ddb000520025" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_389" accession="ddb000515099" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_390" accession="ddb000324838" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_391" accession="ddb000325356" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_392" accession="ddb000514870" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_393" accession="ddb000515275" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_394" accession="ddb000324816" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_395" accession="ddb000515131" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_396" accession="ddb000514926" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_397" accession="ddb000325588" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_398" accession="ddb001709452" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_399" accession="ddb000514837" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_400" accession="ddb000324828" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_401" accession="ddb000515348" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_402" accession="ddb000520030" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_403" accession="ddb000515227" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_404" accession="ddb000325984" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_405" accession="ddb000515084" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_406" accession="ddb000325480" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_407" accession="ddb000514848" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_408" accession="ddb000515363" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_409" accession="ddb000325073" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_410" accession="ddb000325315" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_411" accession="ddb000515185" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_412" accession="ddb000514906" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_413" accession="ddb000350753" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_414" accession="ddb000514983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_415" accession="ddb000515445" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_416" accession="ddb000520027" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_417" accession="ddb000514847" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_418" accession="ddb000515675" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_419" accession="ddb000350743" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_420" accession="ddb000514973" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_421" accession="ddb000515252" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_422" accession="ddb000325064" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_423" accession="ddb000515496" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_424" accession="ddb000514832" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_425" accession="ddb000515416" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_426" accession="ddb000325370" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_427" accession="ddb000515098" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_428" accession="ddb000515225" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_429" accession="ddb000325034" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_430" accession="ddb000515215" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_431" accession="ddb000515323" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_432" accession="ddb000515535" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_433" accession="ddb000325813" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_434" accession="ddb000515093" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_435" accession="ddb002474886" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_436" accession="ddb000326589" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_437" accession="ddb000515412" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_438" accession="ddb000515255" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_439" accession="ddb000325169" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_440" accession="ddb000324817" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_441" accession="ddb000515647" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_442" accession="ddb002474609" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_443" accession="ddb000515119" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_444" accession="ddb001571119" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_445" accession="ddb000325762" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_446" accession="ddb000514908" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_447" accession="ddb000515921" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_448" accession="ddb000325372" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_449" accession="ddb000325355" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_450" accession="ddb002134983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_451" accession="ddb000514836" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_452" accession="ddb023629817" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_453" accession="ddb000520024" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_454" accession="ddb000515154" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_455" accession="ddb000515072" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_456" accession="ddb002474592" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_457" accession="ddb000515528" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_458" accession="ddb000325029" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_459" accession="ddb002474543" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_460" accession="ddb000514905" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_461" accession="ddb000324833" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_462" accession="DECOY_ddb018083465" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_463" accession="ddb000344022" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_464" accession="ddb000515655" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_465" accession="ddb000515587" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_466" accession="ddb000515126" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_467" accession="ddb000326205" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_468" accession="ddb000520031" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_469" accession="ddb000514891" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_470" accession="ddb000515195" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_471" accession="ddb000515261" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_472" accession="ddb000515615" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_473" accession="ddb000325995" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_474" accession="ddb000324955" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_475" accession="ddb000515109" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_476" accession="ddb000515557" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_477" accession="ddb000515039" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_478" accession="ddb000515432" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_479" accession="ddb003695451" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_480" accession="ddb000515173" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_481" accession="ddb000515229" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_482" accession="ddb000515031" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_483" accession="ddb000515950" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_484" accession="ddb000515503" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_485" accession="ddb000386417" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_486" accession="ddb000515036" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_487" accession="ddb000520026" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_488" accession="ddb000520037" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_489" accession="ddb000514834" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_490" accession="ddb000514975" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_491" accession="ddb000325379" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_492" accession="ddb000325285" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_493" accession="ddb000325320" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_494" accession="ddb000514946" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_495" accession="ddb000326254" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_496" accession="ddb000515430" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_497" accession="ddb000515474" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_498" accession="ddb000514972" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_499" accession="ddb000325760" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_500" accession="ddb000515194" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_501" accession="ddb000326090" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_502" accession="ddb000326506" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_503" accession="ddb000644227" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_504" accession="ddb000515083" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_505" accession="ddb000515814" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_506" accession="ddb002474462" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_507" accession="ddb000515236" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_508" accession="ddb000515873" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_509" accession="ddb000515190" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_510" accession="ddb000515073" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_511" accession="ddb000515502" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_512" accession="ddb000515038" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_513" accession="ddb000515409" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_514" accession="ddb000515617" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_515" accession="ddb000515266" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_516" accession="ddb000515218" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_517" accession="ddb000324814" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_518" accession="ddb000325167" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_519" accession="ddb000325814" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_520" accession="ddb000515507" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_521" accession="ddb000520032" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_522" accession="ddb017981988" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_523" accession="ddb005342790" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_524" accession="ddb000325496" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_525" accession="ddb000515444" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_526" accession="ddb000515071" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_527" accession="ddb000325234" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_528" accession="ddb000515408" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_529" accession="ddb000325990" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_530" accession="ddb000515355" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_531" accession="ddb000515467" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_532" accession="ddb000325471" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_533" accession="ddb000515899" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_534" accession="ddb000350745" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_535" accession="ddb000515286" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_536" accession="ddb000514833" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_537" accession="ddb000326015" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_538" accession="ddb002202709" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_539" accession="ddb000325698" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_540" accession="ddb000515380" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_541" accession="ddb000515606" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_542" accession="ddb000515677" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_543" accession="ddb000325386" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_544" accession="ddb000515969" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_545" accession="ddb000324977" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_546" accession="ddb000326283" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_547" accession="ddb000326334" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_548" accession="ddb000326322" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_549" accession="ddb000514893" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_550" accession="ddb000514889" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_551" accession="ddb000628937" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_552" accession="ddb000515382" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_553" accession="ddb000514911" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_554" accession="ddb000515317" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_555" accession="ddb000348631" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_556" accession="ddb000326330" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_557" accession="ddb000343041" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_558" accession="ddb000325163" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_559" accession="ddb002474593" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_560" accession="DECOY_ddb000515001" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_561" accession="ddb000325271" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_562" accession="ddb003870652" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_563" accession="ddb000515939" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_564" accession="ddb000515259" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_565" accession="ddb000515402" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_566" accession="ddb023629773" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_567" accession="ddb000515519" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_568" accession="ddb000515739" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_569" accession="ddb000325003" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_570" accession="ddb002474807" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_571" accession="ddb000514902" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_572" accession="ddb000520039" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_573" accession="ddb000325215" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_574" accession="ddb023629763" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_575" accession="ddb000325974" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_576" accession="ddb000515249" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_577" accession="ddb023629774" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_578" accession="ddb000515696" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_579" accession="ddb000515425" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_580" accession="ddb000515836" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_581" accession="ddb001579753" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_582" accession="ddb000514901" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_583" accession="ddb000515778" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_584" accession="ddb000514856" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_585" accession="ddb000515149" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_586" accession="ddb000326185" score="0" sequence="">
+			</ProteinHit>
+		</ProteinIdentification>
+	</IdentificationRun>
+	<IdentificationRun id="PI_2" date="2014-02-17T06:11:11" search_engine="MyriMatch" search_engine_version="">
+		<SearchParameters db="/cluster/scratch_xl/shareholder/imsb_ra/datasets/PERSONAL_DB-MALARS-DDB_167-20130905113927/ddb_167.fasta" db_version="" taxonomy="" mass_type="monoisotopic" charges="" enzyme="trypsin" missed_cleavages="0" precursor_peak_tolerance="0" peak_mass_tolerance="0" >
+			<FixedModification name="Carbamidomethyl" />
+		</SearchParameters>
+		<ProteinIdentification score_type="" higher_score_better="true" significance_threshold="0">
+			<ProteinHit id="PH_587" accession="ddb000350754" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_588" accession="ddb000326326" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_589" accession="ddb000324841" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_590" accession="ddb000514890" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_591" accession="ddb000386415" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_592" accession="ddb000386416" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_593" accession="ddb000515336" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_594" accession="ddb000325962" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_595" accession="ddb000515615" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_596" accession="ddb000325999" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_597" accession="ddb000324842" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_598" accession="ddb000514900" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_599" accession="ddb000325813" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_600" accession="ddb000324955" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_601" accession="ddb000515861" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_602" accession="ddb000514982" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_603" accession="ddb000514831" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_604" accession="ddb000326593" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_605" accession="ddb000325681" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_606" accession="ddb000515010" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_607" accession="ddb000326331" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_608" accession="ddb000325984" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_609" accession="ddb000515076" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_610" accession="ddb000514851" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_611" accession="ddb000515295" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_612" accession="ddb000326254" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_613" accession="ddb018083465" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_614" accession="DECOY_ddb000417487" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_615" accession="ddb000514907" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_616" accession="ddb018083262" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_617" accession="ddb023629844" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_618" accession="ddb000514838" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_619" accession="ddb000514909" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_620" accession="ddb000326211" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_621" accession="ddb000515468" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_622" accession="ddb000324825" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_623" accession="ddb000324821" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_624" accession="ddb000343041" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_625" accession="ddb000324818" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_626" accession="ddb000350765" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_627" accession="ddb000514999" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_628" accession="ddb000515105" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_629" accession="ddb000325451" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_630" accession="ddb000514901" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_631" accession="ddb000350744" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_632" accession="ddb000350745" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_633" accession="DECOY_ddb000386423" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_634" accession="ddb000515587" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_635" accession="ddb000520026" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_636" accession="ddb000324834" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_637" accession="ddb000325285" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_638" accession="ddb000515921" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_639" accession="ddb000514941" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_640" accession="ddb000324827" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_641" accession="ddb000515432" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_642" accession="ddb000514834" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_643" accession="DECOY_ddb002474844" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_644" accession="ddb000515215" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_645" accession="ddb000514829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_646" accession="ddb000324985" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_647" accession="ddb000514949" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_648" accession="ddb000325029" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_649" accession="ddb000514972" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_650" accession="ddb000515266" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_651" accession="ddb000514835" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_652" accession="ddb000324839" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_653" accession="ddb000514830" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_654" accession="ddb000324832" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_655" accession="ddb000515677" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_656" accession="ddb001709452" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_657" accession="ddb000324983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_658" accession="ddb000325290" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_659" accession="ddb000515146" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_660" accession="ddb000324817" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_661" accession="ddb000325989" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_662" accession="ddb000515154" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_663" accession="ddb000515190" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_664" accession="ddb000325047" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_665" accession="ddb000515481" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_666" accession="ddb000344022" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_667" accession="ddb000326391" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_668" accession="ddb000325124" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_669" accession="ddb000515275" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_670" accession="ddb000514839" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_671" accession="ddb000326205" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_672" accession="ddb000326589" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_673" accession="ddb000325215" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_674" accession="ddb000515218" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_675" accession="ddb000514958" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_676" accession="ddb000515131" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_677" accession="ddb000515055" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_678" accession="ddb000325661" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_679" accession="ddb000514859" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_680" accession="ddb000515099" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_681" accession="ddb000326549" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_682" accession="ddb000350748" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_683" accession="ddb000515056" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_684" accession="ddb000514904" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_685" accession="ddb000515738" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_686" accession="ddb000515969" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_687" accession="ddb000515506" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_688" accession="ddb000515503" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_689" accession="ddb000515323" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_690" accession="ddb000515170" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_691" accession="ddb000515119" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_692" accession="ddb000515575" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_693" accession="ddb000515412" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_694" accession="ddb000326565" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_695" accession="ddb000514956" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_696" accession="ddb000350763" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_697" accession="ddb000515098" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_698" accession="ddb000515447" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_699" accession="ddb000514983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_700" accession="ddb000514908" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_701" accession="ddb000515980" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_702" accession="ddb000514833" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_703" accession="ddb000417288" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_704" accession="ddb000515557" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_705" accession="ddb000326281" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_706" accession="ddb000515124" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_707" accession="ddb000520030" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_708" accession="ddb000515655" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_709" accession="ddb000515225" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_710" accession="ddb000515902" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_711" accession="ddb000515626" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_712" accession="ddb000515750" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_713" accession="ddb000515252" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_714" accession="ddb000324830" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_715" accession="ddb000515161" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_716" accession="ddb000325588" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_717" accession="ddb000515746" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_718" accession="ddb000349206" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_719" accession="ddb000520038" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_720" accession="ddb000514926" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_721" accession="ddb000324814" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_722" accession="ddb000326322" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_723" accession="ddb000324833" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_724" accession="ddb002474593" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_725" accession="ddb000520031" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_726" accession="ddb000326176" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_727" accession="ddb000515870" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_728" accession="ddb000515084" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_729" accession="ddb000514973" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_730" accession="ddb000515490" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_731" accession="ddb000515416" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_732" accession="ddb000515347" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_733" accession="ddb000515851" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_734" accession="ddb000326279" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_735" accession="ddb002134983" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_736" accession="ddb000533442" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_737" accession="ddb000515496" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_738" accession="ddb023629817" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_739" accession="ddb000515158" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_740" accession="ddb000515847" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_741" accession="ddb000514832" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_742" accession="ddb000515163" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_743" accession="ddb018083466" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_744" accession="ddb000326506" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_745" accession="ddb000326334" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_746" accession="ddb000350753" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_747" accession="ddb000515812" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_748" accession="ddb000515675" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_749" accession="ddb000514889" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_750" accession="ddb000326255" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_751" accession="ddb000325356" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_752" accession="ddb000514847" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_753" accession="ddb000350743" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_754" accession="ddb000350746" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_755" accession="ddb000515462" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_756" accession="ddb000520027" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_757" accession="ddb000515686" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_758" accession="ddb000520039" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_759" accession="ddb000514848" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_760" accession="ddb000325635" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_761" accession="ddb000514846" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_762" accession="ddb000326090" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_763" accession="ddb000324994" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_764" accession="ddb000325064" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_765" accession="ddb002474543" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_766" accession="ddb000514911" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_767" accession="ddb000325357" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_768" accession="ddb000325762" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_769" accession="ddb000514840" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_770" accession="ddb000324829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_771" accession="ddb000325372" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_772" accession="ddb000515478" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_773" accession="ddb000515474" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_774" accession="ddb000515879" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_775" accession="ddb023629763" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_776" accession="ddb000515637" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_777" accession="DECOY_ddb017981985" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_778" accession="ddb000515747" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_779" accession="ddb000515414" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_780" accession="ddb000515088" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_781" accession="ddb000515047" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_782" accession="ddb000515093" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_783" accession="ddb000514947" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_784" accession="ddb000515899" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_785" accession="ddb000515073" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_786" accession="ddb000325336" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_787" accession="ddb000515825" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_788" accession="ddb000515647" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_789" accession="ddb000515422" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_790" accession="ddb000515955" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_791" accession="ddb000514855" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_792" accession="ddb000514837" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_793" accession="ddb000348631" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_794" accession="ddb000515027" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_795" accession="ddb000514836" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_796" accession="ddb000515829" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_797" accession="DECOY_ddb002474787" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_798" accession="DECOY_ddb018083465" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_799" accession="ddb000533398" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_800" accession="ddb000386413" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_801" accession="ddb000520036" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_802" accession="ddb000514905" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_803" accession="ddb002474609" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_804" accession="ddb000326117" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_805" accession="ddb000515207" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_806" accession="ddb000515449" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_807" accession="ddb002474592" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_808" accession="ddb000326107" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_809" accession="ddb023629839" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_810" accession="ddb000324822" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_811" accession="ddb000325814" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_812" accession="ddb000515508" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_813" accession="ddb000326324" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_814" accession="ddb000386422" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_815" accession="ddb002137199" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_816" accession="ddb000515868" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_817" accession="ddb000325995" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_818" accession="ddb000533418" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_819" accession="ddb000326015" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_820" accession="ddb000386426" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_821" accession="ddb000515261" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_822" accession="ddb000514946" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_823" accession="ddb005342790" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_824" accession="ddb000324838" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_825" accession="ddb018083017" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_826" accession="ddb000515083" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_827" accession="ddb000515535" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_828" accession="ddb000514856" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_829" accession="ddb000325121" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_830" accession="ddb000515533" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_831" accession="ddb000515071" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_832" accession="ddb000515418" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_833" accession="ddb000515296" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_834" accession="ddb000515586" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_835" accession="DECOY_ddb000514999" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_836" accession="ddb000520034" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_837" accession="ddb000325965" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_838" accession="ddb000515176" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_839" accession="ddb000514870" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_840" accession="ddb000515356" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_841" accession="DECOY_ddb000515170" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_842" accession="ddb003695451" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_843" accession="ddb000515502" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_844" accession="ddb000515227" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_845" accession="ddb000325228" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_846" accession="ddb000515932" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_847" accession="DECOY_ddb000515761" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_848" accession="ddb000515950" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_849" accession="ddb000515444" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_850" accession="DECOY_ddb000515174" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_851" accession="ddb000515016" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_852" accession="ddb000515255" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_853" accession="ddb000520025" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_854" accession="ddb000325320" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_855" accession="ddb002474833" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_856" accession="ddb000386417" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_857" accession="ddb000520037" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_858" accession="ddb000515038" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_859" accession="ddb000515271" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_860" accession="ddb000515409" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_861" accession="ddb000515507" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_862" accession="ddb000515204" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_863" accession="ddb000515381" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_864" accession="ddb000515185" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_865" accession="DECOY_ddb000515504" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_866" accession="ddb000515256" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_867" accession="ddb000515072" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_868" accession="ddb000325163" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_869" accession="ddb018083340" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_870" accession="ddb000515784" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_871" accession="ddb000515380" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_872" accession="DECOY_ddb018083449" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_873" accession="ddb000514953" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_874" accession="ddb000514902" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_875" accession="ddb000514945" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_876" accession="ddb000325473" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_877" accession="ddb000325026" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_878" accession="ddb000515363" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_879" accession="ddb023629774" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_880" accession="ddb018083486" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_881" accession="ddb000515509" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_882" accession="ddb000514906" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_883" accession="ddb000515445" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_884" accession="ddb000515529" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_885" accession="ddb000515348" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_886" accession="ddb000514852" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_887" accession="ddb000325760" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_888" accession="ddb000515126" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_889" accession="ddb000515526" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_890" accession="ddb000514882" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_891" accession="ddb000325370" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_892" accession="ddb000515063" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_893" accession="ddb000515519" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_894" accession="ddb000325559" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_895" accession="ddb000515488" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_896" accession="ddb000644227" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_897" accession="ddb000514916" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_898" accession="ddb000325355" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_899" accession="ddb000515739" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_900" accession="ddb002474690" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_901" accession="ddb000325990" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_902" accession="ddb000325471" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_903" accession="ddb000515430" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_904" accession="ddb000515873" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_905" accession="DECOY_ddb000515383" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_906" accession="ddb000520042" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_907" accession="ddb000515259" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_908" accession="ddb000515951" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_909" accession="ddb000515898" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_910" accession="ddb000325360" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_911" accession="ddb000520028" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_912" accession="ddb000515688" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_913" accession="ddb000515229" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_914" accession="ddb000325188" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_915" accession="ddb017981988" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_916" accession="ddb000515051" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_917" accession="ddb000515939" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_918" accession="ddb000515645" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_919" accession="ddb000515029" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_920" accession="ddb002202709" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_921" accession="ddb000515305" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_922" accession="ddb002474807" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_923" accession="ddb000325169" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_924" accession="ddb000350747" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_925" accession="ddb000326282" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_926" accession="ddb003870652" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_927" accession="ddb000324816" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_928" accession="ddb000325072" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_929" accession="ddb000350764" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_930" accession="DECOY_ddb000515879" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_931" accession="ddb000514940" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_932" accession="ddb000325496" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_933" accession="ddb000515802" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_934" accession="ddb000520029" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_935" accession="ddb000325234" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_936" accession="DECOY_ddb000515627" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_937" accession="ddb000515814" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_938" accession="ddb000515408" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_939" accession="ddb000515355" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_940" accession="ddb000515122" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_941" accession="ddb000515189" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_942" accession="ddb000515464" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_943" accession="ddb000325480" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_944" accession="ddb000325123" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_945" accession="ddb000515036" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_946" accession="ddb000350761" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_947" accession="ddb000515382" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_948" accession="ddb000515395" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_949" accession="ddb000326101" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_950" accession="ddb000515149" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_951" accession="ddb000326368" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_952" accession="ddb000515254" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_953" accession="ddb000515300" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_954" accession="ddb000515744" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_955" accession="ddb000514897" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_956" accession="ddb000515286" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_957" accession="ddb000514844" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_958" accession="ddb000326200" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_959" accession="ddb000515499" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_960" accession="ddb000515512" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_961" accession="ddb000514910" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_962" accession="ddb000515298" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_963" accession="ddb000515194" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_964" accession="ddb000515249" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_965" accession="ddb000324734" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_966" accession="ddb000324891" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_967" accession="ddb000515102" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_968" accession="ddb000514913" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_969" accession="ddb000520032" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_970" accession="ddb000515528" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_971" accession="ddb000515606" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_972" accession="ddb000515175" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_973" accession="ddb000325386" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_974" accession="ddb000514893" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_975" accession="ddb000326283" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_976" accession="ddb000515617" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_977" accession="ddb000325379" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_978" accession="ddb000514920" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_979" accession="ddb000515778" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_980" accession="ddb000350750" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_981" accession="ddb000515173" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_982" accession="ddb000628937" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_983" accession="ddb000350756" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_984" accession="ddb000515443" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_985" accession="ddb000515571" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_986" accession="ddb000325315" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_987" accession="ddb000325974" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_988" accession="ddb000514877" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_989" accession="ddb018083459" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_990" accession="ddb000515236" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_991" accession="ddb000515916" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_992" accession="ddb000515109" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_993" accession="ddb000515031" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_994" accession="ddb000515107" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_995" accession="ddb000325466" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_996" accession="ddb000515322" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_997" accession="ddb000514996" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_998" accession="ddb000515100" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_999" accession="ddb000325252" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1000" accession="ddb000515450" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1001" accession="ddb000515425" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1002" accession="ddb000515954" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1003" accession="ddb000514867" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1004" accession="ddb000515262" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1005" accession="ddb000324928" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1006" accession="ddb000325564" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1007" accession="ddb000344020" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1008" accession="ddb000515935" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1009" accession="ddb000325334" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1010" accession="ddb000515949" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1011" accession="ddb000325023" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1012" accession="ddb000515650" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1013" accession="ddb000514995" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1014" accession="ddb000325698" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1015" accession="ddb002474911" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1016" accession="ddb002474401" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1017" accession="DECOY_ddb000515061" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1018" accession="ddb023629773" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1019" accession="ddb000515696" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1020" accession="ddb000515872" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1021" accession="ddb000515466" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1022" accession="ddb000515427" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1023" accession="ddb000515698" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1024" accession="ddb000515208" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1025" accession="ddb000515354" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1026" accession="ddb000515345" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1027" accession="ddb000340954" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1028" accession="ddb000515402" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1029" accession="ddb000326185" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1030" accession="ddb000514942" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1031" accession="ddb000515028" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1032" accession="ddb000515324" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1033" accession="ddb000520082" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1034" accession="ddb000515328" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1035" accession="ddb000515541" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1036" accession="ddb000515788" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1037" accession="ddb000515920" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1038" accession="ddb000515945" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1039" accession="ddb000325573" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1040" accession="ddb000515936" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1041" accession="ddb000325287" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1042" accession="ddb000515716" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1043" accession="ddb000325387" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1044" accession="ddb000515743" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1045" accession="ddb000520078" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1046" accession="ddb000533379" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1047" accession="ddb000515315" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1048" accession="ddb000514878" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1049" accession="ddb000325353" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1050" accession="ddb000515505" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1051" accession="ddb000514970" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1052" accession="ddb001571119" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1053" accession="ddb000515008" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1054" accession="ddb000515822" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1055" accession="ddb000324977" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1056" accession="DECOY_ddb000515408" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1057" accession="ddb000325981" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1058" accession="ddb023629823" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1059" accession="ddb000515361" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1060" accession="ddb000350759" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1061" accession="ddb000515371" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1062" accession="ddb000515760" score="0" sequence="">
+			</ProteinHit>
+			<ProteinHit id="PH_1063" accession="ddb000515007" score="0" sequence="">
+			</ProteinHit>
+		</ProteinIdentification>
+	</IdentificationRun>
+	<featureList count="40">
+		<feature id="f_14770689761020693120">
+			<position dim="0">287.154849610213</position>
+			<position dim="1">563.322594921998</position>
+			<intensity>4.30395e+08</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.760042</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="285.157" y="563.322296716273" />
+				<pt x="289.765" y="563.322296716273" />
+				<pt x="289.765" y="563.324319310486" />
+				<pt x="285.157" y="563.324319310486" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="285.157" y="563.823568873107" />
+				<pt x="289.765" y="563.823568873107" />
+				<pt x="289.765" y="563.825793288648" />
+				<pt x="285.157" y="563.825793288648" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="285.157" y="564.324827156961" />
+				<pt x="289.765" y="564.324827156961" />
+				<pt x="289.765" y="564.327472619712" />
+				<pt x="285.157" y="564.327472619712" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="285.157" y="564.827279567719" />
+				<pt x="289.765" y="564.827279567719" />
+				<pt x="289.765" y="564.830088593066" />
+				<pt x="285.157" y="564.830088593066" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="285.157" y="565.329408168793" />
+				<pt x="289.765" y="565.329408168793" />
+				<pt x="289.765" y="565.331523418427" />
+				<pt x="285.157" y="565.331523418427" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="563.32435335221" RT="285.588" >
+				<PeptideHit score="0.999999" sequence="RLPSSVNQPK" charge="2" aa_before="R" aa_after="D" protein_refs="PH_310">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="0"/>
+			<userParam type="float" name="score_fit" value="0.591805196521177"/>
+			<userParam type="float" name="score_correlation" value="0.976105414855287"/>
+			<userParam type="float" name="FWHM" value="2.51731896400452"/>
+			<userParam type="int" name="spectrum_index" value="154"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=615"/>
+		</feature>
+		<feature id="f_15068156646691824546">
+			<position dim="0">367.773374703666</position>
+			<position dim="1">595.303590813138</position>
+			<intensity>2.35913e+08</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.746456</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="357.984" y="595.302896749228" />
+				<pt x="378.662" y="595.302896749228" />
+				<pt x="378.662" y="595.305202256888" />
+				<pt x="357.984" y="595.305202256888" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="357.984" y="595.804673440754" />
+				<pt x="378.662" y="595.804673440754" />
+				<pt x="378.662" y="595.807363521308" />
+				<pt x="357.984" y="595.807363521308" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="359.176" y="596.306452412158" />
+				<pt x="378.662" y="596.306452412158" />
+				<pt x="378.662" y="596.309153370559" />
+				<pt x="359.176" y="596.309153370559" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="359.176" y="596.808290440589" />
+				<pt x="378.662" y="596.808290440589" />
+				<pt x="378.662" y="596.810439057648" />
+				<pt x="359.176" y="596.810439057648" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="362.772" y="597.301705084741" />
+				<pt x="378.662" y="597.301705084741" />
+				<pt x="378.662" y="597.311240579933" />
+				<pt x="362.772" y="597.311240579933" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="595.30433382096" RT="375.407" >
+				<PeptideHit score="0.999999" sequence="EAGYTAVVSHR" charge="2" aa_before="K" aa_after="S" protein_refs="PH_312">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="3"/>
+			<userParam type="float" name="score_fit" value="0.571050176908169"/>
+			<userParam type="float" name="score_correlation" value="0.975741198933367"/>
+			<userParam type="float" name="FWHM" value="9.01322364807129"/>
+			<userParam type="int" name="spectrum_index" value="222"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=885"/>
+		</feature>
+		<feature id="f_14099632108428094148">
+			<position dim="0">329.181917719599</position>
+			<position dim="1">788.948210502933</position>
+			<intensity>1.51247e+08</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.764235</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="320.279" y="788.947683349252" />
+				<pt x="337.109" y="788.947683349252" />
+				<pt x="337.109" y="788.953281167895" />
+				<pt x="320.279" y="788.953281167895" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="321.444" y="789.448953792453" />
+				<pt x="337.109" y="789.448953792453" />
+				<pt x="337.109" y="789.451968386769" />
+				<pt x="321.444" y="789.451968386769" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="321.444" y="789.951034143567" />
+				<pt x="337.109" y="789.951034143567" />
+				<pt x="337.109" y="789.954476490617" />
+				<pt x="321.444" y="789.954476490617" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="322.619" y="790.454194232821" />
+				<pt x="337.109" y="790.454194232821" />
+				<pt x="337.109" y="790.456239685416" />
+				<pt x="322.619" y="790.456239685416" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="323.833" y="790.953602124006" />
+				<pt x="337.109" y="790.953602124006" />
+				<pt x="337.109" y="790.957552686334" />
+				<pt x="323.833" y="790.957552686334" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="788.94927903502" RT="323.08999999998" >
+				<PeptideHit score="0.999999" sequence="GQVIAKPSSINPHTK" charge="2" aa_before="R" aa_after="F" protein_refs="PH_653">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="5"/>
+			<userParam type="float" name="score_fit" value="0.59301812830021"/>
+			<userParam type="float" name="score_correlation" value="0.984885642972582"/>
+			<userParam type="float" name="FWHM" value="7.19101238250732"/>
+			<userParam type="int" name="spectrum_index" value="190"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=758"/>
+		</feature>
+		<feature id="f_11024491910611733086">
+			<position dim="0">401.94206335432</position>
+			<position dim="1">643.841315762743</position>
+			<intensity>1.31142e+08</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.764786</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="392.42" y="643.840884704143" />
+				<pt x="411.173" y="643.840884704143" />
+				<pt x="411.173" y="643.842818435282" />
+				<pt x="392.42" y="643.842818435282" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="392.42" y="644.342249814421" />
+				<pt x="411.173" y="644.342249814421" />
+				<pt x="411.173" y="644.344944246113" />
+				<pt x="392.42" y="644.344944246113" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="392.42" y="644.843792457134" />
+				<pt x="411.173" y="644.843792457134" />
+				<pt x="411.173" y="644.846407003701" />
+				<pt x="392.42" y="644.846407003701" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="392.42" y="645.333732981235" />
+				<pt x="411.173" y="645.333732981235" />
+				<pt x="411.173" y="645.348012600094" />
+				<pt x="392.42" y="645.348012600094" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="394.858" y="645.839336935431" />
+				<pt x="407.37" y="645.839336935431" />
+				<pt x="407.37" y="645.850502662361" />
+				<pt x="394.858" y="645.850502662361" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="643.84191819502" RT="394.116" >
+				<PeptideHit score="0.999999" sequence="AAGASAQVLGQEGK" charge="2" aa_before="R" aa_after="Y" protein_refs="PH_625">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="13"/>
+			<userParam type="float" name="score_fit" value="0.59161633790776"/>
+			<userParam type="float" name="score_correlation" value="0.988644457518596"/>
+			<userParam type="float" name="FWHM" value="8.14784145355225"/>
+			<userParam type="int" name="spectrum_index" value="249"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=993"/>
+		</feature>
+		<feature id="f_4386849498676623694">
+			<position dim="0">329.458432414939</position>
+			<position dim="1">526.299210811228</position>
+			<intensity>1.06514e+08</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.756605</overallquality>
+			<charge>3</charge>
+			<convexhull nr="0">
+				<pt x="321.444" y="526.291183806956" />
+				<pt x="338.346" y="526.291183806956" />
+				<pt x="338.346" y="526.302849285305" />
+				<pt x="321.444" y="526.302849285305" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="321.444" y="526.633850745857" />
+				<pt x="338.346" y="526.633850745857" />
+				<pt x="338.346" y="526.635226599872" />
+				<pt x="321.444" y="526.635226599872" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="321.444" y="526.968660585582" />
+				<pt x="338.346" y="526.968660585582" />
+				<pt x="338.346" y="526.969869635999" />
+				<pt x="321.444" y="526.969869635999" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="321.444" y="527.295476846397" />
+				<pt x="338.346" y="527.295476846397" />
+				<pt x="338.346" y="527.304446153343" />
+				<pt x="321.444" y="527.304446153343" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="325.036" y="527.637898743153" />
+				<pt x="337.109" y="527.637898743153" />
+				<pt x="337.109" y="527.639408312738" />
+				<pt x="325.036" y="527.639408312738" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="526.30078049502" RT="325.704" >
+				<PeptideHit score="0.999999" sequence="GQVIAKPSSINPHTK" charge="3" aa_before="R" aa_after="F" protein_refs="PH_653">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="9888"/>
+			<userParam type="float" name="score_fit" value="0.583925289831008"/>
+			<userParam type="float" name="score_correlation" value="0.98034905417942"/>
+			<userParam type="float" name="FWHM" value="7.68990850448608"/>
+			<userParam type="int" name="spectrum_index" value="190"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=758"/>
+		</feature>
+		<feature id="f_6619849360490694279">
+			<position dim="0">293.454706305262</position>
+			<position dim="1">581.316367273743</position>
+			<intensity>1.06185e+08</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.795168</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="289.765" y="581.315911523998" />
+				<pt x="296.742" y="581.315911523998" />
+				<pt x="296.742" y="581.316755153239" />
+				<pt x="289.765" y="581.316755153239" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="289.765" y="581.817733831704" />
+				<pt x="296.742" y="581.817733831704" />
+				<pt x="296.742" y="581.818761542439" />
+				<pt x="289.765" y="581.818761542439" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="289.765" y="582.319077447057" />
+				<pt x="296.742" y="582.319077447057" />
+				<pt x="296.742" y="582.320465639234" />
+				<pt x="289.765" y="582.320465639234" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="290.915" y="582.821484483778" />
+				<pt x="296.742" y="582.821484483778" />
+				<pt x="296.742" y="582.822637610137" />
+				<pt x="290.915" y="582.822637610137" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="292.066" y="583.322937600315" />
+				<pt x="296.742" y="583.322937600315" />
+				<pt x="296.742" y="583.328577004373" />
+				<pt x="292.066" y="583.328577004373" />
+			</convexhull>
+			<convexhull nr="5">
+				<pt x="292.066" y="583.829238131642" />
+				<pt x="296.742" y="583.829238131642" />
+				<pt x="296.742" y="583.838496729732" />
+				<pt x="292.066" y="583.838496729732" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="581.31646653502" RT="290.20999999998" >
+				<PeptideHit score="0.999998" sequence="VATTQGIQSTR" charge="2" aa_before="R" aa_after="D" protein_refs="PH_615">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="1"/>
+			<userParam type="float" name="score_fit" value="0.634887518403953"/>
+			<userParam type="float" name="score_correlation" value="0.995911908795712"/>
+			<userParam type="float" name="FWHM" value="3.47246646881104"/>
+			<userParam type="int" name="spectrum_index" value="160"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=639"/>
+		</feature>
+		<feature id="f_7888642621672826959">
+			<position dim="0">410.057649101839</position>
+			<position dim="1">517.792154568708</position>
+			<intensity>8.51789e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.775826</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="398.608" y="517.791720226407" />
+				<pt x="422.469" y="517.791720226407" />
+				<pt x="422.469" y="517.793985806406" />
+				<pt x="398.608" y="517.793985806406" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="398.608" y="518.293539389968" />
+				<pt x="422.469" y="518.293539389968" />
+				<pt x="422.469" y="518.29519828409" />
+				<pt x="398.608" y="518.29519828409" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="399.843" y="518.796125099063" />
+				<pt x="422.469" y="518.796125099063" />
+				<pt x="422.469" y="518.797386534512" />
+				<pt x="399.843" y="518.797386534512" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="403.561" y="519.290647670627" />
+				<pt x="422.469" y="519.290647670627" />
+				<pt x="422.469" y="519.308755330741" />
+				<pt x="403.561" y="519.308755330741" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="517.79334749284" RT="399.094" >
+				<PeptideHit score="0.999999" sequence="RLDNVVYR" charge="2" aa_before="R" aa_after="L" protein_refs="PH_322">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="40"/>
+			<userParam type="float" name="score_fit" value="0.608536826039567"/>
+			<userParam type="float" name="score_correlation" value="0.989103656959689"/>
+			<userParam type="float" name="FWHM" value="10.6198902130127"/>
+			<userParam type="int" name="spectrum_index" value="256"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=1021"/>
+		</feature>
+		<feature id="f_18263479451516371518">
+			<position dim="0">349.680142753253</position>
+			<position dim="1">698.866170839926</position>
+			<intensity>8.50689e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.776485</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="343.223" y="698.865803282708" />
+				<pt x="356.765" y="698.865803282708" />
+				<pt x="356.765" y="698.867875840515" />
+				<pt x="343.223" y="698.867875840515" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="343.223" y="699.367243859917" />
+				<pt x="356.765" y="699.367243859917" />
+				<pt x="356.765" y="699.369679216295" />
+				<pt x="343.223" y="699.369679216295" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="343.223" y="699.869189042598" />
+				<pt x="356.765" y="699.869189042598" />
+				<pt x="356.765" y="699.872040282935" />
+				<pt x="343.223" y="699.872040282935" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="343.223" y="700.371202480048" />
+				<pt x="356.765" y="700.371202480048" />
+				<pt x="356.765" y="700.372728835791" />
+				<pt x="343.223" y="700.372728835791" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="346.902" y="700.86950147897" />
+				<pt x="354.429" y="700.86950147897" />
+				<pt x="354.429" y="700.876264777035" />
+				<pt x="346.902" y="700.876264777035" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="698.86822434502" RT="343.92199999998" >
+				<PeptideHit score="0.999999" sequence="AHASNVGISANVEK" charge="2" aa_before="R" aa_after="A" protein_refs="PH_588">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="17"/>
+			<userParam type="float" name="score_fit" value="0.607644963239682"/>
+			<userParam type="float" name="score_correlation" value="0.992239856494328"/>
+			<userParam type="float" name="FWHM" value="5.88383007049561"/>
+			<userParam type="int" name="spectrum_index" value="207"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=826"/>
+		</feature>
+		<feature id="f_15975402300258436018">
+			<position dim="0">372.599680316146</position>
+			<position dim="1">530.307164031965</position>
+			<intensity>7.88505e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.80932</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="365.231" y="530.306849300861" />
+				<pt x="379.908" y="530.306849300861" />
+				<pt x="379.908" y="530.308378875256" />
+				<pt x="365.231" y="530.308378875256" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="365.231" y="530.808645546436" />
+				<pt x="379.908" y="530.808645546436" />
+				<pt x="379.908" y="530.810761749744" />
+				<pt x="365.231" y="530.810761749744" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="365.231" y="531.283560454845" />
+				<pt x="379.908" y="531.283560454845" />
+				<pt x="379.908" y="531.311924040318" />
+				<pt x="365.231" y="531.311924040318" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="368.859" y="531.811638653278" />
+				<pt x="379.908" y="531.811638653278" />
+				<pt x="379.908" y="531.81355625391" />
+				<pt x="368.859" y="531.81355625391" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="530.30732454362" RT="374.185" >
+				<PeptideHit score="0.998462" sequence="DKGTEAVVLK" charge="2" aa_before="K" aa_after="A" protein_refs="PH_358">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="20"/>
+			<userParam type="float" name="score_fit" value="0.659785357731592"/>
+			<userParam type="float" name="score_correlation" value="0.99274464156663"/>
+			<userParam type="float" name="FWHM" value="6.64364910125732"/>
+			<userParam type="int" name="spectrum_index" value="226"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=901"/>
+		</feature>
+		<feature id="f_16706919926217157313">
+			<position dim="0">289.7317271658</position>
+			<position dim="1">545.311648036404</position>
+			<intensity>6.62419e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.808186</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="286.349" y="545.311212025583" />
+				<pt x="293.243" y="545.311212025583" />
+				<pt x="293.243" y="545.312650971115" />
+				<pt x="286.349" y="545.312650971115" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="287.482" y="545.813083924353" />
+				<pt x="293.243" y="545.813083924353" />
+				<pt x="293.243" y="545.815012194216" />
+				<pt x="287.482" y="545.815012194216" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="287.482" y="546.315345615149" />
+				<pt x="293.243" y="546.315345615149" />
+				<pt x="293.243" y="546.316851876676" />
+				<pt x="287.482" y="546.316851876676" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="288.623" y="546.816930018365" />
+				<pt x="292.066" y="546.816930018365" />
+				<pt x="292.066" y="546.818511873484" />
+				<pt x="288.623" y="546.818511873484" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="545.31280442502" RT="287.90800000002" >
+				<PeptideHit score="0.999999" sequence="VAEATELTKK" charge="2" aa_before="K" aa_after="D" protein_refs="PH_594">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="4"/>
+			<userParam type="float" name="score_fit" value="0.662824030719749"/>
+			<userParam type="float" name="score_correlation" value="0.985426198260268"/>
+			<userParam type="float" name="FWHM" value="3.22545909881592"/>
+			<userParam type="int" name="spectrum_index" value="156"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=623"/>
+		</feature>
+		<feature id="f_4681181566081862662">
+			<position dim="0">348.076769466197</position>
+			<position dim="1">616.301769286006</position>
+			<intensity>6.38302e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.806866</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="340.784" y="616.291706506163" />
+				<pt x="355.591" y="616.291706506163" />
+				<pt x="355.591" y="616.303907647729" />
+				<pt x="340.784" y="616.303907647729" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="340.784" y="616.803082082421" />
+				<pt x="355.591" y="616.803082082421" />
+				<pt x="355.591" y="616.805365096778" />
+				<pt x="340.784" y="616.805365096778" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="340.784" y="617.305489107966" />
+				<pt x="355.591" y="617.305489107966" />
+				<pt x="355.591" y="617.309241607785" />
+				<pt x="340.784" y="617.309241607785" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="340.784" y="617.806341741234" />
+				<pt x="353.191" y="617.806341741234" />
+				<pt x="353.191" y="617.809757873416" />
+				<pt x="340.784" y="617.809757873416" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="616.303296223305" RT="343.684" >
+				<PeptideHit score="0.999999" sequence="QAAEAVADEATR" charge="2" aa_before="K" aa_after="A" protein_refs="PH_344">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="32"/>
+			<userParam type="float" name="score_fit" value="0.657653386438889"/>
+			<userParam type="float" name="score_correlation" value="0.989934059245342"/>
+			<userParam type="float" name="FWHM" value="6.51751852035522"/>
+			<userParam type="int" name="spectrum_index" value="205"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=818"/>
+		</feature>
+		<feature id="f_14284615147321167679">
+			<position dim="0">338.3236905399</position>
+			<position dim="1">628.374403152469</position>
+			<intensity>6.37973e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.792621</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="331.05" y="628.373729187995" />
+				<pt x="345.666" y="628.373729187995" />
+				<pt x="345.666" y="628.376808457077" />
+				<pt x="331.05" y="628.376808457077" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="331.05" y="628.875260371715" />
+				<pt x="345.666" y="628.875260371715" />
+				<pt x="345.666" y="628.87859897688" />
+				<pt x="331.05" y="628.87859897688" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="331.05" y="629.377619601786" />
+				<pt x="345.666" y="629.377619601786" />
+				<pt x="345.666" y="629.382105518132" />
+				<pt x="331.05" y="629.382105518132" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="333.435" y="629.879196893424" />
+				<pt x="345.666" y="629.879196893424" />
+				<pt x="345.666" y="629.881088051945" />
+				<pt x="333.435" y="629.881088051945" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="335.866" y="630.378664460033" />
+				<pt x="341.992" y="630.378664460033" />
+				<pt x="341.992" y="630.382912356406" />
+				<pt x="335.866" y="630.382912356406" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="628.37609788502" RT="332.7" >
+				<PeptideHit score="0.999999" sequence="VASVNTVNVKPK" charge="2" aa_before="K" aa_after="A" protein_refs="PH_660">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="33"/>
+			<userParam type="float" name="score_fit" value="0.631351221830114"/>
+			<userParam type="float" name="score_correlation" value="0.995086093194629"/>
+			<userParam type="float" name="FWHM" value="6.20414924621582"/>
+			<userParam type="int" name="spectrum_index" value="197"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=786"/>
+		</feature>
+		<feature id="f_8743000412484305437">
+			<position dim="0">325.064496845707</position>
+			<position dim="1">507.789314490679</position>
+			<intensity>6.01193e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.603308</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="321.444" y="507.789148874581" />
+				<pt x="329.813" y="507.789148874581" />
+				<pt x="329.813" y="507.790735658258" />
+				<pt x="321.444" y="507.790735658258" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="321.444" y="508.275628708303" />
+				<pt x="329.813" y="508.275628708303" />
+				<pt x="329.813" y="508.300387255847" />
+				<pt x="321.444" y="508.300387255847" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="321.444" y="508.792501587421" />
+				<pt x="329.813" y="508.792501587421" />
+				<pt x="329.813" y="508.80237602815" />
+				<pt x="321.444" y="508.80237602815" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="507.78991624502" RT="325.47799999998" >
+				<PeptideHit score="0.999999" sequence="RAEEVAALR" charge="2" aa_before="K" aa_after="G" protein_refs="PH_654">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="15"/>
+			<userParam type="float" name="score_fit" value="0.409324119282516"/>
+			<userParam type="float" name="score_correlation" value="0.889222950669318"/>
+			<userParam type="float" name="FWHM" value="4.54270935058594"/>
+			<userParam type="int" name="spectrum_index" value="187"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=746"/>
+		</feature>
+		<feature id="f_3836452612521836028">
+			<position dim="0">303.656632641414</position>
+			<position dim="1">619.827280610864</position>
+			<intensity>5.71525e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.80541</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="297.903" y="619.826824408025" />
+				<pt x="309.661" y="619.826824408025" />
+				<pt x="309.661" y="619.82843901217" />
+				<pt x="297.903" y="619.82843901217" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="297.903" y="620.328526120633" />
+				<pt x="309.661" y="620.328526120633" />
+				<pt x="309.661" y="620.329989746213" />
+				<pt x="297.903" y="620.329989746213" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="297.903" y="620.830119356513" />
+				<pt x="309.661" y="620.830119356513" />
+				<pt x="309.661" y="620.832925383002" />
+				<pt x="297.903" y="620.832925383002" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="297.903" y="621.332112889737" />
+				<pt x="307.251" y="621.332112889737" />
+				<pt x="307.251" y="621.333780094981" />
+				<pt x="297.903" y="621.333780094981" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="619.82832063737" RT="299.516" >
+				<PeptideHit score="0.999999" sequence="RPGSMGPVAPNR" charge="2" aa_before="R" aa_after="V" protein_refs="PH_299">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="24"/>
+			<userParam type="float" name="score_fit" value="0.652772646373623"/>
+			<userParam type="float" name="score_correlation" value="0.993738736475401"/>
+			<userParam type="float" name="FWHM" value="4.87576675415039"/>
+			<userParam type="int" name="spectrum_index" value="168"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=670"/>
+		</feature>
+		<feature id="f_14976843323742728469">
+			<position dim="0">370.512075327401</position>
+			<position dim="1">558.800048035569</position>
+			<intensity>5.54858e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.696324</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="361.572" y="558.799683019519" />
+				<pt x="382.422" y="558.799683019519" />
+				<pt x="382.422" y="558.801262840629" />
+				<pt x="361.572" y="558.801262840629" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="361.572" y="559.30179874599" />
+				<pt x="382.422" y="559.30179874599" />
+				<pt x="382.422" y="559.303543940187" />
+				<pt x="361.572" y="559.303543940187" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="362.772" y="559.802353039384" />
+				<pt x="382.422" y="559.802353039384" />
+				<pt x="382.422" y="559.80442713201" />
+				<pt x="362.772" y="559.80442713201" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="366.424" y="560.304131433368" />
+				<pt x="382.422" y="560.304131433368" />
+				<pt x="382.422" y="560.306094661355" />
+				<pt x="366.424" y="560.306094661355" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="558.801343098305" RT="363.251" >
+				<PeptideHit score="0.999999" sequence="AQVQEIAETK" charge="2" aa_before="R" aa_after="M" protein_refs="PH_351">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="56"/>
+			<userParam type="float" name="score_fit" value="0.513843764848616"/>
+			<userParam type="float" name="score_correlation" value="0.943607461434692"/>
+			<userParam type="float" name="FWHM" value="9.79376792907715"/>
+			<userParam type="int" name="spectrum_index" value="224"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=893"/>
+		</feature>
+		<feature id="f_6797171373372280344">
+			<position dim="0">308.328000540601</position>
+			<position dim="1">529.797216983931</position>
+			<intensity>5.53008e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.702589</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="302.563" y="529.796861350536" />
+				<pt x="314.426" y="529.796861350536" />
+				<pt x="314.426" y="529.798429310322" />
+				<pt x="302.563" y="529.798429310322" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="302.563" y="530.298651516438" />
+				<pt x="314.426" y="530.298651516438" />
+				<pt x="314.426" y="530.300349652767" />
+				<pt x="302.563" y="530.300349652767" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="302.563" y="530.801006019115" />
+				<pt x="314.426" y="530.801006019115" />
+				<pt x="314.426" y="530.802196800709" />
+				<pt x="302.563" y="530.802196800709" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="304.918" y="531.301179468632" />
+				<pt x="314.426" y="531.301179468632" />
+				<pt x="314.426" y="531.303542673588" />
+				<pt x="304.918" y="531.303542673588" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="529.79835237565" RT="304.189" >
+				<PeptideHit score="0.999999" sequence="NKDGVEAVVK" charge="2" aa_before="R" aa_after="T" protein_refs="PH_296">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="28"/>
+			<userParam type="float" name="score_fit" value="0.505658531635087"/>
+			<userParam type="float" name="score_correlation" value="0.976215243260943"/>
+			<userParam type="float" name="FWHM" value="5.31142902374268"/>
+			<userParam type="int" name="spectrum_index" value="172"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=686"/>
+		</feature>
+		<feature id="f_10912014979280673292">
+			<position dim="0">388.29826584205</position>
+			<position dim="1">480.76212036551</position>
+			<intensity>5.34047e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.764585</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="376.204" y="480.761869117618" />
+				<pt x="399.843" y="480.761869117618" />
+				<pt x="399.843" y="480.764118775725" />
+				<pt x="376.204" y="480.764118775725" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="376.204" y="481.263669744134" />
+				<pt x="398.608" y="481.263669744134" />
+				<pt x="398.608" y="481.265658244491" />
+				<pt x="376.204" y="481.265658244491" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="377.464" y="481.762360975146" />
+				<pt x="399.843" y="481.762360975146" />
+				<pt x="399.843" y="481.766786169261" />
+				<pt x="377.464" y="481.766786169261" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="381.155" y="482.266673788428" />
+				<pt x="396.144" y="482.266673788428" />
+				<pt x="396.144" y="482.269393667579" />
+				<pt x="381.155" y="482.269393667579" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="386.198" y="482.766324296594" />
+				<pt x="389.926" y="482.766324296594" />
+				<pt x="389.926" y="482.769591774791" />
+				<pt x="386.198" y="482.769591774791" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="480.762311115884" RT="392.905" >
+				<PeptideHit score="0.998948" sequence="HVTFTEVK" charge="2" aa_before="K" aa_after="-" protein_refs="PH_367">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="72"/>
+			<userParam type="float" name="score_fit" value="0.588822866246991"/>
+			<userParam type="float" name="score_correlation" value="0.992812271112094"/>
+			<userParam type="float" name="FWHM" value="9.8325023651123"/>
+			<userParam type="int" name="spectrum_index" value="238"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=949"/>
+		</feature>
+		<feature id="f_2939901064651854857">
+			<position dim="0">258.937774470494</position>
+			<position dim="1">479.752113439805</position>
+			<intensity>4.6725e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.795855</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="82.9723" y="479.751813385636" />
+				<pt x="276.874" y="479.751813385636" />
+				<pt x="276.874" y="479.753322854638" />
+				<pt x="82.9723" y="479.753322854638" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="82.9723" y="480.254090089351" />
+				<pt x="278.105" y="480.254090089351" />
+				<pt x="278.105" y="480.255778659135" />
+				<pt x="82.9723" y="480.255778659135" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="82.9723" y="480.755402907729" />
+				<pt x="274.129" y="480.755402907729" />
+				<pt x="274.129" y="480.757359191775" />
+				<pt x="82.9723" y="480.757359191775" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="479.75283738502" RT="76.25110000002" >
+				<PeptideHit score="0.999999" sequence="AVQGAVEER" charge="2" aa_before="K" aa_after="L" protein_refs="PH_590">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="8590"/>
+			<userParam type="float" name="score_fit" value="0.652428701368676"/>
+			<userParam type="float" name="score_correlation" value="0.970810870986653"/>
+			<userParam type="float" name="FWHM" value="141.139099121094"/>
+			<userParam type="int" name="spectrum_index" value="135"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=539"/>
+		</feature>
+		<feature id="f_6098422873738602307">
+			<position dim="0">336.319999695035</position>
+			<position dim="1">587.316699730509</position>
+			<intensity>4.05308e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.820115</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="328.631" y="587.31588890031" />
+				<pt x="343.223" y="587.31588890031" />
+				<pt x="343.223" y="587.318394389004" />
+				<pt x="328.631" y="587.318394389004" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="328.631" y="587.818006109446" />
+				<pt x="343.223" y="587.818006109446" />
+				<pt x="343.223" y="587.820189263672" />
+				<pt x="328.631" y="587.820189263672" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="329.813" y="588.320283457637" />
+				<pt x="343.223" y="588.320283457637" />
+				<pt x="343.223" y="588.322012159973" />
+				<pt x="329.813" y="588.322012159973" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="587.31811448502" RT="330.552" >
+				<PeptideHit score="0.999999" sequence="GALDTAGVADRK" charge="2" aa_before="R" aa_after="Q" protein_refs="PH_657">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="58"/>
+			<userParam type="float" name="score_fit" value="0.684011985372326"/>
+			<userParam type="float" name="score_correlation" value="0.983298639739999"/>
+			<userParam type="float" name="FWHM" value="6.31085062026978"/>
+			<userParam type="int" name="spectrum_index" value="196"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=782"/>
+		</feature>
+		<feature id="f_5182479253906410904">
+			<position dim="0">300.665320751841</position>
+			<position dim="1">515.799611995656</position>
+			<intensity>3.7359e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.77328</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="296.742" y="515.79919988662" />
+				<pt x="304.918" y="515.79919988662" />
+				<pt x="304.918" y="515.800845243037" />
+				<pt x="296.742" y="515.800845243037" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="296.742" y="516.300829775631" />
+				<pt x="304.918" y="516.300829775631" />
+				<pt x="304.918" y="516.302288085222" />
+				<pt x="296.742" y="516.302288085222" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="296.742" y="516.803309723735" />
+				<pt x="304.918" y="516.803309723735" />
+				<pt x="304.918" y="516.804495804012" />
+				<pt x="296.742" y="516.804495804012" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="296.742" y="517.305259034038" />
+				<pt x="302.563" y="517.305259034038" />
+				<pt x="302.563" y="517.311339966953" />
+				<pt x="296.742" y="517.311339966953" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="515.80053635502" RT="298.353" >
+				<PeptideHit score="0.999996" sequence="VIDKDIATR" charge="2" aa_before="K" aa_after="Q" protein_refs="PH_615">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="31"/>
+			<userParam type="float" name="score_fit" value="0.604397939741746"/>
+			<userParam type="float" name="score_correlation" value="0.989352294249457"/>
+			<userParam type="float" name="FWHM" value="3.83785319328308"/>
+			<userParam type="int" name="spectrum_index" value="166"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=662"/>
+		</feature>
+		<feature id="f_3471960062796233340">
+			<position dim="0">289.852814628306</position>
+			<position dim="1">765.84204956607</position>
+			<intensity>3.72504e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.863475</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="286.349" y="765.841083172709" />
+				<pt x="293.243" y="765.841083172709" />
+				<pt x="293.243" y="765.844996765256" />
+				<pt x="286.349" y="765.844996765256" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="286.349" y="766.342726245522" />
+				<pt x="293.243" y="766.342726245522" />
+				<pt x="293.243" y="766.346404504031" />
+				<pt x="286.349" y="766.346404504031" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="287.482" y="766.845116633922" />
+				<pt x="293.243" y="766.845116633922" />
+				<pt x="293.243" y="766.849101379514" />
+				<pt x="287.482" y="766.849101379514" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="288.623" y="767.347398605198" />
+				<pt x="292.066" y="767.347398605198" />
+				<pt x="292.066" y="767.350516747683" />
+				<pt x="288.623" y="767.350516747683" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="765.84338303502" RT="288.13600000002" >
+				<PeptideHit score="0.999999" sequence="NYEANEAEYDGKK" charge="2" aa_before="R" aa_after="L" protein_refs="PH_590">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="23"/>
+			<userParam type="float" name="score_fit" value="0.753745795991962"/>
+			<userParam type="float" name="score_correlation" value="0.989178132430996"/>
+			<userParam type="float" name="FWHM" value="2.99795818328857"/>
+			<userParam type="int" name="spectrum_index" value="157"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=627"/>
+		</feature>
+		<feature id="f_10379604088509515157">
+			<position dim="0">334.985275495057</position>
+			<position dim="1">702.881450562996</position>
+			<intensity>3.69177e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.803962</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="328.631" y="702.880895845592" />
+				<pt x="341.992" y="702.880895845592" />
+				<pt x="341.992" y="702.883373998106" />
+				<pt x="328.631" y="702.883373998106" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="328.631" y="703.382782973349" />
+				<pt x="341.992" y="703.382782973349" />
+				<pt x="341.992" y="703.385836489499" />
+				<pt x="328.631" y="703.385836489499" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="328.631" y="703.885282959789" />
+				<pt x="341.992" y="703.885282959789" />
+				<pt x="341.992" y="703.886940088123" />
+				<pt x="328.631" y="703.886940088123" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="328.631" y="704.386589024216" />
+				<pt x="341.992" y="704.386589024216" />
+				<pt x="341.992" y="704.39017932862" />
+				<pt x="328.631" y="704.39017932862" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="332.21" y="704.889012541622" />
+				<pt x="334.667" y="704.889012541622" />
+				<pt x="334.667" y="704.889464695007" />
+				<pt x="332.21" y="704.889464695007" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="702.88299485502" RT="330.30100000002" >
+				<PeptideHit score="0.999999" sequence="VQYGGSVKPENVK" charge="2" aa_before="R" aa_after="D" protein_refs="PH_619">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="62"/>
+			<userParam type="float" name="score_fit" value="0.655442194173291"/>
+			<userParam type="float" name="score_correlation" value="0.986136016450731"/>
+			<userParam type="float" name="FWHM" value="5.8023509979248"/>
+			<userParam type="int" name="spectrum_index" value="195"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=778"/>
+		</feature>
+		<feature id="f_17313491067151027927">
+			<position dim="0">374.506070988269</position>
+			<position dim="1">536.313314388111</position>
+			<intensity>3.62697e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.807231</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="366.424" y="536.312994234264" />
+				<pt x="384.907" y="536.312994234264" />
+				<pt x="384.907" y="536.31427513808" />
+				<pt x="366.424" y="536.31427513808" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="367.643" y="536.815219655633" />
+				<pt x="384.907" y="536.815219655633" />
+				<pt x="384.907" y="536.816274926066" />
+				<pt x="367.643" y="536.816274926066" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="536.31434358659" RT="370.613" >
+				<PeptideHit score="0.999999" sequence="LAEIEVNRK" charge="2" aa_before="K" aa_after="M" protein_refs="PH_355">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="109"/>
+			<userParam type="float" name="score_fit" value="0.694252629255949"/>
+			<userParam type="float" name="score_correlation" value="0.938593945506005"/>
+			<userParam type="float" name="FWHM" value="9.21372604370117"/>
+			<userParam type="int" name="spectrum_index" value="227"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=905"/>
+		</feature>
+		<feature id="f_8127750680176619356">
+			<position dim="0">363.034603319791</position>
+			<position dim="1">600.337374991959</position>
+			<intensity>3.59295e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.794336</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="357.984" y="600.337111908942" />
+				<pt x="368.859" y="600.337111908942" />
+				<pt x="368.859" y="600.338843077421" />
+				<pt x="357.984" y="600.338843077421" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="357.984" y="600.838960975409" />
+				<pt x="368.859" y="600.838960975409" />
+				<pt x="368.859" y="600.840844895691" />
+				<pt x="357.984" y="600.840844895691" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="357.984" y="601.322929769754" />
+				<pt x="368.859" y="601.322929769754" />
+				<pt x="368.859" y="601.342133432627" />
+				<pt x="357.984" y="601.342133432627" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="357.984" y="601.823827236891" />
+				<pt x="368.859" y="601.823827236891" />
+				<pt x="368.859" y="601.844592899084" />
+				<pt x="357.984" y="601.844592899084" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="600.337353840495" RT="357.242" >
+				<PeptideHit score="0.999999" sequence="TTHVTVVVSEK" charge="2" aa_before="R" aa_after="-" protein_refs="PH_348">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="50"/>
+			<userParam type="float" name="score_fit" value="0.636425159852627"/>
+			<userParam type="float" name="score_correlation" value="0.991427906078486"/>
+			<userParam type="float" name="FWHM" value="4.94322204589844"/>
+			<userParam type="int" name="spectrum_index" value="218"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=869"/>
+		</feature>
+		<feature id="f_300808356704827026">
+			<position dim="0">321.911019056721</position>
+			<position dim="1">508.275955756738</position>
+			<intensity>3.54431e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.818309</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="317.932" y="508.275507874787" />
+				<pt x="326.182" y="508.275507874787" />
+				<pt x="326.182" y="508.278881151229" />
+				<pt x="317.932" y="508.278881151229" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="317.932" y="508.777434851974" />
+				<pt x="326.182" y="508.777434851974" />
+				<pt x="326.182" y="508.778602171689" />
+				<pt x="317.932" y="508.778602171689" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="317.932" y="509.279075670987" />
+				<pt x="326.182" y="509.279075670987" />
+				<pt x="326.182" y="509.279981981963" />
+				<pt x="317.932" y="509.279981981963" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="320.279" y="509.779571752995" />
+				<pt x="323.833" y="509.779571752995" />
+				<pt x="323.833" y="509.781442016363" />
+				<pt x="320.279" y="509.781442016363" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="508.27685471502" RT="318.393" >
+				<PeptideHit score="0.999995" sequence="LAQGDVVEGK" charge="2" aa_before="K" aa_after="V" protein_refs="PH_629">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="103"/>
+			<userParam type="float" name="score_fit" value="0.67543636810307"/>
+			<userParam type="float" name="score_correlation" value="0.991402318200164"/>
+			<userParam type="float" name="FWHM" value="3.46064066886902"/>
+			<userParam type="int" name="spectrum_index" value="184"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=734"/>
+		</feature>
+		<feature id="f_3781799370747879048">
+			<position dim="0">281.347479262994</position>
+			<position dim="1">500.794276058206</position>
+			<intensity>3.33186e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.810897</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="275.583" y="500.793800339103" />
+				<pt x="286.349" y="500.793800339103" />
+				<pt x="286.349" y="500.79528747499" />
+				<pt x="275.583" y="500.79528747499" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="275.583" y="501.296087130904" />
+				<pt x="285.157" y="501.296087130904" />
+				<pt x="285.157" y="501.297107860446" />
+				<pt x="275.583" y="501.297107860446" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="278.105" y="501.797700926661" />
+				<pt x="285.157" y="501.797700926661" />
+				<pt x="285.157" y="501.798698559403" />
+				<pt x="278.105" y="501.798698559403" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="279.423" y="502.26400892064" />
+				<pt x="285.157" y="502.26400892064" />
+				<pt x="285.157" y="502.29971306026" />
+				<pt x="279.423" y="502.29971306026" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="500.79476853502" RT="273.33100000002" >
+				<PeptideHit score="0.999999" sequence="ANKQDLIAK" charge="2" aa_before="M" aa_after="V" protein_refs="PH_594">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="48"/>
+			<userParam type="float" name="score_fit" value="0.670374906293581"/>
+			<userParam type="float" name="score_correlation" value="0.980874569049958"/>
+			<userParam type="float" name="FWHM" value="4.94555044174194"/>
+			<userParam type="int" name="spectrum_index" value="149"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=595"/>
+		</feature>
+		<feature id="f_9847238450217257701">
+			<position dim="0">310.541500161602</position>
+			<position dim="1">509.238785094633</position>
+			<intensity>3.21629e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.727564</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="303.726" y="509.238226447254" />
+				<pt x="317.932" y="509.238226447254" />
+				<pt x="317.932" y="509.240154858679" />
+				<pt x="303.726" y="509.240154858679" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="303.726" y="509.740217123181" />
+				<pt x="317.932" y="509.740217123181" />
+				<pt x="317.932" y="509.741452127695" />
+				<pt x="303.726" y="509.741452127695" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="303.726" y="510.242254704237" />
+				<pt x="317.932" y="510.242254704237" />
+				<pt x="317.932" y="510.26883789897" />
+				<pt x="303.726" y="510.26883789897" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="307.251" y="510.737458977848" />
+				<pt x="314.426" y="510.737458977848" />
+				<pt x="314.426" y="510.743976503611" />
+				<pt x="307.251" y="510.743976503611" />
+			</convexhull>
+			<convexhull nr="4">
+				<pt x="312.059" y="511.240385521203" />
+				<pt x="314.426" y="511.240385521203" />
+				<pt x="314.426" y="511.240758482367" />
+				<pt x="312.059" y="511.240758482367" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="509.239331379555" RT="305.854" >
+				<PeptideHit score="0.999998" sequence="DATHSMDIK" charge="2" aa_before="K" aa_after="L" protein_refs="PH_305">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="4717"/>
+			<userParam type="float" name="score_fit" value="0.543206052872285"/>
+			<userParam type="float" name="score_correlation" value="0.97449122497673"/>
+			<userParam type="float" name="FWHM" value="6.40362358093262"/>
+			<userParam type="int" name="spectrum_index" value="174"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=694"/>
+		</feature>
+		<feature id="f_4557223264957156763">
+			<position dim="0">286.015774863071</position>
+			<position dim="1">597.312765896715</position>
+			<intensity>3.12682e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.644732</overallquality>
+			<charge>3</charge>
+			<convexhull nr="0">
+				<pt x="284.004" y="597.312029305845" />
+				<pt x="288.623" y="597.312029305845" />
+				<pt x="288.623" y="597.314780589193" />
+				<pt x="284.004" y="597.314780589193" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="284.004" y="597.646304290742" />
+				<pt x="288.623" y="597.646304290742" />
+				<pt x="288.623" y="597.648522716016" />
+				<pt x="284.004" y="597.648522716016" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="284.004" y="597.981370795518" />
+				<pt x="288.623" y="597.981370795518" />
+				<pt x="288.623" y="597.983751092106" />
+				<pt x="284.004" y="597.983751092106" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="284.004" y="598.312006983906" />
+				<pt x="288.623" y="598.312006983906" />
+				<pt x="288.623" y="598.317953739315" />
+				<pt x="284.004" y="598.317953739315" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="597.31433030502" RT="285.82000000002" >
+				<PeptideHit score="0.999999" sequence="HQKPNTENPQGAIVEK" charge="3" aa_before="K" aa_after="E" protein_refs="PH_631">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="9891"/>
+			<userParam type="float" name="score_fit" value="0.443195439821395"/>
+			<userParam type="float" name="score_correlation" value="0.937914278186026"/>
+			<userParam type="float" name="FWHM" value="2.29023313522339"/>
+			<userParam type="int" name="spectrum_index" value="153"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=611"/>
+		</feature>
+		<feature id="f_16538070091703847735">
+			<position dim="0">363.981235943202</position>
+			<position dim="1">537.315280107795</position>
+			<intensity>2.66622e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.751442</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="359.176" y="537.314984038472" />
+				<pt x="368.859" y="537.314984038472" />
+				<pt x="368.859" y="537.316380694509" />
+				<pt x="359.176" y="537.316380694509" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="359.176" y="537.817117646337" />
+				<pt x="368.859" y="537.817117646337" />
+				<pt x="368.859" y="537.818349227309" />
+				<pt x="359.176" y="537.818349227309" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="359.176" y="538.319255150855" />
+				<pt x="367.643" y="538.319255150855" />
+				<pt x="367.643" y="538.319948233664" />
+				<pt x="359.176" y="538.319948233664" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="360.366" y="538.818984054029" />
+				<pt x="365.231" y="538.818984054029" />
+				<pt x="365.231" y="538.822951391339" />
+				<pt x="360.366" y="538.822951391339" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="537.31629671159" RT="359.896" >
+				<PeptideHit score="0.999866" sequence="SVQEEIIKK" charge="2" aa_before="K" aa_after="N" protein_refs="PH_350">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="53"/>
+			<userParam type="float" name="score_fit" value="0.573341758328062"/>
+			<userParam type="float" name="score_correlation" value="0.984867130959908"/>
+			<userParam type="float" name="FWHM" value="4.11615896224976"/>
+			<userParam type="int" name="spectrum_index" value="218"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=869"/>
+		</feature>
+		<feature id="f_5093920970754392734">
+			<position dim="0">275.327053239937</position>
+			<position dim="1">458.743534161959</position>
+			<intensity>2.25737e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.782582</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="153.801" y="458.737097516656" />
+				<pt x="284.004" y="458.737097516656" />
+				<pt x="284.004" y="458.744579061866" />
+				<pt x="153.801" y="458.744579061866" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="153.801" y="459.239293888211" />
+				<pt x="284.004" y="459.239293888211" />
+				<pt x="284.004" y="459.246462360024" />
+				<pt x="153.801" y="459.246462360024" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="458.744336262369" RT="243.868" >
+				<PeptideHit score="0.999886" sequence="KVYDYTK" charge="2" aa_before="R" aa_after="F" protein_refs="PH_312">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="674"/>
+			<userParam type="float" name="score_fit" value="0.760778478129093"/>
+			<userParam type="float" name="score_correlation" value="0.80501053053671"/>
+			<userParam type="float" name="FWHM" value="97.7920150756836"/>
+			<userParam type="int" name="spectrum_index" value="144"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=575"/>
+		</feature>
+		<feature id="f_6113229078048224296">
+			<position dim="0">384.12943177576</position>
+			<position dim="1">623.847923195889</position>
+			<intensity>2.06709e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.789259</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="372.484" y="623.84071714431" />
+				<pt x="396.144" y="623.84071714431" />
+				<pt x="396.144" y="623.849626701325" />
+				<pt x="372.484" y="623.849626701325" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="372.484" y="624.34797283262" />
+				<pt x="394.858" y="624.34797283262" />
+				<pt x="394.858" y="624.350835319608" />
+				<pt x="372.484" y="624.350835319608" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="373.673" y="624.851300466806" />
+				<pt x="393.625" y="624.851300466806" />
+				<pt x="393.625" y="624.852983687073" />
+				<pt x="373.673" y="624.852983687073" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="378.662" y="625.346513938159" />
+				<pt x="389.926" y="625.346513938159" />
+				<pt x="389.926" y="625.357419636101" />
+				<pt x="378.662" y="625.357419636101" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="623.84931673112" RT="372.961" >
+				<PeptideHit score="0.999999" sequence="IMETRPLSATK" charge="2" aa_before="R" aa_after="R" protein_refs="PH_335">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="272"/>
+			<userParam type="float" name="score_fit" value="0.635348631006069"/>
+			<userParam type="float" name="score_correlation" value="0.980454390712569"/>
+			<userParam type="float" name="FWHM" value="10.2263336181641"/>
+			<userParam type="int" name="spectrum_index" value="235"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=937"/>
+		</feature>
+		<feature id="f_10012859422756310695">
+			<position dim="0">283.488718574264</position>
+			<position dim="1">522.789181321345</position>
+			<intensity>1.95479e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.763112</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="281.723" y="522.788896985352" />
+				<pt x="285.157" y="522.788896985352" />
+				<pt x="285.157" y="522.790097646415" />
+				<pt x="281.723" y="522.790097646415" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="281.723" y="523.290945157409" />
+				<pt x="285.157" y="523.290945157409" />
+				<pt x="285.157" y="523.292518272996" />
+				<pt x="281.723" y="523.292518272996" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="281.723" y="523.7923251912" />
+				<pt x="285.157" y="523.7923251912" />
+				<pt x="285.157" y="523.793769523501" />
+				<pt x="281.723" y="523.793769523501" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="281.723" y="524.280861184001" />
+				<pt x="284.004" y="524.280861184001" />
+				<pt x="284.004" y="524.294431738555" />
+				<pt x="281.723" y="524.294431738555" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="522.78997727502" RT="283.25899999998" >
+				<PeptideHit score="0.999999" sequence="REVIEEAAK" charge="2" aa_before="R" aa_after="E" protein_refs="PH_629">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="37"/>
+			<userParam type="float" name="score_fit" value="0.588319840162975"/>
+			<userParam type="float" name="score_correlation" value="0.989834314088681"/>
+			<userParam type="float" name="FWHM" value="1.94443297386169"/>
+			<userParam type="int" name="spectrum_index" value="151"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=603"/>
+		</feature>
+		<feature id="f_11668628922926544047">
+			<position dim="0">314.083594683962</position>
+			<position dim="1">701.899259567192</position>
+			<intensity>1.94325e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.784765</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="310.88" y="701.898901265115" />
+				<pt x="317.932" y="701.898901265115" />
+				<pt x="317.932" y="701.90035462752" />
+				<pt x="310.88" y="701.90035462752" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="310.88" y="702.400987975299" />
+				<pt x="317.932" y="702.400987975299" />
+				<pt x="317.932" y="702.402686320245" />
+				<pt x="310.88" y="702.402686320245" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="310.88" y="702.903024710715" />
+				<pt x="317.932" y="702.903024710715" />
+				<pt x="317.932" y="702.904942832887" />
+				<pt x="310.88" y="702.904942832887" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="310.88" y="703.401745658368" />
+				<pt x="317.932" y="703.401745658368" />
+				<pt x="317.932" y="703.431719683111" />
+				<pt x="310.88" y="703.431719683111" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="701.89930452409" RT="310.39" >
+				<PeptideHit score="0.994933" sequence="IMETRPLSATKR" charge="2" aa_before="R" aa_after="F" protein_refs="PH_335">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="88"/>
+			<userParam type="float" name="score_fit" value="0.625052287839517"/>
+			<userParam type="float" name="score_correlation" value="0.985287584268602"/>
+			<userParam type="float" name="FWHM" value="3.52254724502563"/>
+			<userParam type="int" name="spectrum_index" value="177"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=706"/>
+		</feature>
+		<feature id="f_3807004077118390175">
+			<position dim="0">346.536147752839</position>
+			<position dim="1">481.265545777906</position>
+			<intensity>1.89681e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.765554</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="338.346" y="481.265199676156" />
+				<pt x="354.429" y="481.265199676156" />
+				<pt x="354.429" y="481.266053065658" />
+				<pt x="338.346" y="481.266053065658" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="338.346" y="481.767034228891" />
+				<pt x="354.429" y="481.767034228891" />
+				<pt x="354.429" y="481.768105432391" />
+				<pt x="338.346" y="481.768105432391" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="338.346" y="482.268409356475" />
+				<pt x="354.429" y="482.268409356475" />
+				<pt x="354.429" y="482.274057164788" />
+				<pt x="338.346" y="482.274057164788" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="481.265332356119" RT="356.531" >
+				<PeptideHit score="0.999999" sequence="VAEATELTK" charge="2" aa_before="K" aa_after="K" protein_refs="PH_347">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="173"/>
+			<userParam type="float" name="score_fit" value="0.607063314445163"/>
+			<userParam type="float" name="score_correlation" value="0.965423265446655"/>
+			<userParam type="float" name="FWHM" value="6.84547185897827"/>
+			<userParam type="int" name="spectrum_index" value="204"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=814"/>
+		</feature>
+		<feature id="f_5071019997370755863">
+			<position dim="0">353.0453989642</position>
+			<position dim="1">544.803150406524</position>
+			<intensity>1.76124e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.817627</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="346.902" y="544.802682243288" />
+				<pt x="359.176" y="544.802682243288" />
+				<pt x="359.176" y="544.804134376347" />
+				<pt x="346.902" y="544.804134376347" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="346.902" y="545.304464407265" />
+				<pt x="359.176" y="545.304464407265" />
+				<pt x="359.176" y="545.305761806667" />
+				<pt x="346.902" y="545.305761806667" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="346.902" y="545.785666935146" />
+				<pt x="359.176" y="545.785666935146" />
+				<pt x="359.176" y="545.807599924505" />
+				<pt x="346.902" y="545.807599924505" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_0" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="544.8044250319" RT="347.87" >
+				<PeptideHit score="0.999852" sequence="SIVEEEVKR" charge="2" aa_before="K" aa_after="M" protein_refs="PH_291">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="133"/>
+			<userParam type="float" name="score_fit" value="0.682052222592423"/>
+			<userParam type="float" name="score_correlation" value="0.980151041186282"/>
+			<userParam type="float" name="FWHM" value="4.96764326095581"/>
+			<userParam type="int" name="spectrum_index" value="209"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=834"/>
+		</feature>
+		<feature id="f_6070465410728283243">
+			<position dim="0">377.786423288424</position>
+			<position dim="1">628.801941435435</position>
+			<intensity>1.71924e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.817613</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="370.144" y="628.801170654595" />
+				<pt x="384.907" y="628.801170654595" />
+				<pt x="384.907" y="628.803286604583" />
+				<pt x="370.144" y="628.803286604583" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="370.144" y="629.303287427872" />
+				<pt x="384.907" y="629.303287427872" />
+				<pt x="384.907" y="629.305238969624" />
+				<pt x="370.144" y="629.305238969624" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="370.144" y="629.805351618677" />
+				<pt x="384.907" y="629.805351618677" />
+				<pt x="384.907" y="629.807734899223" />
+				<pt x="370.144" y="629.807734899223" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="373.673" y="630.304828681052" />
+				<pt x="383.671" y="630.304828681052" />
+				<pt x="383.671" y="630.309465419501" />
+				<pt x="373.673" y="630.309465419501" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="628.80218430502" RT="371.079" >
+				<PeptideHit score="0.999999" sequence="YFQGSVNEANK" charge="2" aa_before="R" aa_after="L" protein_refs="PH_672">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="210"/>
+			<userParam type="float" name="score_fit" value="0.678633261485696"/>
+			<userParam type="float" name="score_correlation" value="0.985055528489194"/>
+			<userParam type="float" name="FWHM" value="6.5784273147583"/>
+			<userParam type="int" name="spectrum_index" value="230"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=917"/>
+		</feature>
+		<feature id="f_3068499239371315729">
+			<position dim="0">400.631121214856</position>
+			<position dim="1">487.763081061477</position>
+			<intensity>1.70298e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.768361</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="392.42" y="487.762769497931" />
+				<pt x="408.596" y="487.762769497931" />
+				<pt x="408.596" y="487.763891067356" />
+				<pt x="392.42" y="487.763891067356" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="392.42" y="488.26471574977" />
+				<pt x="408.596" y="488.26471574977" />
+				<pt x="408.596" y="488.265703450888" />
+				<pt x="392.42" y="488.265703450888" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="394.858" y="488.765396308154" />
+				<pt x="406.093" y="488.765396308154" />
+				<pt x="406.093" y="488.767176833004" />
+				<pt x="394.858" y="488.767176833004" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="487.763318195962" RT="396.634" >
+				<PeptideHit score="0.999999" sequence="GLSQEELAK" charge="2" aa_before="R" aa_after="K" protein_refs="PH_316">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="209"/>
+			<userParam type="float" name="score_fit" value="0.610200590132512"/>
+			<userParam type="float" name="score_correlation" value="0.967516673892494"/>
+			<userParam type="float" name="FWHM" value="7.01047849655151"/>
+			<userParam type="int" name="spectrum_index" value="248"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=989"/>
+		</feature>
+		<feature id="f_14453668772751663974">
+			<position dim="0">387.242288195133</position>
+			<position dim="1">563.794664095294</position>
+			<intensity>1.65263e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.752017</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="379.908" y="563.794266454875" />
+				<pt x="394.858" y="563.794266454875" />
+				<pt x="394.858" y="563.796286232769" />
+				<pt x="379.908" y="563.796286232769" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="379.908" y="564.296103954315" />
+				<pt x="394.858" y="564.296103954315" />
+				<pt x="394.858" y="564.297487236559" />
+				<pt x="379.908" y="564.297487236559" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="379.908" y="564.798272110522" />
+				<pt x="393.625" y="564.798272110522" />
+				<pt x="393.625" y="564.799761481583" />
+				<pt x="379.908" y="564.799761481583" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="379.908" y="565.274311542511" />
+				<pt x="394.858" y="565.274311542511" />
+				<pt x="394.858" y="565.300031192601" />
+				<pt x="379.908" y="565.300031192601" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="563.797314777995" RT="384.168" >
+				<PeptideHit score="0.994146" sequence="EFYEKPSVK" charge="2" aa_before="R" aa_after="R" protein_refs="PH_363">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="221"/>
+			<userParam type="float" name="score_fit" value="0.573852589955683"/>
+			<userParam type="float" name="score_correlation" value="0.985495159445437"/>
+			<userParam type="float" name="FWHM" value="6.21313095092773"/>
+			<userParam type="int" name="spectrum_index" value="237"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=945"/>
+		</feature>
+		<feature id="f_3302279503143001384">
+			<position dim="0">366.210582301404</position>
+			<position dim="1">457.788684656572</position>
+			<intensity>1.5604e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.821801</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="360.366" y="457.788408141583" />
+				<pt x="372.484" y="457.788408141583" />
+				<pt x="372.484" y="457.789266690612" />
+				<pt x="360.366" y="457.789266690612" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="360.366" y="458.290554448962" />
+				<pt x="372.484" y="458.290554448962" />
+				<pt x="372.484" y="458.291317984462" />
+				<pt x="360.366" y="458.291317984462" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="360.366" y="458.790904764086" />
+				<pt x="370.144" y="458.790904764086" />
+				<pt x="370.144" y="458.792544052005" />
+				<pt x="360.366" y="458.792544052005" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="457.78939744502" RT="361.113" >
+				<PeptideHit score="0.999999" sequence="KEVALLNK" charge="2" aa_before="K" aa_after="Q" protein_refs="PH_645">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="176"/>
+			<userParam type="float" name="score_fit" value="0.689958624031387"/>
+			<userParam type="float" name="score_correlation" value="0.97883577689479"/>
+			<userParam type="float" name="FWHM" value="5.3374137878418"/>
+			<userParam type="int" name="spectrum_index" value="220"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=877"/>
+		</feature>
+		<feature id="f_6831067898173657862">
+			<position dim="0">370.869198136074</position>
+			<position dim="1">756.870938080116</position>
+			<intensity>1.49451e+07</intensity>
+			<quality dim="0">0</quality>
+			<quality dim="1">0</quality>
+			<overallquality>0.814628</overallquality>
+			<charge>2</charge>
+			<convexhull nr="0">
+				<pt x="361.572" y="756.870234470814" />
+				<pt x="381.155" y="756.870234470814" />
+				<pt x="381.155" y="756.872080348432" />
+				<pt x="361.572" y="756.872080348432" />
+			</convexhull>
+			<convexhull nr="1">
+				<pt x="361.572" y="757.370102275163" />
+				<pt x="381.155" y="757.370102275163" />
+				<pt x="381.155" y="757.373115248978" />
+				<pt x="361.572" y="757.373115248978" />
+			</convexhull>
+			<convexhull nr="2">
+				<pt x="361.572" y="757.871740035713" />
+				<pt x="381.155" y="757.871740035713" />
+				<pt x="381.155" y="757.874756984413" />
+				<pt x="361.572" y="757.874756984413" />
+			</convexhull>
+			<convexhull nr="3">
+				<pt x="366.424" y="758.36573446542" />
+				<pt x="381.155" y="758.36573446542" />
+				<pt x="381.155" y="758.388911928982" />
+				<pt x="366.424" y="758.388911928982" />
+			</convexhull>
+			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="756.87188645502" RT="363.49000000002" >
+				<PeptideHit score="0.999958" sequence="VDGMEAHGNSQIVR" charge="2" aa_before="R" aa_after="A" protein_refs="PH_646">
+				</PeptideHit>
+			</PeptideIdentification>
+			<userParam type="int" name="label" value="310"/>
+			<userParam type="float" name="score_fit" value="0.680671170587556"/>
+			<userParam type="float" name="score_correlation" value="0.974948441539084"/>
+			<userParam type="float" name="FWHM" value="8.28097343444824"/>
+			<userParam type="int" name="spectrum_index" value="224"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=893"/>
+		</feature>
+	</featureList>
+</featureMap>
