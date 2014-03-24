@@ -4,12 +4,9 @@ def main():
     from PyQt4 import QtGui
     from gui.ivi import IdentViewer
 
-    #from lib import load_idxml_file, load_experiment
     from lib import CompressedDataReader
     assert len(sys.argv) >= 2
     reader = CompressedDataReader(sys.argv[1])
-    #pep_identifications, prot_identifications = load_idxml_file(sys.argv[1])
-    #peakmaps = map(load_experiment, sys.argv[2:])
 
     app = QtGui.QApplication(sys.argv)
     window = IdentViewer(reader)
@@ -79,6 +76,12 @@ def _prepare():
         _create_dir_for(unmatched_hits_file)
 
     from lib import CollectHitsData
+    from lib.compress_io import CompressedDataReader
 
     collector = CollectHitsData(root)
     collector.collect(out_file, unmatched_hits_file, mz_tolerance, rt_tolerance)
+
+    with measure_time("reading and computing full chromatogram"):
+        reader = CompressedDataReader(out_file)
+        rts, chromo = reader.fetch_chromatogram(0, 1e30, 0, 1e30)
+        logger.info("chromatogram has length %d and max ion count %.1f" % (len(rts), max(chromo)))

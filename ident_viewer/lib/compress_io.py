@@ -1,9 +1,10 @@
+import pdb
 from collections import defaultdict, namedtuple, Counter
 import pyopenms as oms
 
 from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, Float64Atom,
                     Int16Col, Int8Col, open_file, Filters, Float16Atom, Float32Atom, Float64Col,
-                    BoolCol)
+                    BoolCol, UInt8Col, Float16Col)
 
 import numpy as np
 
@@ -32,15 +33,15 @@ class CompressedDataWriter(object):
             of size CHUNKLEN indexed by segment_id
         """
 
-        aa_seq_id = Int64Col()
-        segment_id = Int8Col()
+        aa_seq_id = Int64Col()     # no uint, as pytables can not index uints
+        segment_id = Int8Col()     # no uint, as pytables can not index uints
         segment = StringCol(CHUNKLEN)
 
     class HitsPerAASequenceCounter(IsDescription):
 
         """ counts number of hits per aa sequenc
         """
-        aa_seq_id = Int64Col()
+        aa_seq_id = Int64Col()     # no uint, as pytables can not index uints
         hit_count = UInt64Col()
 
     class BaseName(IsDescription):
@@ -49,8 +50,8 @@ class CompressedDataWriter(object):
             of size CHUNKLEN indexed by segment_id
         """
 
-        base_name_id = Int16Col()
-        segment_id = Int8Col()
+        base_name_id = Int16Col()     # no uint, as pytables can not index uints
+        segment_id = Int8Col()     # no uint, as pytables can not index uints
         segment = StringCol(CHUNKLEN)
 
     class Spectrum(IsDescription):
@@ -60,13 +61,15 @@ class CompressedDataWriter(object):
             and intensity[i_low:i_high, :]
         """
 
-        spec_id = Int64Col()
+        spec_id = Int64Col()     # no uint, as pytables can not index uints
+        ms_level = UInt8Col()
+        rt = Float16Col()
         i_low = UInt64Col()
         i_high = UInt64Col()
 
     class ConvexHull(IsDescription):
 
-        convex_hull_id = Int64Col()
+        convex_hull_id = Int64Col()     # no uint, as pytables can not index uints
         rt_min = Float32Col()
         rt_max = Float32Col()
         mz_min = Float32Col()
@@ -74,12 +77,12 @@ class CompressedDataWriter(object):
 
     class HitConvexHullLink(IsDescription):
 
-        hit_id = Int64Col()
+        hit_id = Int64Col()     # no uint, as pytables can not index uints
         convex_hull_id = Int64Col()
 
     class HitData(IsDescription):
 
-        hit_id = Int64Col()
+        hit_id = Int64Col()     # no uint, as pytables can not index uints
         base_name_id = Int16Col()
         mz = Float64Col()
         rt = Float32Col()
@@ -93,8 +96,8 @@ class CompressedDataWriter(object):
         this might be n:m, that is we find multiple specs for one hit....
         """
 
-        hit_id = Int64Col()
-        spec_id = Int64Col()
+        hit_id = Int64Col()     # no uint, as pytables can not index uints
+        spec_id = Int64Col()     # no uint, as pytables can not index uints
 
     def __init__(self, path):
         self.path = path
@@ -160,7 +163,7 @@ class CompressedDataWriter(object):
 
         self.intensity_array = self.file_.create_earray(self.root,
                                                     'intensities',
-                                                    Float16Atom(),
+                                                    Float64Atom(),
                                                     (0,),
                                                     filters=filters,)
 
@@ -246,6 +249,8 @@ class CompressedDataWriter(object):
         # register peaks
         row = self.spectrum_table.row
         row["spec_id"] = self.spec_id
+        row["ms_level"] = spec.getMSLevel()
+        row["rt"] = spec.getRT()
         row["i_low"] = self.peak_imin
         row["i_high"] = self.peak_imax
         row.append()
@@ -288,6 +293,8 @@ class CompressedDataWriter(object):
 
         self.spectrum_table.flush()
         self.spectrum_table.cols.spec_id.create_index()
+        self.spectrum_table.cols.ms_level.create_index()
+        self.spectrum_table.cols.rt.create_index()
         self.spectrum_table.flush()
         self.spectrum_table.close()
 
@@ -423,6 +430,26 @@ class CompressedDataReader(object):
                 mz_min = row["mz_min"]
                 mz_max = row["mz_max"]
                 yield rt_min, rt_max, mz_min, mz_max
+
+    def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max):
+        rows0 = self.spectrum_table.where("(%d <= rt) & (rt <= %d) & (ms_level == 1)" % (rt_min, rt_max))
+        rts = []
+        ion_counts = []
+        for row in rows0:
+            rts.append(row["rt"])
+            i_low = row["i_low"]
+            i_high = row["i_high"]
+            mzs = self.mz_array[i_low:i_high]
+            intensities = self.intensity_array[i_low:i_high]
+            view = (mz_min <= mzs) * (mzs <= mz_max)
+            # dtype conversion from float16 -> float128 in order to avoid overflow when
+            # summing up many values:
+            ion_count = intensities[view].astype(np.float128).sum()
+            ion_counts.append(ion_count)
+        return rts, ion_counts
+
+
+
 
 if __name__ == "__main__":
     r = CompressedDataReader("/data/dose_minimized/collected.ivi")

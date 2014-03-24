@@ -98,6 +98,9 @@ class Consumer(object):
                     self.num_collected += 1
                     self.matched_hit_ids.add(hit.id_)
 
+        elif spec.getMSLevel() == 1:
+            self.writer.add_spectrum(spec)
+
     def consumeChromatogram(self, chromo):
         pass
 

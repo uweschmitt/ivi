@@ -78,3 +78,10 @@ def test_0(data_path, tmpdir):
     # check if not alls peaks are zero:
     assert spectrum.get_peaks()[0].sum() > 0
     assert spectrum.get_peaks()[1].sum() > 0
+
+    import time
+    s = time.time()
+    rts, intensities = reader.fetch_chromatogram(0, 1000, 0, 1000)
+    print len(rts), len(intensities)
+    print rts[:3], intensities[:3]
+    print time.time() - s
