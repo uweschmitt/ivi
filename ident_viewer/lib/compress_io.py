@@ -163,7 +163,7 @@ class CompressedDataWriter(object):
 
         self.intensity_array = self.file_.create_earray(self.root,
                                                     'intensities',
-                                                    Float64Atom(),
+                                                    Float32Atom(),
                                                     (0,),
                                                     filters=filters,)
 

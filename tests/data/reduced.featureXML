@@ -3837,48 +3837,42 @@
 			<userParam type="int" name="spectrum_index" value="220"/>
 			<userParam type="string" name="spectrum_native_id" value="scan=877"/>
 		</feature>
-		<feature id="f_6831067898173657862">
-			<position dim="0">370.869198136074</position>
-			<position dim="1">756.870938080116</position>
-			<intensity>1.49451e+07</intensity>
+		<feature id="f_8921995772518139576">
+			<position dim="0">324.105109448523</position>
+			<position dim="1">570.824654192536</position>
+			<intensity>1.42905e+07</intensity>
 			<quality dim="0">0</quality>
 			<quality dim="1">0</quality>
-			<overallquality>0.814628</overallquality>
+			<overallquality>0.834422</overallquality>
 			<charge>2</charge>
 			<convexhull nr="0">
-				<pt x="361.572" y="756.870234470814" />
-				<pt x="381.155" y="756.870234470814" />
-				<pt x="381.155" y="756.872080348432" />
-				<pt x="361.572" y="756.872080348432" />
+				<pt x="321.444" y="570.824265956879" />
+				<pt x="327.406" y="570.824265956879" />
+				<pt x="327.406" y="570.825685448945" />
+				<pt x="321.444" y="570.825685448945" />
 			</convexhull>
 			<convexhull nr="1">
-				<pt x="361.572" y="757.370102275163" />
-				<pt x="381.155" y="757.370102275163" />
-				<pt x="381.155" y="757.373115248978" />
-				<pt x="361.572" y="757.373115248978" />
+				<pt x="321.444" y="571.326473392546" />
+				<pt x="327.406" y="571.326473392546" />
+				<pt x="327.406" y="571.327308304608" />
+				<pt x="321.444" y="571.327308304608" />
 			</convexhull>
 			<convexhull nr="2">
-				<pt x="361.572" y="757.871740035713" />
-				<pt x="381.155" y="757.871740035713" />
-				<pt x="381.155" y="757.874756984413" />
-				<pt x="361.572" y="757.874756984413" />
+				<pt x="321.444" y="571.827881924808" />
+				<pt x="327.406" y="571.827881924808" />
+				<pt x="327.406" y="571.828735239804" />
+				<pt x="321.444" y="571.828735239804" />
 			</convexhull>
-			<convexhull nr="3">
-				<pt x="366.424" y="758.36573446542" />
-				<pt x="381.155" y="758.36573446542" />
-				<pt x="381.155" y="758.388911928982" />
-				<pt x="366.424" y="758.388911928982" />
-			</convexhull>
-			<PeptideIdentification identification_run_ref="PI_2" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="756.87188645502" RT="363.49000000002" >
-				<PeptideHit score="0.999958" sequence="VDGMEAHGNSQIVR" charge="2" aa_before="R" aa_after="A" protein_refs="PH_646">
+			<PeptideIdentification identification_run_ref="PI_1" score_type="InterProphet probability" higher_score_better="true" significance_threshold="0" MZ="570.82532991471" RT="321.907" >
+				<PeptideHit score="0.999997" sequence="AQEVPEAIRK" charge="2" aa_before="K" aa_after="A" protein_refs="PH_339">
 				</PeptideHit>
 			</PeptideIdentification>
-			<userParam type="int" name="label" value="310"/>
-			<userParam type="float" name="score_fit" value="0.680671170587556"/>
-			<userParam type="float" name="score_correlation" value="0.974948441539084"/>
-			<userParam type="float" name="FWHM" value="8.28097343444824"/>
-			<userParam type="int" name="spectrum_index" value="224"/>
-			<userParam type="string" name="spectrum_native_id" value="scan=893"/>
+			<userParam type="int" name="label" value="77"/>
+			<userParam type="float" name="score_fit" value="0.710971979395358"/>
+			<userParam type="float" name="score_correlation" value="0.979308431775675"/>
+			<userParam type="float" name="FWHM" value="2.86506009101868"/>
+			<userParam type="int" name="spectrum_index" value="186"/>
+			<userParam type="string" name="spectrum_native_id" value="scan=742"/>
 		</feature>
 	</featureList>
 </featureMap>

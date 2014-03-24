@@ -191,7 +191,6 @@ class CollectHitsData(object):
         self._match_and_write_features(hits, hit_finders, writer)
 
         # todo:
-        # consumer for ms1 spectra
         # visualisation
 
         self._collect_ms2_spectra(hits, hit_finders, unmatched_hits_file, writer)
@@ -251,7 +250,7 @@ class CollectHitsData(object):
         logger.info("target file %s written and closed" % out_file)
         logger.info("size of all input files: %s" % (format_bytes(self.summed_sizes)))
         logger.info("size of compressed file: %s" % (format_bytes(final_bytes)))
-        factor = self.summed_sizes / final_bytes
+        factor = float(self.summed_sizes) / final_bytes
         logger.info("compression factor is %.1f" % factor)
 
     def _collect_ms2_spectra(self, hits, hit_finders, unmatched_hits_file, writer):
