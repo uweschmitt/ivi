@@ -70,12 +70,12 @@ def test_0(data_path, tmpdir):
 
 
     spectrum = spectra[0]
-    assert spectrum.getRT() == hit.rt
-    assert spectrum.getPrecursors()[0].getMZ() == hit.mz
-    assert spectrum.size() == 497
+    assert spectrum.rt == hit.rt
+    assert spectrum.precursors[0].mz == hit.mz
+    assert len(spectrum.mzs) == 497
     # check if not alls peaks are zero:
-    assert spectrum.get_peaks()[0].sum() > 0
-    assert spectrum.get_peaks()[1].sum() > 0
+    assert spectrum.mzs.sum() > 0
+    assert spectrum.intensities.sum() > 0
 
     import time
     s = time.time()
@@ -88,3 +88,11 @@ def test_0(data_path, tmpdir):
     print len(rts), len(intensities)
     print rts[:3], intensities[:3]
     print time.time() - s
+
+    pm = reader.fetch_peak_map(hit.base_name)
+    assert len(pm.spectra) == 248
+    assert all(s.ms_level == 1 for s in pm.spectra)
+    assert len(pm.spectra[0].mzs) == 5881
+    assert len(pm.spectra[0].intensities) == 5881
+    assert len(pm.spectra[0].precursors) == 0
+    assert abs(pm.spectra[0].rt - 0.5800) < 1e-4

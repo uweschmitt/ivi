@@ -1,11 +1,12 @@
-from collections import defaultdict, namedtuple, Counter
-import pyopenms as oms
+from collections import defaultdict, Counter
 
 from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, Float64Atom,
                     Int16Col, Int8Col, open_file, Filters, Float32Atom, Float64Col, BoolCol,
                     UInt8Col, Float16Col)
 
 import numpy as np
+
+from data_structures import Hit, Spectrum, Precursor, ConvexHull, PeakMap, Chromatogram
 
 
 def invert_dict(d):
@@ -62,9 +63,6 @@ class IdProvider(object):
 
     def get_items_iter(self):
         return self.item_to_id.iterkeys()
-
-
-Hit = namedtuple("Hit", "id_, aa_sequence, base_name, mz, rt, score, is_higher_score_better")
 
 
 CHUNKLEN = 32
@@ -304,7 +302,7 @@ class CompressedDataWriter(object):
 
     def add_spectrum(self, spec, base_name):
         base_name_id = self._lookup_or_insert_base_name(base_name)
-        mzs, intensities = spec.get_peaks()
+        rt, mzs, intensities, precursors, ms_level = spec
         self.mz_array.append(mzs)
         self.intensity_array.append(intensities)
         self.peak_imax += mzs.shape[0]
@@ -312,8 +310,8 @@ class CompressedDataWriter(object):
         row = self.spectrum_table.row
         row["spec_id"] = self.spec_id_provider.next_id()
         row["base_name_id"] = base_name_id
-        row["ms_level"] = spec.getMSLevel()
-        row["rt"] = spec.getRT()
+        row["ms_level"] = ms_level
+        row["rt"] = rt
         row["i_low"] = self.peak_imin
         row["i_high"] = self.peak_imax
         id_ = row["spec_id"]  # row.append() below destroys content of row !
@@ -471,12 +469,8 @@ class CompressedDataReader(object):
                 i_high = row1["i_high"]
                 mzs = self.mz_array[i_low:i_high]
                 intensities = self.intensity_array[i_low:i_high]
-                spec = oms.MSSpectrum()
-                spec.set_peaks((mzs, intensities))
-                spec.setRT(hit.rt)
-                precursor = oms.Precursor()
-                precursor.setMZ(hit.mz)
-                spec.setPrecursors([precursor])
+                precursor = Precursor(hit.mz)
+                spec = Spectrum(hit.rt, mzs, intensities, [precursor], 2)
                 yield spec
 
     def fetch_convex_hulls(self, hit):
@@ -489,14 +483,14 @@ class CompressedDataReader(object):
                 rt_max = row["rt_max"]
                 mz_min = row["mz_min"]
                 mz_max = row["mz_max"]
-                yield rt_min, rt_max, mz_min, mz_max
+                yield ConvexHull(rt_min, rt_max, mz_min, mz_max)
 
     def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
-        rows0 = self.spectrum_table.where("""(base_name_id == %d) & (%d <= rt) & (rt <= %d) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
+        rows = self.spectrum_table.where("""(base_name_id == %d) & (%d <= rt) & (rt <= %d) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
         rts = []
         ion_counts = []
-        for row in rows0:
+        for row in rows:
             rts.append(row["rt"])
             i_low = row["i_low"]
             i_high = row["i_high"]
@@ -507,9 +501,21 @@ class CompressedDataReader(object):
             # summing up many values:
             ion_count = intensities[view].astype(np.float128).sum()
             ion_counts.append(ion_count)
-        return rts, ion_counts
+        return Chromatogram(rts, ion_counts)
 
-
+    def fetch_peak_map(self, base_name):
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        rows = self.spectrum_table.where("""(base_name_id == %d) & (ms_level == 1)""" % (base_name_id, ))
+        spectra = []
+        for row in rows:
+            rt = row["rt"]
+            i_low = row["i_low"]
+            i_high = row["i_high"]
+            mzs = self.mz_array[i_low:i_high]
+            intensities = self.intensity_array[i_low:i_high]
+            spectrum = Spectrum(rt, mzs, intensities, [], 1)
+            spectra.append(spectrum)
+        return PeakMap(spectra)
 
 
 if __name__ == "__main__":

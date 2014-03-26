@@ -11,6 +11,8 @@ from ..std_logger import logger
 
 from ..helpers import measure_time, format_bytes
 
+from data_structures import Spectrum, Precursor
+
 
 def _find_pep_xml_files(root_dir):
     return glob.glob(os.path.join(root_dir, "*", "*.pep.xml"))
@@ -82,28 +84,39 @@ class Consumer(object):
         self.max_rt = None
         self.base_name = base_name
 
-    def consumeSpectrum(self, spec):
-        if spec.getMSLevel() == 2:
+    def _cleanup_and_convert(self, spectrum):
+        mzs, intensities = spectrum.get_peaks()
+        mask = (intensities > 0.0)
+        intensities = intensities[mask]
+        mzs = mzs[mask]
+        precursors = [Precursor(p.getMZ()) for p in spectrum.getPrecursors()]
+        return Spectrum(spectrum.getRT(), intensities, mzs, precursors, spectrum.getMSLevel())
+
+
+    def consumeSpectrum(self, oms_spec):
+        if oms_spec.getMSLevel() == 2:
             matching_hits = []
-            rt = spec.getRT()
+            rt = oms_spec.getRT()
             if self.min_rt is None:
                 self.min_rt = rt
                 self.max_rt = rt
             else:
                 self.min_rt = min(self.min_rt, rt)
                 self.max_rt = max(self.max_rt, rt)
-            mz = float(spec.getPrecursors()[0].getMZ())
+            mz = float(oms_spec.getPrecursors()[0].getMZ())
             for hit in self.hit_finder.find_hits(rt, mz):
                 matching_hits.append(hit)
             if matching_hits:
-                spec_id = self.writer.add_spectrum(spec, self.base_name)
+                spectrum = self._cleanup_and_convert(oms_spec)
+                spec_id = self.writer.add_spectrum(spectrum, self.base_name)
                 for hit in matching_hits:
                     self.writer.link_spec_with_hit(spec_id, hit.id_)
                     self.num_collected += 1
                     self.matched_hit_ids.add(hit.id_)
 
-        elif spec.getMSLevel() == 1:
-            self.writer.add_spectrum(spec, self.base_name)
+        elif oms_spec.getMSLevel() == 1:
+            spectrum = self._cleanup_and_convert(oms_spec)
+            self.writer.add_spectrum(spectrum, self.base_name)
 
     def consumeChromatogram(self, chromo):
         pass
