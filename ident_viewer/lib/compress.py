@@ -1,3 +1,4 @@
+import pdb
 #encoding: utf-8
 
 import pyopenms as oms
@@ -5,7 +6,7 @@ from collections import defaultdict
 import glob
 import os
 
-from compress_io import CompressedDataWriter, Hit
+from compress_io import CompressedDataWriter, Hit, IdProvider
 from ..std_logger import logger
 
 from ..helpers import measure_time, format_bytes
@@ -33,6 +34,8 @@ def _find_mz_xml_files(root_dir):
 
 def _find_feature_xml_files(root_dir):
     return _find_xxx_files(root_dir, "*.featureXML")
+
+
 
 
 class HitFinder(object):
@@ -68,7 +71,7 @@ class HitFinder(object):
 
 class Consumer(object):
 
-    def __init__(self, writer, hit_finder, matched_hit_ids):
+    def __init__(self, writer, hit_finder, matched_hit_ids, base_name):
         self.writer = writer
         self.hit_finder = hit_finder
         self.imin = 0
@@ -77,6 +80,7 @@ class Consumer(object):
         self.matched_hit_ids = matched_hit_ids
         self.min_rt = None
         self.max_rt = None
+        self.base_name = base_name
 
     def consumeSpectrum(self, spec):
         if spec.getMSLevel() == 2:
@@ -92,21 +96,22 @@ class Consumer(object):
             for hit in self.hit_finder.find_hits(rt, mz):
                 matching_hits.append(hit)
             if matching_hits:
-                spec_id = self.writer.add_spectrum(spec)
+                spec_id = self.writer.add_spectrum(spec, self.base_name)
                 for hit in matching_hits:
                     self.writer.link_spec_with_hit(spec_id, hit.id_)
                     self.num_collected += 1
                     self.matched_hit_ids.add(hit.id_)
 
         elif spec.getMSLevel() == 1:
-            self.writer.add_spectrum(spec)
+            self.writer.add_spectrum(spec, self.base_name)
 
     def consumeChromatogram(self, chromo):
         pass
 
     def setExperimentalSettings(self, settings):
         file_name = settings.getSourceFiles()[0].getNameOfFile()
-        self.base_name, __ = os.path.splitext(file_name)
+        print file_name
+        self.orig_base_name, __ = os.path.splitext(file_name)
 
     def setExpectedSize(self, n, m):
         pass
@@ -123,7 +128,7 @@ class CollectHitsData(object):
                                                                        path_root_dir))
 
         self.summed_sizes = 0
-        self.next_hit_id = 0
+        self.hit_id_provider = IdProvider(10000000)
         self.pep_file = pep_files[0]
 
         self.summed_sizes += os.stat(self.pep_file).st_size
@@ -166,8 +171,7 @@ class CollectHitsData(object):
             for ph in pep.getHits():
                 aa_sequence = ph.getSequence().toString()
                 score = ph.getScore()
-                hit_id = self.next_hit_id
-                self.next_hit_id += 1
+                hit_id = self.hit_id_provider.next_id()
                 hit = Hit(hit_id, aa_sequence, base_name, mz, rt, score, is_higher_score_better)
                 hits.append(hit)
                 hit_finders[base_name].add_hit(hit)
@@ -185,7 +189,7 @@ class CollectHitsData(object):
 
         hits, hit_finders = self._extract_hits(peps, mz_tolerance_ppm, rt_tolerance_s)
 
-        writer.add_hits(hits)
+        writer.write_hits(hits)
         logger.info("wrote hits")
 
         self._match_and_write_features(hits, hit_finders, writer)
@@ -193,7 +197,7 @@ class CollectHitsData(object):
         # todo:
         # visualisation
 
-        self._collect_ms2_spectra(hits, hit_finders, unmatched_hits_file, writer)
+        self._collect_spectra(hits, hit_finders, unmatched_hits_file, writer)
 
         writer.close()
 
@@ -232,14 +236,13 @@ class CollectHitsData(object):
                                     break
                             else:
                                 # create new hit
-                                hit_id = self.next_hit_id
-                                self.next_hit_id += 1
+                                hit_id = self.hit_id_provider.next_id()
                                 aa_sequence = oms_hit.getSequence().toString()
                                 score = oms_hit.getScore()
                                 hit = Hit(hit_id, aa_sequence, base_name, mz, rt, score,
                                           is_higher_score_better)
                                 hits.append(hit)
-                                writer.add_hits([hit])
+                                writer.add_hit(hit)
                             # write convex hull for this hit
                             for hull_id in hull_ids:
                                 writer.link_convex_hull_with_hit(hull_id, hit.id_)
@@ -253,12 +256,12 @@ class CollectHitsData(object):
         factor = float(self.summed_sizes) / final_bytes
         logger.info("compression factor is %.1f" % factor)
 
-    def _collect_ms2_spectra(self, hits, hit_finders, unmatched_hits_file, writer):
+    def _collect_spectra(self, hits, hit_finders, unmatched_hits_file, writer):
         matched_hit_ids = set()
         for base_name, path in self.peak_map_files.items():
             hit_finder = hit_finders[base_name]
             with measure_time("fetching peaks from %s" % path):
-                consumer = Consumer(writer, hit_finder, matched_hit_ids)
+                consumer = Consumer(writer, hit_finder, matched_hit_ids, base_name)
                 mzxml_file = oms.MzXMLFile()
                 mzxml_file.transform(path, consumer)
                 logger.info("rt range in this file is %.1f ... %.1f seconds" % (consumer.min_rt,

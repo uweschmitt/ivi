@@ -1,10 +1,9 @@
-import pdb
 from collections import defaultdict, namedtuple, Counter
 import pyopenms as oms
 
 from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, Float64Atom,
-                    Int16Col, Int8Col, open_file, Filters, Float16Atom, Float32Atom, Float64Col,
-                    BoolCol, UInt8Col, Float16Col)
+                    Int16Col, Int8Col, open_file, Filters, Float32Atom, Float64Col, BoolCol,
+                    UInt8Col, Float16Col)
 
 import numpy as np
 
@@ -12,11 +11,57 @@ import numpy as np
 def invert_dict(d):
     return dict((v, k) for (k, v) in d.items())
 
+
 def invert_non_injective_dict(d):
     inv_dict = defaultdict(list)
     for k, v in d.iteritems():
         inv_dict[v].append(k)
     return inv_dict
+
+
+class IdProvider(object):
+
+    def __init__(self, start_with_id=0):
+        self.current_id = start_with_id
+        self.id_to_item = dict()
+        self.item_to_id = dict()
+
+    def next_id(self):
+        next_id = self.current_id
+        self.current_id += 1
+        return next_id
+
+    def is_registered(self, item):
+        return item in self.item_to_id
+
+    def register(self, item):
+        if self.is_registered(item):
+            raise Exception("item %r is already registered" % item)
+        assigned_id = self.current_id
+        self.set_(assigned_id, item)
+        self.current_id += 1
+        return assigned_id
+
+    def set_(self, id_, item):
+        self.id_to_item[id_] = item
+        self.item_to_id[item] = id_
+
+    def unregister(self, item):
+        if not self.is_registered(item):
+            raise Exception("can not remove item %r as it is not registered yet" % item)
+        id_ = self.lookup_id(item)
+        del self.id_to_item[id_]
+        del self.item_to_id[item]
+        return id_
+
+    def lookup_id(self, item):
+        return self.item_to_id.get(item)
+
+    def lookup_item(self, id_):
+        return self.id_to_item.get(id_)
+
+    def get_items_iter(self):
+        return self.item_to_id.iterkeys()
 
 
 Hit = namedtuple("Hit", "id_, aa_sequence, base_name, mz, rt, score, is_higher_score_better")
@@ -61,7 +106,8 @@ class CompressedDataWriter(object):
             and intensity[i_low:i_high, :]
         """
 
-        spec_id = Int64Col()     # no uint, as pytables can not index uints
+        spec_id = Int64Col()       # no uint, as pytables can not index uints
+        base_name_id = Int64Col()  # no uint, as pytables can not index uints
         ms_level = UInt8Col()
         rt = Float16Col()
         i_low = UInt64Col()
@@ -91,6 +137,7 @@ class CompressedDataWriter(object):
         is_higher_score_better = BoolCol()
 
     class HitSpectrumLink(IsDescription):
+
         """
         in most cases we have one spec linked to 0..n hits, but depending on tolerance,
         this might be n:m, that is we find multiple specs for one hit....
@@ -167,12 +214,12 @@ class CompressedDataWriter(object):
                                                     (0,),
                                                     filters=filters,)
 
-        self.base_name_to_id = dict()
-        self.aa_sequence_to_id = dict()
+        self.base_name_id_provider = IdProvider()
+        self.aa_sequence_id_provider = IdProvider()
         self.peak_imin = 0
         self.peak_imax = 0
-        self.spec_id = 0
-        self.convex_hull_id = 0
+        self.spec_id_provider = IdProvider()
+        self.convex_hull_id_provider = IdProvider()
 
     @staticmethod
     def add_string(table, id_col, id_, string):
@@ -186,78 +233,93 @@ class CompressedDataWriter(object):
             row.append()
         table.flush()
 
-    def add_aa_sequence(self, id_, sequence):
+    def add_aa_sequence(self, sequence):
+        id_ = self.aa_sequence_id_provider.register(sequence)
         CompressedDataWriter.add_string(self.aa_sequence_table, "aa_seq_id", id_, sequence)
-        #self.aa_sequence_to_id[sequence] = id_
+        return id_
 
     def finish_writing_aa_sequences(self):
         self.aa_sequence_table.flush()
         self.hit_counts_table.flush()
 
-    def add_base_name(self, id_, name):
+    def add_base_name(self, name):
+        id_ = self.base_name_id_provider.register(name)
         CompressedDataWriter.add_string(self.base_name_table, "base_name_id", id_, name)
-        self.base_name_to_id[name] = id_
+        return id_
 
     def finish_writing_base_names(self):
         self.base_name_table.flush()
 
     def _add_aa_sequences(self, hits):
-        aa_sequences = dict(enumerate(set(h.aa_sequence for h in hits)))
-        for id_, aa_sequence in aa_sequences.iteritems():  # enumerate(set(aa_sequences)):
-            self.add_aa_sequence(id_, aa_sequence)
 
-        self.aa_sequence_to_id = invert_dict(aa_sequences)
-        counts = Counter((self.aa_sequence_to_id[h.aa_sequence] for h in hits))
-        for aa_seq_id, count in counts.iteritems():
+        for aa_sequence in set(h.aa_sequence for h in hits):
+            self.add_aa_sequence(aa_sequence)
+
+        for aa_sequence, count in Counter((h.aa_sequence for h in hits)).iteritems():
+            id_ = self.aa_sequence_id_provider.lookup_id(aa_sequence)
+            assert id_ is not None, "may not happen"
             row = self.hit_counts_table.row
-            row["aa_seq_id"] = aa_seq_id
+            row["aa_seq_id"] = id_
             row["hit_count"] = count
             row.append()
 
         self.finish_writing_aa_sequences()
 
     def _add_base_names(self, base_names):
-        for id_, base_name in enumerate(set(base_names)):
-            self.add_base_name(id_, base_name)
+        for base_name in set(base_names):
+            self.add_base_name(base_name)
         self.finish_writing_base_names()
 
-    def _add_hit(self, hit):
-        aa_seq_id = self.aa_sequence_to_id[hit.aa_sequence]
+    def _lookup_or_insert_base_name(self, base_name):
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        if base_name_id is None:
+            base_name_id = self.add_base_name(base_name)
+        return base_name_id
+
+    def _lookup_or_insert_aa_sequence(self, aa_sequence):
+        aa_sequence_id = self.aa_sequence_id_provider.lookup_id(aa_sequence)
+        if aa_sequence_id is None:
+            aa_sequence_id = self.add_aa_sequence(aa_sequence)
+        return aa_sequence_id
+
+    def add_hit(self, hit):
+        base_name_id = self._lookup_or_insert_base_name(hit.base_name)
+        aa_sequence_id = self._lookup_or_insert_aa_sequence(hit.aa_sequence)
         row = self.hit_data_table.row
         row["hit_id"] = hit.id_
-        row["base_name_id"] = self.base_name_to_id[hit.base_name]
+        row["base_name_id"] = base_name_id
         row["rt"] = hit.rt
-        row["mz"] = hit.mz
-        row["aa_seq_id"] = self.aa_sequence_to_id[hit.aa_sequence]
+        row["aa_seq_id"] = aa_sequence_id
         row["score"] = hit.score
         row["is_higher_score_better"] = hit.is_higher_score_better
         row.append()
 
-    def add_hits(self, hits):
+    def write_hits(self, hits):
         # it is important to write aa sequences and basenames before we write the hits
         # as hits link to aa sequences and base names
         self._add_aa_sequences(hits)
         self._add_base_names(set(h.base_name for h in hits))
         for hit in hits:
-            self._add_hit(hit)
+            self.add_hit(hit)
 
-    def add_spectrum(self, spec):
+    def add_spectrum(self, spec, base_name):
+        base_name_id = self._lookup_or_insert_base_name(base_name)
         mzs, intensities = spec.get_peaks()
         self.mz_array.append(mzs)
         self.intensity_array.append(intensities)
         self.peak_imax += mzs.shape[0]
         # register peaks
         row = self.spectrum_table.row
-        row["spec_id"] = self.spec_id
+        row["spec_id"] = self.spec_id_provider.next_id()
+        row["base_name_id"] = base_name_id
         row["ms_level"] = spec.getMSLevel()
         row["rt"] = spec.getRT()
         row["i_low"] = self.peak_imin
         row["i_high"] = self.peak_imax
+        id_ = row["spec_id"]  # row.append() below destroys content of row !
         row.append()
         self.peak_imin = self.peak_imax
-        last_spec_id = self.spec_id
-        self.spec_id += 1
-        return last_spec_id
+        return id_
 
     def link_spec_with_hit(self, spec_id, hit_id):
         row = self.hit_spectrum_link_table.row
@@ -271,15 +333,14 @@ class CompressedDataWriter(object):
         rt_min, mz_min = hull.min(axis=0)
         rt_max, mz_max = hull.max(axis=0)
         row = self.convex_hull_table.row
-        row["convex_hull_id"] = self.convex_hull_id
+        row["convex_hull_id"] = self.convex_hull_id_provider.next_id()
         row["rt_min"] = rt_min
         row["rt_max"] = rt_max
         row["mz_min"] = mz_min
         row["mz_max"] = mz_max
+        id_ = row["convex_hull_id"]  # row.append() below destroys content of row !
         row.append()
-        last_hull_id = self.convex_hull_id
-        self.convex_hull_id += 1
-        return last_hull_id
+        return id_
 
     def link_convex_hull_with_hit(self, hull_id, hit_id):
         row = self.hit_convex_hull_link_table.row
@@ -358,40 +419,37 @@ class CompressedDataReader(object):
             segment = row["segment"]
             collected_segments[id_].append((segment_id, segment))
 
-        strings = dict()
+        id_provider = IdProvider()
         for id_, segments in collected_segments.iteritems():
             segments.sort()  # sorts by segment_id
             full_str = "".join(s for (segment_id, s) in segments)
-            strings[id_] = full_str
-        return strings
+            id_provider.set_(id_, full_str)
+        return id_provider
 
     def _read_base_names(self):
-        self.id_to_base_name = CompressedDataReader.fetch_strings(self.base_name_table, "base_name_id")
+        self.base_name_id_provider = CompressedDataReader.fetch_strings(self.base_name_table, "base_name_id")
 
     def _read_aa_sequences(self):
-        self.id_to_aa_sequence = CompressedDataReader.fetch_strings(self.aa_sequence_table, "aa_seq_id")
-        self.aa_sequence_to_id = invert_dict(self.id_to_aa_sequence)
+        self.aa_sequence_id_provider = CompressedDataReader.fetch_strings(self.aa_sequence_table, "aa_seq_id")
         self.no_hits_per_aa_sequence = dict()
         for row in self.hit_counts_table:
             id_ = row["aa_seq_id"]
             counts = row["hit_count"]
             self.no_hits_per_aa_sequence[id_] = counts
 
-    def get_aa_sequences(self):
-        return self.id_to_aa_sequence.values()
+    def aa_sequence_iter(self):
+        return self.aa_sequence_id_provider.get_items_iter()
 
     def get_number_of_hits_for(self, aa_sequence):
-        id_ = self.aa_sequence_to_id.get(aa_sequence)
+        id_ = self.aa_sequence_id_provider.lookup_id(aa_sequence)
         return self.no_hits_per_aa_sequence.get(id_, 0)
 
     def get_hits_for_aa_sequence(self, aa_sequence):
-        t = self.hit_data_table
-
         hits = []
-        aa_seq_id = self.aa_sequence_to_id.get(aa_sequence)
+        aa_seq_id = self.aa_sequence_id_provider.lookup_id(aa_sequence)
         rows = self.hit_data_table.where("aa_seq_id == %d" % aa_seq_id)
         for row in rows:
-            base_name = self.id_to_base_name.get(row["base_name_id"])
+            base_name = self.base_name_id_provider.lookup_item(row["base_name_id"])
             hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["score"],
                       row["is_higher_score_better"])
             hits.append(hit)
@@ -403,6 +461,8 @@ class CompressedDataReader(object):
 
     def fetch_spectra(self, hit):
         rows0 = self.hit_spectrum_link_table.where("hit_id == %d" % hit.id_)
+        # no look up with  base name needed, as hit has unique base name which is
+        # implicitly contained when lookup up in hit_spectrum_link_table.
         for row0 in rows0:
             spec_id = row0["spec_id"]
             rows1 = self.spectrum_table.where("spec_id == %d" % spec_id)
@@ -431,8 +491,9 @@ class CompressedDataReader(object):
                 mz_max = row["mz_max"]
                 yield rt_min, rt_max, mz_min, mz_max
 
-    def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max):
-        rows0 = self.spectrum_table.where("(%d <= rt) & (rt <= %d) & (ms_level == 1)" % (rt_min, rt_max))
+    def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max, base_name):
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        rows0 = self.spectrum_table.where("""(base_name_id == %d) & (%d <= rt) & (rt <= %d) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
         rts = []
         ion_counts = []
         for row in rows0:

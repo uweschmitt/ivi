@@ -81,7 +81,7 @@ def _prepare():
     collector = CollectHitsData(root)
     collector.collect(out_file, unmatched_hits_file, mz_tolerance, rt_tolerance)
 
-    with measure_time("reading and computing full chromatogram"):
-        reader = CompressedDataReader(out_file)
-        rts, chromo = reader.fetch_chromatogram(0, 1e30, 0, 1e30)
-        logger.info("chromatogram has length %d and max ion count %.1f" % (len(rts), max(chromo)))
+    #with measure_time("reading and computing full chromatogram"):
+        #reader = CompressedDataReader(out_file)
+        #rts, chromo = reader.fetch_chromatogram(0, 1e30, 0, 1e30)
+        #logger.info("chromatogram has length %d and max ion count %.1f" % (len(rts), max(chromo)))
