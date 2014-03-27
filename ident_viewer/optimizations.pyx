@@ -57,7 +57,7 @@ def get_ranges(peak_map, int ms_level):
     cdef object spectrum
     cdef double rt_min, rt_max, mz_min, mz_max, rt, ii_min, ii_max
     cdef np_min = np.min
-    cdef np_max = np.min
+    cdef np_max = np.max
     cdef np.float64_t[:] mzs
     cdef np.float32_t[:] iis
     cdef int found_spec = 0
