@@ -435,6 +435,9 @@ class CompressedDataReader(object):
             counts = row["hit_count"]
             self.no_hits_per_aa_sequence[id_] = counts
 
+    def get_base_names(self):
+        return list(self.base_name_id_provider.get_items_iter())
+
     def aa_sequence_iter(self):
         return self.aa_sequence_id_provider.get_items_iter()
 

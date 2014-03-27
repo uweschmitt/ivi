@@ -1,4 +1,5 @@
 cimport cython
+from libc.float cimport DBL_MAX
 cimport numpy as np
 import numpy as np
 
@@ -45,3 +46,42 @@ def sample_image(peak_map, double rtmin, double rtmax, double mzmin, double mzma
                 mz_bin = int((mz - mzmin) / (mzmax - mzmin) * (h - 1))
                 img_view[mz_bin, rt_bin] += intensities[j]
     return img
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+def get_ranges(peak_map, int ms_level):
+    cdef list spectra = peak_map.spectra
+    cdef int n = len(spectra)
+
+    cdef object spectrum
+    cdef double rt_min, rt_max, mz_min, mz_max, rt, ii_min, ii_max
+    cdef np_min = np.min
+    cdef np_max = np.min
+    cdef np.float64_t[:] mzs
+    cdef np.float32_t[:] iis
+    cdef int found_spec = 0
+
+    rt_max = -DBL_MAX
+    rt_min = +DBL_MAX
+    mz_max = -DBL_MAX
+    mz_min = +DBL_MAX
+    ii_max = -DBL_MAX
+    ii_min = +DBL_MAX
+
+    for i in range(n):
+        spectrum = spectra[i]
+        if spectrum.ms_level == ms_level:
+            found_spec = 1
+            mzs = spectrum.mzs
+            iis = spectrum.intensities
+            rt = spectrum.rt
+            rt_min = min(rt, rt_min)
+            rt_max = max(rt, rt_min)
+            mz_min = min(mz_min, np_min(mzs))
+            mz_max = max(mz_max, np_max(mzs))
+            ii_min = min(ii_min, np_min(iis))
+            ii_max = max(ii_max, np_max(iis))
+    if found_spec:
+        return rt_min, rt_max, mz_min, mz_max, ii_min, ii_max
+    return None, None, None, None, None, None

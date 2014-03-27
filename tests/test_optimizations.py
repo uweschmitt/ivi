@@ -1,5 +1,5 @@
 from ident_viewer.lib.data_structures import Spectrum, PeakMap
-from ident_viewer.optimizations import sample_image
+from ident_viewer.optimizations import sample_image, get_ranges
 import numpy as np
 
 
@@ -29,3 +29,13 @@ def test_00():
 
     img = sample_image(pm, 1.0, 2.0, 1.0, 4.0, 2, 2, 1)
     assert np.linalg.norm(np.array(((3, 5), (4, 5))) - img) <= 1e-6
+
+    assert get_ranges(PeakMap([]), 1) == (None, ) * 6
+    assert get_ranges(pm, 1) == (1.0, 2.0, 1.0, 2.0, 1.0, 2.0)
+    assert get_ranges(pm, 2) == (3.0, 3.0, 2.0, 2.0, 2.0, 2.0)
+    assert get_ranges(pm, 3) == (None, ) * 6
+
+    pm = PeakMap(spectra[:1])
+    assert get_ranges(pm, 1) == (1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+    assert get_ranges(pm, 2) == (None, ) * 6
+    assert get_ranges(pm, 3) == (None, ) * 6
