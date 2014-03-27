@@ -30,6 +30,10 @@ def test_00():
     img = sample_image(pm, 1.0, 2.0, 1.0, 4.0, 2, 2, 1)
     assert np.linalg.norm(np.array(((3, 5), (4, 5))) - img) <= 1e-6
 
+    # now test if attached method works too...
+    img = pm.sample_image(1.0, 2.0, 1.0, 4.0, 2, 2, 1)
+    assert np.linalg.norm(np.array(((3, 5), (4, 5))) - img) <= 1e-6
+
     assert get_ranges(PeakMap([]), 1) == (None, ) * 6
     assert get_ranges(pm, 1) == (1.0, 2.0, 1.0, 2.0, 1.0, 2.0)
     assert get_ranges(pm, 2) == (3.0, 3.0, 2.0, 2.0, 2.0, 2.0)
@@ -39,3 +43,8 @@ def test_00():
     assert get_ranges(pm, 1) == (1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
     assert get_ranges(pm, 2) == (None, ) * 6
     assert get_ranges(pm, 3) == (None, ) * 6
+
+    # now test if attached method works too...
+    assert pm.get_ranges(1) == (1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+    assert pm.get_ranges(2) == (None, ) * 6
+    assert pm.get_ranges(3) == (None, ) * 6
