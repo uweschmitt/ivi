@@ -1,4 +1,3 @@
-import pdb
 #encoding: utf-8
 
 import pyopenms as oms
@@ -36,8 +35,6 @@ def _find_mz_xml_files(root_dir):
 
 def _find_feature_xml_files(root_dir):
     return _find_xxx_files(root_dir, "*.featureXML")
-
-
 
 
 class HitFinder(object):
@@ -84,14 +81,10 @@ class Consumer(object):
         self.max_rt = None
         self.base_name = base_name
 
-    def _cleanup_and_convert(self, spectrum):
+    def _convert_from_oms_type(self, spectrum):
         mzs, intensities = spectrum.get_peaks()
-        mask = (intensities > 0.0)
-        intensities = intensities[mask]
-        mzs = mzs[mask]
         precursors = [Precursor(p.getMZ()) for p in spectrum.getPrecursors()]
-        return Spectrum(spectrum.getRT(), intensities, mzs, precursors, spectrum.getMSLevel())
-
+        return Spectrum(spectrum.getRT(), mzs, intensities, precursors, spectrum.getMSLevel())
 
     def consumeSpectrum(self, oms_spec):
         if oms_spec.getMSLevel() == 2:
@@ -107,7 +100,8 @@ class Consumer(object):
             for hit in self.hit_finder.find_hits(rt, mz):
                 matching_hits.append(hit)
             if matching_hits:
-                spectrum = self._cleanup_and_convert(oms_spec)
+                spectrum = self._convert_from_oms_type(oms_spec)
+                spectrum = spectrum.cleaned()
                 spec_id = self.writer.add_spectrum(spectrum, self.base_name)
                 for hit in matching_hits:
                     self.writer.link_spec_with_hit(spec_id, hit.id_)
@@ -115,7 +109,8 @@ class Consumer(object):
                     self.matched_hit_ids.add(hit.id_)
 
         elif oms_spec.getMSLevel() == 1:
-            spectrum = self._cleanup_and_convert(oms_spec)
+            spectrum = self._convert_from_oms_type(oms_spec)
+            spectrum = spectrum.cleaned()
             self.writer.add_spectrum(spectrum, self.base_name)
 
     def consumeChromatogram(self, chromo):
