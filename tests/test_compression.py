@@ -45,7 +45,7 @@ def test_0(data_path, tmpdir):
     spectra = list(reader.fetch_spectra(hit))
     assert len(spectra) == 0
 
-    ch = list(reader.fetch_convex_hulls(hit))
+    ch = list(reader.fetch_convex_hulls_for_hit(hit))
     assert len(ch) == 0
 
     hit = hits[0]
@@ -57,7 +57,7 @@ def test_0(data_path, tmpdir):
     assert len(spectra) == 1
 
 
-    ch = list(reader.fetch_convex_hulls(hit))
+    ch = list(reader.fetch_convex_hulls_for_hit(hit))
     assert len(ch) == 3
     tobe = [(360.3659973144531, 372.4840087890625, 457.7884216308594, 457.7892761230469),
             (360.3659973144531, 372.4840087890625, 458.2905578613281, 458.29132080078125),
@@ -96,3 +96,9 @@ def test_0(data_path, tmpdir):
     assert len(pm.spectra[0].intensities) == 5881
     assert len(pm.spectra[0].precursors) == 0
     assert abs(pm.spectra[0].rt - 0.5800) < 1e-4
+
+    hulls = list(reader.fetch_convex_hulls_for_base_name("reduced"))
+    assert len(hulls) == 160
+
+    hits = list(reader.get_hits_for_base_name("reduced"))
+    assert len(hits) == 910

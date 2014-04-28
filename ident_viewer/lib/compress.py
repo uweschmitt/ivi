@@ -253,7 +253,7 @@ class CollectHitsData(object):
                                 writer.add_hit(hit)
                             # write convex hull for this hit
                             for hull_id in hull_ids:
-                                writer.link_convex_hull_with_hit(hull_id, hit.id_)
+                                writer.link_convex_hull_with_hit(hull_id, hit)
 
     def _report_size_of_final_file(self, out_file):
 

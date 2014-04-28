@@ -76,7 +76,7 @@ class CompressedDataWriter(object):
             of size CHUNKLEN indexed by segment_id
         """
 
-        aa_seq_id = Int64Col()     # no uint, as pytables can not index uints
+        aa_sequence_id = Int64Col()     # no uint, as pytables can not index uints
         segment_id = Int8Col()     # no uint, as pytables can not index uints
         segment = StringCol(CHUNKLEN)
 
@@ -84,7 +84,7 @@ class CompressedDataWriter(object):
 
         """ counts number of hits per aa sequenc
         """
-        aa_seq_id = Int64Col()     # no uint, as pytables can not index uints
+        aa_sequence_id = Int64Col()     # no uint, as pytables can not index uints
         hit_count = UInt64Col()
 
     class BaseName(IsDescription):
@@ -121,8 +121,10 @@ class CompressedDataWriter(object):
 
     class HitConvexHullLink(IsDescription):
 
-        hit_id = Int64Col()     # no uint, as pytables can not index uints
-        convex_hull_id = Int64Col()
+        hit_id = Int64Col()           # no uint, as pytables can not index uints
+        base_name_id = Int64Col()     # dito
+        convex_hull_id = Int64Col()   # dito
+
 
     class HitData(IsDescription):
 
@@ -130,7 +132,7 @@ class CompressedDataWriter(object):
         base_name_id = Int16Col()
         mz = Float64Col()
         rt = Float32Col()
-        aa_seq_id = Int64Col()
+        aa_sequence_id = Int64Col()
         score = Float64Col()
         is_higher_score_better = BoolCol()
 
@@ -233,7 +235,7 @@ class CompressedDataWriter(object):
 
     def add_aa_sequence(self, sequence):
         id_ = self.aa_sequence_id_provider.register(sequence)
-        CompressedDataWriter.add_string(self.aa_sequence_table, "aa_seq_id", id_, sequence)
+        CompressedDataWriter.add_string(self.aa_sequence_table, "aa_sequence_id", id_, sequence)
         return id_
 
     def finish_writing_aa_sequences(self):
@@ -257,7 +259,7 @@ class CompressedDataWriter(object):
             id_ = self.aa_sequence_id_provider.lookup_id(aa_sequence)
             assert id_ is not None, "may not happen"
             row = self.hit_counts_table.row
-            row["aa_seq_id"] = id_
+            row["aa_sequence_id"] = id_
             row["hit_count"] = count
             row.append()
 
@@ -287,7 +289,7 @@ class CompressedDataWriter(object):
         row["hit_id"] = hit.id_
         row["base_name_id"] = base_name_id
         row["rt"] = hit.rt
-        row["aa_seq_id"] = aa_sequence_id
+        row["aa_sequence_id"] = aa_sequence_id
         row["score"] = hit.score
         row["is_higher_score_better"] = hit.is_higher_score_better
         row.append()
@@ -340,9 +342,10 @@ class CompressedDataWriter(object):
         row.append()
         return id_
 
-    def link_convex_hull_with_hit(self, hull_id, hit_id):
+    def link_convex_hull_with_hit(self, hull_id, hit):
         row = self.hit_convex_hull_link_table.row
-        row["hit_id"] = hit_id
+        row["hit_id"] = hit.id_
+        row["base_name_id"] = self.base_name_id_provider.lookup_id(hit.base_name)
         row["convex_hull_id"] = hull_id
         row.append()
 
@@ -359,7 +362,7 @@ class CompressedDataWriter(object):
 
         self.hit_data_table.flush()
         self.hit_data_table.cols.hit_id.create_index()
-        self.hit_data_table.cols.aa_seq_id.create_index()
+        self.hit_data_table.cols.aa_sequence_id.create_index()
         self.hit_data_table.close()
 
         self.hit_spectrum_link_table.flush()
@@ -376,6 +379,7 @@ class CompressedDataWriter(object):
         self.hit_convex_hull_link_table.flush()
         self.hit_convex_hull_link_table.cols.hit_id.create_index()
         self.hit_convex_hull_link_table.cols.convex_hull_id.create_index()
+        self.hit_convex_hull_link_table.cols.base_name_id.create_index()
         self.hit_convex_hull_link_table.flush()
         self.hit_convex_hull_link_table.close()
 
@@ -428,10 +432,11 @@ class CompressedDataReader(object):
         self.base_name_id_provider = CompressedDataReader.fetch_strings(self.base_name_table, "base_name_id")
 
     def _read_aa_sequences(self):
-        self.aa_sequence_id_provider = CompressedDataReader.fetch_strings(self.aa_sequence_table, "aa_seq_id")
+        self.aa_sequence_id_provider = CompressedDataReader.fetch_strings(self.aa_sequence_table,
+                "aa_sequence_id")
         self.no_hits_per_aa_sequence = dict()
         for row in self.hit_counts_table:
-            id_ = row["aa_seq_id"]
+            id_ = row["aa_sequence_id"]
             counts = row["hit_count"]
             self.no_hits_per_aa_sequence[id_] = counts
 
@@ -447,10 +452,21 @@ class CompressedDataReader(object):
 
     def get_hits_for_aa_sequence(self, aa_sequence):
         hits = []
-        aa_seq_id = self.aa_sequence_id_provider.lookup_id(aa_sequence)
-        rows = self.hit_data_table.where("aa_seq_id == %d" % aa_seq_id)
+        aa_sequence_id = self.aa_sequence_id_provider.lookup_id(aa_sequence)
+        rows = self.hit_data_table.where("aa_sequence_id == %d" % aa_sequence_id)
         for row in rows:
             base_name = self.base_name_id_provider.lookup_item(row["base_name_id"])
+            hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["score"],
+                      row["is_higher_score_better"])
+            hits.append(hit)
+        return hits
+
+    def get_hits_for_base_name(self, base_name):
+        hits = []
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        rows = self.hit_data_table.where("base_name_id == %d" % base_name_id)
+        for row in rows:
+            aa_sequence = self.aa_sequence_id_provider.lookup_item(row["aa_sequence_id"])
             hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["score"],
                       row["is_higher_score_better"])
             hits.append(hit)
@@ -476,7 +492,7 @@ class CompressedDataReader(object):
                 spec = Spectrum(hit.rt, mzs, intensities, [precursor], 2)
                 yield spec
 
-    def fetch_convex_hulls(self, hit):
+    def fetch_convex_hulls_for_hit(self, hit):
         rows0 = self.hit_convex_hull_link_table.where("hit_id == %d" % hit.id_)
         for row0 in rows0:
             hull_id = row0["convex_hull_id"]
@@ -487,6 +503,40 @@ class CompressedDataReader(object):
                 mz_min = row["mz_min"]
                 mz_max = row["mz_max"]
                 yield ConvexHull(rt_min, rt_max, mz_min, mz_max)
+
+    def fetch_convex_hulls_for_base_name(self, base_name):
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        rows0 = self.hit_convex_hull_link_table.where("base_name_id == %d" % base_name_id)
+        for row0 in rows0:
+            hull_id = row0["convex_hull_id"]
+            rows = self.convex_hull_table.where("convex_hull_id == %d" % hull_id)
+            for row in rows:
+                rt_min = row["rt_min"]
+                rt_max = row["rt_max"]
+                mz_min = row["mz_min"]
+                mz_max = row["mz_max"]
+                yield ConvexHull(rt_min, rt_max, mz_min, mz_max)
+
+    def fetch_overall_hulls_for_base_name(self, base_name):
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        rows0 = self.hit_convex_hull_link_table.where("base_name_id == %d" % base_name_id)
+        for row0 in rows0:
+            hull_id = row0["convex_hull_id"]
+            rows = self.convex_hull_table.where("convex_hull_id == %d" % hull_id)
+            rt_mins = []
+            rt_maxs = []
+            mz_mins = []
+            mz_maxs = []
+            for row in rows:
+                rt_min = row["rt_min"]
+                rt_max = row["rt_max"]
+                mz_min = row["mz_min"]
+                mz_max = row["mz_max"]
+                rt_mins.append(rt_min)
+                rt_maxs.append(rt_max)
+                mz_mins.append(mz_min)
+                mz_maxs.append(mz_max)
+            yield ConvexHull(min(rt_mins), max(rt_maxs), min(mz_mins), max(mz_maxs))
 
     def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
