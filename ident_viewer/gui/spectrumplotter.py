@@ -10,5 +10,5 @@ class SpectrumPlotter(MzPlotWidget):
             color = dict(y="red", b="green").get(ion_name[0], "black")
             annotations.append((mz, ii, "%s<br>%s" % (ion_name, info or ""), color))
         self.set_annotations(annotations)
-        self.plot_spectrum(spectrum)
+        self.plot_spectrum(spectrum.to_oms_spectrum())
 

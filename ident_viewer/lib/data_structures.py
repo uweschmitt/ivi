@@ -26,7 +26,7 @@ class Spectrum(namedtuple("Spectrum", "rt, mzs, intensities, precursors, ms_leve
         intensities = self.intensities[mask]
         return self.__class__(self.rt, mzs, intensities, self.precursors, self.ms_level)
 
-    def as_oms_spectrum(self):
+    def to_oms_spectrum(self):
         spec = oms.MSSpectrum()
         spec.setRT(self.rt)
         spec.set_peaks((self.mzs, self.intensities))

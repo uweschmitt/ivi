@@ -14,7 +14,7 @@ class PeptideHitAssigner(object):
         assert isinstance(spectrum, Spectrum)
 
         theoretical_rich_spectrum = self._compute_theoretical_spectrum(hit)
-        alignment = self._compute_alignment(spectrum.as_oms_spectrum(), theoretical_rich_spectrum)
+        alignment = self._compute_alignment(spectrum.to_oms_spectrum(), theoretical_rich_spectrum)
 
         assignment = []
 

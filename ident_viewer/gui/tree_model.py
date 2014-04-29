@@ -1,4 +1,4 @@
-from PyQt4.QtCore import QVariant, QAbstractItemModel, QModelIndex, Qt
+from PyQt4.QtCore import QVariant, QAbstractItemModel, QModelIndex, Qt, pyqtSignal
 
 import sys
 
@@ -132,6 +132,8 @@ class RootItem(TreeItem):
 
 class TreeModel(QAbstractItemModel):
 
+    peptideSelected = pyqtSignal(object, object)
+
     def __init__(self, reader, parent=None):
         super(TreeModel, self).__init__(parent)
         self.root_item = RootItem(reader)
@@ -199,10 +201,8 @@ class TreeModel(QAbstractItemModel):
         if isinstance(item, SpectrumItem):
             hit = item.parent().data()
             spectrum = item.data()
-            print hit
-            # print str(hit), str(spectrum)
-            # assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
-            # print assignment
+            assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
+            self.peptideSelected.emit(spectrum, assignment)
 
 
 if __name__ == "__main__":

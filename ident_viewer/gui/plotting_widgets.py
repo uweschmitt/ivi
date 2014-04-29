@@ -1,5 +1,3 @@
-import pdb
-
 from guiqwt.plot import CurveWidget, PlotManager
 from guiqwt.builder import make
 from guiqwt.label import ObjectInfo
@@ -165,9 +163,10 @@ class MzPlotWidget(PlotWidget):
 
         all_peaks = []
         for spectrum in spectra:
-            peaks = spectrum.get_peaks()
+            mzs, iis = spectrum.get_peaks()
+            peaks = np.vstack((mzs, iis)).T
             all_peaks.append(peaks)
-            curve = make_peak_curve(peaks[:, 0], peaks[:,1])
+            curve = make_peak_curve(mzs, iis)
             self.plot.add_item(curve)
 
         self.plot.all_peaks = np.vstack(all_peaks)
