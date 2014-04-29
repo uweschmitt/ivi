@@ -29,11 +29,7 @@ class IdentViewer(MainWindow):
         self.peptide_hits.setMinimumWidth(400)
 
     def connect_signals(self):
-        # self.peptide_hits.verticalHeader().sectionClicked.connect(self.row_chosen)
-        # self.peptide_hits.verticalHeader().sectionClicked.connect(self.tree_model.select)
-        # self.tree_model.peptideSelected.connect(self.spectrum_plotter.plot_hit)
-        self.action_preferences.triggered.connect(self.edit_preferences)
-        self.action_open_file.triggered.connect(self.open_file)
+        self.peptide_hits.clicked.connect(self.tree_model.select)
 
     def row_chosen(self, i):
         self.peptide_hits.selectRow(i)

@@ -2,14 +2,16 @@ from PyQt4.QtCore import QVariant, QAbstractItemModel, QModelIndex, Qt
 
 import sys
 
+from ..lib import PeptideHitAssigner
+
 
 class TreeItem(object):
 
     def __init__(self, parent, row, data, reader):
-        self.parent = parent
-        self.row_ = row
-        self.data_ = data
-        self.reader = reader
+        self._parent = parent
+        self._row = row
+        self._data = data
+        self._reader = reader
 
     def childCount(self):
         return 0
@@ -17,11 +19,20 @@ class TreeItem(object):
     def columnCount(self):
         return 4
 
-    def data(self, col=0):
-        return self.data_[col]
+    def data_in_column(self, col=0):
+        return self._data[col]
 
     def row(self):
-        return self.row_
+        return self._row
+
+    def data(self):
+        return self._data
+
+    def parent(self):
+        return self._parent
+
+    def reader(self):
+        return self._reader
 
     def get_child(self, row):
         assert False, "should be implmented"
@@ -30,11 +41,11 @@ class TreeItem(object):
 class HitItem(TreeItem):
 
     def __init__(self, parent, row, hit, reader):
-        super(HitItem, self).__init__(parent, row, [hit], reader)
+        super(HitItem, self).__init__(parent, row, hit, reader)
         self.children = None
 
-    def data(self, col):
-        hit = self.data_[0]
+    def data_in_column(self, col):
+        hit = self.data()
         # return hit.base_name
         if col == 0:
             return "HIT: %s" % hit.base_name
@@ -52,23 +63,24 @@ class HitItem(TreeItem):
             return "%.4f" % hit.score
 
     def childCount(self):
-        return self.reader.count_spectra_for(self.data_[0])
+        return self.reader().count_spectra_for(self.data())
 
     def get_child(self, row):
+        r = self.reader()
         if self.children is None:
-            spectra = list(self.reader.fetch_spectra(self.data_[0]))
+            spectra = list(r.fetch_spectra(self.data()))
             spectra.sort(lambda spec: (spec.rt, spec.precursors[0].mz))
-            self.children = [SpectrumItem(self, i, s, self.reader) for (i, s) in enumerate(spectra)]
+            self.children = [SpectrumItem(self, i, s, r) for (i, s) in enumerate(spectra)]
         return self.children[row]
 
 
 class SpectrumItem(TreeItem):
 
     def __init__(self, parent, row, spectrum, reader):
-        super(SpectrumItem, self).__init__(parent, row, [spectrum], reader)
+        super(SpectrumItem, self).__init__(parent, row, spectrum, reader)
 
-    def data(self, col):
-        spectrum = self.data_[0]
+    def data_in_column(self, col):
+        spectrum = self.data()
         if col == 0:
             return "MS2:"
         if col == 1:
@@ -81,22 +93,23 @@ class SpectrumItem(TreeItem):
 class AASeqItem(TreeItem):
 
     def __init__(self, parent, row, seq, reader):
-        super(AASeqItem, self).__init__(parent, row, [seq], reader)
+        super(AASeqItem, self).__init__(parent, row, seq, reader)
         self.children = None
 
     def childCount(self):
-        count = self.reader.get_number_of_hits_for(self.data_[0])
+        count = self.reader().get_number_of_hits_for(self.data())
         return count
 
     def get_child(self, row):
+        r = self.reader()
         if self.children is None:
-            hits = self.reader.get_hits_for_aa_sequence(self.data_[0])
+            hits = r.get_hits_for_aa_sequence(self.data())
             hits.sort(key=lambda hit: (hit.base_name, hit.rt, hit.mz))
-            self.children = [HitItem(self, i, hit, self.reader) for (i, hit) in enumerate(hits)]
+            self.children = [HitItem(self, i, hit, r) for (i, hit) in enumerate(hits)]
         return self.children[row]
 
-    def data(self, col):
-        return self.data_[0] if col == 0 else ""
+    def data_in_column(self, col):
+        return self.data() if col == 0 else ""
 
 
 class RootItem(TreeItem):
@@ -123,8 +136,8 @@ class TreeModel(QAbstractItemModel):
         super(TreeModel, self).__init__(parent)
         self.root_item = RootItem(reader)
 
-    def set_preferences(self, *a):
-        print "preferences=", a
+    def set_preferences(self, preferences):
+        self.preferences = preferences
 
     def data(self, index, role):
         if not index.isValid():
@@ -133,7 +146,7 @@ class TreeModel(QAbstractItemModel):
             return QVariant()
 
         item = index.internalPointer()
-        return item.data(index.column())
+        return item.data_in_column(index.column())
 
     def flags(self, index):
         if not index.isValid():
@@ -156,7 +169,7 @@ class TreeModel(QAbstractItemModel):
             return QModelIndex()
 
         child_item = index.internalPointer()
-        parent_item = child_item.parent
+        parent_item = child_item.parent()
         if parent_item == self.root_item:
             return QModelIndex()
         return self.createIndex(parent_item.row(), 0, parent_item)
@@ -180,6 +193,16 @@ class TreeModel(QAbstractItemModel):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return ["Hit", "RT", "MZ", "Score"][section]
         return QVariant()
+
+    def select(self, index):
+        item = index.internalPointer()
+        if isinstance(item, SpectrumItem):
+            hit = item.parent().data()
+            spectrum = item.data()
+            print hit
+            # print str(hit), str(spectrum)
+            # assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
+            # print assignment
 
 
 if __name__ == "__main__":
