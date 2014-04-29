@@ -1,13 +1,15 @@
 from setuptools import setup, find_packages
 from distutils.extension import Extension
+import numpy
 
 ext_modules = [
     Extension("ident_viewer.optimizations",
               ["ident_viewer/optimizations.c"],
+              include_dirs=[numpy.get_include()]
               )
 ]
 
-from ident_viewer.version import version
+version = (0, 0, 1)
 
 setup(name="ident_viewer",
       packages=find_packages(exclude=["tests"]),
