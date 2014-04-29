@@ -19,12 +19,13 @@ class PeptideHitModel(QtCore.QAbstractTableModel):
 
     peptideSelected = QtCore.pyqtSignal(object, object)
 
-    def __init__(self, parent, peakmaps, peptide_identifications, protein_identifications):
+    def __init__(self, reader):  # parent, peakmaps, peptide_identifications, protein_identifications):
         super(PeptideHitModel, self).__init__()
-        self.hits = list(extract_hits(peakmaps[0], peptide_identifications, []))
+        self.reader = reader
+        #self.hits = list(extract_hits(peakmaps[0], peptide_identifications, []))
 
     def rowCount(self, parent=QtCore.QModelIndex()):
-        return len(self.hits)
+        return self.reader.get_number_of_all_hits()
 
     def columnCount(self, parent=QtCore.QModelIndex()):
         return 4

@@ -27,7 +27,6 @@ class TreeItem(object):
         assert False, "should be implmented"
 
 
-
 class HitItem(TreeItem):
 
     def __init__(self, parent, row, hit, reader):
@@ -36,8 +35,8 @@ class HitItem(TreeItem):
 
     def data(self, col):
         hit = self.data_[0]
-        #return hit.base_name
-        if col==0:
+        # return hit.base_name
+        if col == 0:
             return "HIT: %s" % hit.base_name
         elif col == 1:
             if hit.rt is None:
@@ -58,7 +57,7 @@ class HitItem(TreeItem):
     def get_child(self, row):
         if self.children is None:
             spectra = list(self.reader.fetch_spectra(self.data_[0]))
-            spectra.sort(lambda spec: (spec.getRT(), spec.getPrecursors()[0].getMZ()))
+            spectra.sort(lambda spec: (spec.rt, spec.precursors[0].mz))
             self.children = [SpectrumItem(self, i, s, self.reader) for (i, s) in enumerate(spectra)]
         return self.children[row]
 
@@ -73,12 +72,10 @@ class SpectrumItem(TreeItem):
         if col == 0:
             return "MS2:"
         if col == 1:
-            return "%.1fs" % spectrum.getRT()
+            return "%.1fs" % spectrum.rt
         elif col == 2:
-            return "%.5f" % spectrum.getPrecursors()[0].getMZ()
+            return "%.5f" % spectrum.precursors[0].mz
         return ""
-
-
 
 
 class AASeqItem(TreeItem):
@@ -105,7 +102,7 @@ class AASeqItem(TreeItem):
 class RootItem(TreeItem):
 
     def __init__(self, reader):
-        super(RootItem, self).__init__(None, 0, ["AASequence" ,"base_name", "mz", "rt"], reader)
+        super(RootItem, self).__init__(None, 0, ["AASequence", "base_name", "mz", "rt"], reader)
         aa_sequences = reader.get_aa_sequences()
         aa_sequences.sort(reverse=True)
         self.children = [AASeqItem(self, i, seq, reader) for (i, seq) in enumerate(aa_sequences)]
@@ -128,7 +125,6 @@ class TreeModel(QAbstractItemModel):
 
     def set_preferences(self, *a):
         print "preferences=", a
-
 
     def data(self, index, role):
         if not index.isValid():
@@ -197,8 +193,6 @@ if __name__ == "__main__":
             self.model = TreeModel()
             self.treeView.setModel(self.model)
             self.treeView.setUniformRowHeights(True)
-
-
 
     app = QApplication([])
     win = Window()

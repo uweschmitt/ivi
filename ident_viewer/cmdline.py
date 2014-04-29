@@ -2,6 +2,7 @@ def main():
 
     import sys
     from PyQt4 import QtGui
+    from PyQt4.QtCore import Qt
     from gui.ivi import IdentViewer
 
     from lib import CompressedDataReader
@@ -11,7 +12,10 @@ def main():
     app = QtGui.QApplication(sys.argv)
     window = IdentViewer(reader)
     window.show()
+    window.raise_()
+    window.setWindowState(Qt.WindowActive)
     sys.exit(app.exec_())
+
 
 def prepare():
 
@@ -23,6 +27,7 @@ def prepare():
         pass
     except:
         logger.error("execution failed", exc_info=True)
+
 
 def _prepare():
 
@@ -81,7 +86,7 @@ def _prepare():
     collector = CollectHitsData(root)
     collector.collect(out_file, unmatched_hits_file, mz_tolerance, rt_tolerance)
 
-    #with measure_time("reading and computing full chromatogram"):
-        #reader = CompressedDataReader(out_file)
-        #rts, chromo = reader.fetch_chromatogram(0, 1e30, 0, 1e30)
-        #logger.info("chromatogram has length %d and max ion count %.1f" % (len(rts), max(chromo)))
+    # with measure_time("reading and computing full chromatogram"):
+    #   #reader = CompressedDataReader(out_file)
+    #   #rts, chromo = reader.fetch_chromatogram(0, 1e30, 0, 1e30)
+    #   #logger.info("chromatogram has length %d and max ion count %.1f" % (len(rts), max(chromo)))
