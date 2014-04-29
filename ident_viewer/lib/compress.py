@@ -1,3 +1,4 @@
+import pdb
 #encoding: utf-8
 
 import pyopenms as oms
@@ -88,7 +89,6 @@ class Consumer(object):
 
     def consumeSpectrum(self, oms_spec):
         if oms_spec.getMSLevel() == 2:
-            matching_hits = []
             rt = oms_spec.getRT()
             if self.min_rt is None:
                 self.min_rt = rt
@@ -97,8 +97,7 @@ class Consumer(object):
                 self.min_rt = min(self.min_rt, rt)
                 self.max_rt = max(self.max_rt, rt)
             mz = float(oms_spec.getPrecursors()[0].getMZ())
-            for hit in self.hit_finder.find_hits(rt, mz):
-                matching_hits.append(hit)
+            matching_hits = [hit for hit in self.hit_finder.find_hits(rt, mz)]
             if matching_hits:
                 spectrum = self._convert_from_oms_type(oms_spec)
                 spectrum = spectrum.cleaned()

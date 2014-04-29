@@ -288,6 +288,7 @@ class CompressedDataWriter(object):
         row["hit_id"] = hit.id_
         row["base_name_id"] = base_name_id
         row["rt"] = hit.rt
+        row["mz"] = hit.mz
         row["aa_sequence_id"] = aa_sequence_id
         row["score"] = hit.score
         row["is_higher_score_better"] = hit.is_higher_score_better
@@ -428,8 +429,8 @@ class CompressedDataReader(object):
         return id_provider
 
     def _read_base_names(self):
-        self.base_name_id_provider = CompressedDataReader.fetch_strings(
-            self.base_name_table, "base_name_id")
+        self.base_name_id_provider = CompressedDataReader.fetch_strings(self.base_name_table,
+                                                                        "base_name_id")
 
     def _read_aa_sequences(self):
         self.aa_sequence_id_provider = CompressedDataReader.fetch_strings(self.aa_sequence_table,
