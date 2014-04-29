@@ -1,5 +1,3 @@
-import pdb
-
 import os
 import shutil
 from ident_viewer.lib import CollectHitsData, CompressedDataReader
@@ -24,10 +22,9 @@ def test_0(data_path, tmpdir):
     # read compressed data and check it !
     reader = CompressedDataReader(tmpdir.join("out.ivi").strpath)
 
-    aa_sequences = list(reader.aa_sequence_iter())
+    aa_sequences = reader.get_aa_sequences()
     assert len(aa_sequences) == 484
     assert len(aa_sequences) == len(set(aa_sequences))
-
 
     # as we reduced the peakmap a lot we only have one hit, which is tested below:
     assert "KEVALLNK" in aa_sequences
@@ -56,7 +53,6 @@ def test_0(data_path, tmpdir):
     spectra = list(reader.fetch_spectra(hit))
     assert len(spectra) == 1
 
-
     ch = list(reader.fetch_convex_hulls_for_hit(hit))
     assert len(ch) == 3
     tobe = [(360.3659973144531, 372.4840087890625, 457.7884216308594, 457.7892761230469),
@@ -67,7 +63,6 @@ def test_0(data_path, tmpdir):
         c0 = ch[i]
         for tii, cii in zip(t0, c0):
             assert abs(tii - cii) < 1e-5
-
 
     spectrum = spectra[0]
     assert spectrum.rt == hit.rt

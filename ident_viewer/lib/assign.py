@@ -116,8 +116,8 @@ def extract_hits(mse, peptide_ids, protein_ids):
     for spec in mse.getSpectra():
         if spec.getMSLevel() == 2 and spec.getPeptideIdentifications():
             for pi in spec.getPeptideIdentifications():
-                mz = pi.getMetaValue("MZ")
-                rt = pi.getMetaValue("RT")
+                mz = pi.getMZ()
+                rt = pi.getRT()
                 lower_is_better = pi.isHigherScoreBetter()
                 hits = []
                 for hit in pi.getHits():

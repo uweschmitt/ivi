@@ -125,7 +125,6 @@ class CompressedDataWriter(object):
         base_name_id = Int64Col()     # dito
         convex_hull_id = Int64Col()   # dito
 
-
     class HitData(IsDescription):
 
         hit_id = Int64Col()     # no uint, as pytables can not index uints
@@ -179,16 +178,16 @@ class CompressedDataWriter(object):
                                                       filters=filters)
 
         self.convex_hull_table = self.file_.create_table(self.root,
-                                                      'convex_hulls',
-                                                      self.ConvexHull,
-                                                      "ConvexHulls",
-                                                      filters=filters)
+                                                         'convex_hulls',
+                                                         self.ConvexHull,
+                                                         "ConvexHulls",
+                                                         filters=filters)
 
         self.hit_convex_hull_link_table = self.file_.create_table(self.root,
-                                                                'hit_convex_hulls_links',
-                                                                self.HitConvexHullLink,
-                                                                "HitConvexHullLink",
-                                                                filters=filters)
+                                                                  'hit_convex_hulls_links',
+                                                                  self.HitConvexHullLink,
+                                                                  "HitConvexHullLink",
+                                                                  filters=filters)
 
         self.hit_data_table = self.file_.create_table(self.root,
                                                       "hit_data",
@@ -203,16 +202,16 @@ class CompressedDataWriter(object):
                                                                filters=filters)
 
         self.mz_array = self.file_.create_earray(self.root,
-                                                    'mzs',
-                                                    Float64Atom(),
-                                                    (0,),
-                                                    filters=filters,)
+                                                 'mzs',
+                                                 Float64Atom(),
+                                                 (0,),
+                                                 filters=filters,)
 
         self.intensity_array = self.file_.create_earray(self.root,
-                                                    'intensities',
-                                                    Float32Atom(),
-                                                    (0,),
-                                                    filters=filters,)
+                                                        'intensities',
+                                                        Float32Atom(),
+                                                        (0,),
+                                                        filters=filters,)
 
         self.base_name_id_provider = IdProvider()
         self.aa_sequence_id_provider = IdProvider()
@@ -429,11 +428,12 @@ class CompressedDataReader(object):
         return id_provider
 
     def _read_base_names(self):
-        self.base_name_id_provider = CompressedDataReader.fetch_strings(self.base_name_table, "base_name_id")
+        self.base_name_id_provider = CompressedDataReader.fetch_strings(
+            self.base_name_table, "base_name_id")
 
     def _read_aa_sequences(self):
         self.aa_sequence_id_provider = CompressedDataReader.fetch_strings(self.aa_sequence_table,
-                "aa_sequence_id")
+                                                                          "aa_sequence_id")
         self.no_hits_per_aa_sequence = dict()
         for row in self.hit_counts_table:
             id_ = row["aa_sequence_id"]
@@ -443,8 +443,8 @@ class CompressedDataReader(object):
     def get_base_names(self):
         return list(self.base_name_id_provider.get_items_iter())
 
-    def aa_sequence_iter(self):
-        return self.aa_sequence_id_provider.get_items_iter()
+    def get_aa_sequences(self):
+        return list(self.aa_sequence_id_provider.get_items_iter())
 
     def get_number_of_hits_for(self, aa_sequence):
         id_ = self.aa_sequence_id_provider.lookup_id(aa_sequence)
@@ -540,7 +540,8 @@ class CompressedDataReader(object):
 
     def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
-        rows = self.spectrum_table.where("""(base_name_id == %d) & (%d <= rt) & (rt <= %d) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
+        rows = self.spectrum_table.where(
+            """(base_name_id == %d) & (%d <= rt) & (rt <= %d) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
         rts = []
         ion_counts = []
         for row in rows:
@@ -558,7 +559,8 @@ class CompressedDataReader(object):
 
     def fetch_peak_map(self, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
-        rows = self.spectrum_table.where("""(base_name_id == %d) & (ms_level == 1)""" % (base_name_id, ))
+        rows = self.spectrum_table.where(
+            """(base_name_id == %d) & (ms_level == 1)""" % (base_name_id, ))
         spectra = []
         for row in rows:
             rt = row["rt"]

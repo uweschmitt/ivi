@@ -33,8 +33,8 @@ fh.loadExperiment("/data/dose/01_20100910185134835-50516/B08-08319.mzXML", mse)
 
 hf = HitFinder(5, 20)
 for pi in peps:
-    mz = pi.getMetaValue("MZ")
-    rt = pi.getMetaValue("RT")
+    mz = pi.getMZ()
+    rt = pi.getRT()
     if rt > TMAX:
         continue
     hf.add_hit(Hit(rt, mz))
@@ -48,8 +48,8 @@ seen = set()
 
 for f in fmap:
     for pi in f.getPeptideIdentifications():
-        mz = pi.getMetaValue("MZ")
-        rt = pi.getMetaValue("RT")
+        mz = pi.getMZ()
+        rt = pi.getRT()
         if rt > TMAX:
             continue
         found = False
@@ -87,7 +87,7 @@ fh.storeExperiment("reduced.mzXML", msneu)
 
 pepsneu = []
 for pep in peps:
-    if pep.getMetaValue("RT") <= TMAX:
+    if pep.getRT() <= TMAX:
         pepsneu.append(pep)
 
 fh = oms.PepXMLFile()

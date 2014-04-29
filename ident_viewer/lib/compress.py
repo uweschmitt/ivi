@@ -168,10 +168,10 @@ class CollectHitsData(object):
         for pep in peps:
             li = []
             pep.getKeys(li)
-            rt = pep.getMetaValue("RT")
+            rt = pep.getRT()
             if rt == 0.0:
                 continue
-            mz = pep.getMetaValue("MZ")
+            mz = pep.getMZ()
             base_name = pep.getBaseName()
             base_name = os.path.basename(base_name)
             base_name, __, __ = base_name.partition("~")
@@ -235,8 +235,8 @@ class CollectHitsData(object):
                     hull_points = [hull.getHullPoints() for hull in feature.getConvexHulls()]
                     hull_ids = [writer.add_convex_hull(points) for points in hull_points]
                     for pep_id in feature.getPeptideIdentifications():
-                        rt = pep_id.getMetaValue("RT")
-                        mz = pep_id.getMetaValue("MZ")
+                        rt = pep_id.getRT()
+                        mz = pep_id.getMZ()
                         is_higher_score_better = pep_id.isHigherScoreBetter()
                         for oms_hit in pep_id.getHits():
                             for hit in hit_finder.find_hits(rt, mz):
