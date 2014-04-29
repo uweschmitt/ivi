@@ -1,66 +1,69 @@
 import pyopenms as oms
 import re
 
+from data_structures import Hit, Spectrum, Precursor
+
 
 class PeptideHitAssigner(object):
 
     def __init__(self, preferences):
         self.preferences = preferences
 
-    def compute_assignment(self, peptide_hit, spectrum):
+    def compute_assignment(self, hit, spectrum):
+        assert isinstance(hit, Hit)
+        assert isinstance(spectrum, Spectrum)
 
-        aa_sequence = peptide_hit.getSequence()
-        if not aa_sequence.isValid():
-            return []
-
-        theoretical_spectrum = self._compute_theoretical_spectrum(peptide_hit, aa_sequence)
-        alignment = self._compute_alignment(spectrum, theoretical_spectrum)
+        theoretical_rich_spectrum = self._compute_theoretical_spectrum(hit)
+        alignment = self._compute_alignment(spectrum.as_oms_spectrum(), theoretical_rich_spectrum)
 
         assignment = []
 
         for (i, j) in alignment:
-            ion_name = theoretical_spectrum[j].getMetaValue("IonName")
-            residue_info = self._residue_info(ion_name, aa_sequence)
-            assignment.append((spectrum[i].getMZ(), spectrum[i].getIntensity(), ion_name,
-                               residue_info))
+            ion_name = theoretical_rich_spectrum[j].getMetaValue("IonName")
+            residue_info = self._residue_info(ion_name, hit)
+            assignment.append((spectrum.mzs[i], spectrum.intensities[i], ion_name, residue_info))
 
         return assignment
 
-    def _compute_theoretical_spectrum(self, peptide_hit, aa_sequence):
+    def _compute_theoretical_spectrum(self, hit):
+
+        aa_sequence = oms.AASequence(hit.aa_sequence)
 
         generator = self._setup_spectrum_generator()
 
-        theoretical_spectrum = oms.RichPeakSpectrum()
-        max_charge = max(1, peptide_hit.getCharge())
+        result_spec = oms.RichPeakSpectrum()
+        max_charge = max(1, hit.charge)
+
+        ResType = oms.Residue.ResidueType
 
         for charge in range(1, max_charge + 1):
             if self.preferences.get("show_a_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.AIon, charge)
+                generator.addPeaks(result_spec, aa_sequence, ResType.AIon, charge)
             if self.preferences.get("show_b_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.BIon, charge)
+                generator.addPeaks(result_spec, aa_sequence, ResType.BIon, charge)
             if self.preferences.get("show_c_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.CIon, charge)
+                generator.addPeaks(result_spec, aa_sequence, ResType.CIon, charge)
             if self.preferences.get("show_x_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.XIon, charge)
+                generator.addPeaks(result_spec, aa_sequence, ResType.XIon, charge)
             if self.preferences.get("show_y_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.YIon, charge)
+                generator.addPeaks(result_spec, aa_sequence, ResType.YIon, charge)
             if self.preferences.get("show_z_ion"):
-                generator.addPeaks(theoretical_spectrum, aa_sequence, oms.Residue.ResidueType.ZIon, charge)
-            generator.addPrecursorPeaks(theoretical_spectrum, aa_sequence, charge)
+                generator.addPeaks(result_spec, aa_sequence, ResType.ZIon, charge)
+            generator.addPrecursorPeaks(result_spec, aa_sequence, charge)
 
-        return theoretical_spectrum
+        return result_spec
 
-    def _compute_alignment(self, spec1, spec2):
+    def _compute_alignment(self, oms_spec1, oms_spec2):
         aligner = self._setup_aligner()
         indices = []
-        aligner.getSpectrumAlignment(indices, spec1, spec2)
+        aligner.getSpectrumAlignment(indices, oms_spec1, oms_spec2)
         return indices
 
-    def _residue_info(self, ion_name, aa_sequence):
-
+    def _residue_info(self, ion_name, hit):
+        aa_sequence = oms.AASequence(hit.aa_sequence)
         if ion_name.startswith("y"):
             ion_nr_str = ion_name.replace("y", "").replace("+", "")
-            ion_nr_str, __ , __ = ion_nr_str.partition("-")
+            ion_nr_str, __, __ = ion_nr_str.partition("-")
             ion_number = int(ion_nr_str)
             info = []
             # ion residue for y is reverted:
@@ -72,7 +75,7 @@ class PeptideHitAssigner(object):
             return "".join(info)
         elif ion_name.startswith("b"):
             ion_nr_str = ion_name.replace("b", "").replace("+", "")
-            ion_nr_str, __ , __ = ion_nr_str.partition("-")
+            ion_nr_str, __, __ = ion_nr_str.partition("-")
             ion_number = int(ion_nr_str)
             sub_seq = aa_sequence.getSubsequence(0, ion_number).toString()
             return re.sub("[(].*[)]", "*", sub_seq)  # replaces "(Modification)" to "*"
@@ -106,22 +109,3 @@ class PeptideHitAssigner(object):
         params["tolerance"] = tolerance
         aligner.setParameters(params)
         return aligner
-
-
-def extract_hits(mse, peptide_ids, protein_ids):
-
-    mapper = oms.IDMapper()
-    mapper.annotate(mse, peptide_ids, protein_ids)
-
-    for spec in mse.getSpectra():
-        if spec.getMSLevel() == 2 and spec.getPeptideIdentifications():
-            for pi in spec.getPeptideIdentifications():
-                mz = pi.getMZ()
-                rt = pi.getRT()
-                lower_is_better = pi.isHigherScoreBetter()
-                hits = []
-                for hit in pi.getHits():
-                    hits.append((hit.getScore(), hit.getSequence().toString(), rt, mz, hit, spec))
-                hits.sort(reverse=not lower_is_better)
-                for hit in hits:
-                    yield hit

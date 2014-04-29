@@ -1,38 +1,35 @@
-import ident_viewer as iv
 import sys
 import cStringIO
+import cPickle
 
-
-def _read(data_path):
-    peptide_ids, protein_ids = iv.lib.load_idxml_file(data_path("BSA1_OMSSA.idXML"))
-    mse = iv.lib.load_experiment(data_path("BSA1.mzML"))
-    return mse, peptide_ids, protein_ids
+import ident_viewer as iv
+import pyopenms as oms
 
 
 def test_0(data_path):
 
-    mse, peptide_ids, protein_ids = _read(data_path)
+    # setup hit
+    hit = iv.lib.data_structures.Hit(id_=0,
+                                     aa_sequence='SHC(Carbamidomethyl)IAEVEK',
+                                     base_name='',
+                                     mz=358.174682617188,
+                                     rt=1554.4921875,
+                                     charge=3,
+                                     score=0.0,
+                                     is_higher_score_better=False)
 
-    score, seq, rt, mz, hit, spec = iv.lib.extract_hits(mse, peptide_ids, protein_ids).next()
+    # setup spectrum
+    spec = iv.lib.io.load_experiment(data_path("one_spec_peakmap.mzML"))[0]
 
-    assert abs(mz - 358.17) < 0.01
-    assert abs(rt - 1554.49) < 0.01
+    # create and record ion assignments for regression test ...
+    assigner = iv.lib.PeptideHitAssigner(iv.lib.default_preferences())
+    fp = cStringIO.StringIO()
+    for mz, ii, ion, info in assigner.compute_assignment(hit, spec):
+        print >> fp, "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
+    output = fp.getvalue()
 
-    assert seq == "SHC(Carbamidomethyl)IAEVEK"
-
-    preferences = iv.lib.default_preferences()
-    sys.stdout = cStringIO.StringIO()
-    try:
-        for mz, ii, ion, info in iv.lib.PeptideHitAssigner(preferences).compute_assignment(hit, spec):
-            print "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
-    finally:
-        output = sys.stdout.getvalue()
-        sys.stdout = sys.__stdout__
-
-    print output
-
-    tobe = [line.strip() for line in """
-                129.11508 5.574852e+00 b3+++      SHC*
+    # this is what we expect
+    tobe = """  129.11508 5.574852e+00 b3+++      SHC*
                 147.13916 4.676226e+01 y1+        K
                 166.98907 4.726707e+00 b4+++      SHC*I
                 188.03242 1.824428e+01 y3++       KEV
@@ -54,28 +51,10 @@ def test_0(data_path):
                 569.28241 6.562495e+01 b5+        SHC*IA
                 575.40710 7.541013e+01 y5+        KEVEA
                 698.27173 1.949970e+00 b6+        SHC*IAE
-                797.51617 1.818095e+00 b7+        SHC*IAEV
-        """.split("\n")]
-    tobe = [l for l in tobe if l]
+                797.51617 1.818095e+00 b7+        SHC*IAEV """
 
+    # compare
+    tobe = [l.strip() for l in tobe.split("\n")]
     is_ = [l.strip() for l in output.split("\n")]
-    is_ = [l for l in is_ if l]
     for (t, i) in zip(tobe, is_):
         assert t == i
-
-
-def test_1(data_path):
-
-    mse, pep_ids, prot_ids = _read(data_path)
-    sequences = [seq for score, seq, rt, mz, hit, spec in iv.lib.extract_hits(mse, pep_ids, prot_ids)]
-
-    sequences.sort()
-    assert sequences[:9] == ['AEFVEVTK', 'AEFVEVTK', 'AEFVEVTK', 'AGAFSLPK', 'AGAFSLPK',
-                             'AGDLLFFK', 'C(Carbamidomethyl)C(Carbamidomethyl)TESLVNR',
-                             'C(Carbamidomethyl)C(Carbamidomethyl)TESLVNR',
-                             'C(Carbamidomethyl)C(Carbamidomethyl)TESLVNR', ]
-
-    assert sequences[-10:] == ['YIC(Carbamidomethyl)DNQDTISSK', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR',
-                               'YLYEIAR', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR', 'YLYEIAR']
-
-    assert len(sequences) == 77

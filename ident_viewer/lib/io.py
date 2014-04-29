@@ -1,5 +1,7 @@
-#encoding: latin-1
+# encoding: latin-1
+
 import pyopenms as oms
+import data_structures
 
 
 def load_idxml_file(path):
@@ -12,4 +14,5 @@ def load_idxml_file(path):
 def load_experiment(path):
     mse = oms.MSExperiment()
     oms.FileHandler().loadExperiment(path, mse)
-    return mse
+    spectra = [data_structures.Spectrum.from_oms_spectrum(spec) for spec in mse]
+    return spectra

@@ -179,7 +179,8 @@ class CollectHitsData(object):
                 aa_sequence = ph.getSequence().toString()
                 score = ph.getScore()
                 hit_id = self.hit_id_provider.next_id()
-                hit = Hit(hit_id, aa_sequence, base_name, mz, rt, score, is_higher_score_better)
+                charge = ph.getCharge()
+                hit = Hit(hit_id, aa_sequence, base_name, mz, rt, charge, score, is_higher_score_better)
                 hits.append(hit)
                 hit_finders[base_name].add_hit(hit)
         logger.info("extracted %d peptide hits" % len(hits))
@@ -246,7 +247,8 @@ class CollectHitsData(object):
                                 hit_id = self.hit_id_provider.next_id()
                                 aa_sequence = oms_hit.getSequence().toString()
                                 score = oms_hit.getScore()
-                                hit = Hit(hit_id, aa_sequence, base_name, mz, rt, score,
+                                charge = oms_hit.getCharge()
+                                hit = Hit(hit_id, aa_sequence, base_name, mz, rt, charge, score,
                                           is_higher_score_better)
                                 hits.append(hit)
                                 writer.add_hit(hit)

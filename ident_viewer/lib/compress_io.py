@@ -134,6 +134,7 @@ class CompressedDataWriter(object):
         aa_sequence_id = Int64Col()
         score = Float64Col()
         is_higher_score_better = BoolCol()
+        charge = UInt8Col()
 
     class HitSpectrumLink(IsDescription):
 
@@ -291,6 +292,7 @@ class CompressedDataWriter(object):
         row["mz"] = hit.mz
         row["aa_sequence_id"] = aa_sequence_id
         row["score"] = hit.score
+        row["charge"] = hit.charge
         row["is_higher_score_better"] = hit.is_higher_score_better
         row.append()
 
@@ -457,8 +459,8 @@ class CompressedDataReader(object):
         rows = self.hit_data_table.where("aa_sequence_id == %d" % aa_sequence_id)
         for row in rows:
             base_name = self.base_name_id_provider.lookup_item(row["base_name_id"])
-            hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["score"],
-                      row["is_higher_score_better"])
+            hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["charge"],
+                      row["score"], row["is_higher_score_better"])
             hits.append(hit)
         return hits
 
@@ -468,8 +470,8 @@ class CompressedDataReader(object):
         rows = self.hit_data_table.where("base_name_id == %d" % base_name_id)
         for row in rows:
             aa_sequence = self.aa_sequence_id_provider.lookup_item(row["aa_sequence_id"])
-            hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["score"],
-                      row["is_higher_score_better"])
+            hit = Hit(row["hit_id"], aa_sequence, base_name, row["mz"], row["rt"], row["charge"],
+                      row["score"], row["is_higher_score_better"])
             hits.append(hit)
         return hits
 
