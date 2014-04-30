@@ -6,7 +6,10 @@ from collections import defaultdict
 import glob
 import os
 
-from compress_io import CompressedDataWriter, Hit, IdProvider
+from compress_io_write import CompressedDataWriter
+from data_structures import Hit
+from id_provider import IdProvider
+
 from ..std_logger import logger
 
 from ..helpers import measure_time, format_bytes

@@ -1,0 +1,17 @@
+
+feature <1 --- n> hit   ( implemented as <m --- n> relation )
+
+feature <1 --- n> mass_trace
+
+
+pep xml file:
+
+    - hits inkl. precursor mz, rt, aa_sequence, charge
+
+peakmap:
+
+    - ms2 spectra which might match hits
+
+features:
+
+    - features which might be associated to hits
