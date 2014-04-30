@@ -6,7 +6,8 @@ from .. import optimizations
 Hit = namedtuple("Hit", "id_, aa_sequence, base_name, mz, rt, charge, score, is_higher_score_better")
 Precursor = namedtuple("Precursor", "mz")
 Chromatogram = namedtuple("Chromatogram", "rts, ion_counts")
-ConvexHull = namedtuple("ConvexHull", "rt_min, rt_max, mz_min, mz_max")
+PeakRange = namedtuple("PeakRange", "rt_min, rt_max, mz_min, mz_max")
+Feature = namedtuple("Feature", "id_, base_name, fid, rt_min, rt_max, mz_min, mz_max, mass_traces")
 
 
 class PeakMap(namedtuple("PeakMap", "spectra")):

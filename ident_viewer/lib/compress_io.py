@@ -6,7 +6,7 @@ from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, F
 
 import numpy as np
 
-from data_structures import Hit, Spectrum, Precursor, ConvexHull, PeakMap, Chromatogram
+from data_structures import Hit, Spectrum, Precursor, PeakRange, PeakMap, Chromatogram, Feature
 
 
 def invert_dict(d):
@@ -111,19 +111,31 @@ class CompressedDataWriter(object):
         i_low = UInt64Col()
         i_high = UInt64Col()
 
-    class ConvexHull(IsDescription):
+    class Feature(IsDescription):
 
-        convex_hull_id = Int64Col()     # no uint, as pytables can not index uints
+        feature_id = Int64Col()     # no uint, as pytables can not index uints
+        base_name_id = Int64Col()   # dito
+        feature_id_from_file = UInt64Col()  # size_t in OpenMS
         rt_min = Float32Col()
         rt_max = Float32Col()
-        mz_min = Float32Col()
-        mz_max = Float32Col()
+        mz_min = Float64Col()
+        mz_max = Float64Col()
+        area   = Float32Col()
 
-    class HitConvexHullLink(IsDescription):
+    class MassTrace(IsDescription):
+
+        mass_trace_id = Int64Col()     # no uint, as pytables can not index uints
+        feature_id = Int64Col()       # dito
+        rt_min = Float32Col()
+        rt_max = Float32Col()
+        mz_min = Float64Col()
+        mz_max = Float64Col()
+        area   = Float32Col()
+
+    class HitFeatureLink(IsDescription):
 
         hit_id = Int64Col()           # no uint, as pytables can not index uints
-        base_name_id = Int64Col()     # dito
-        convex_hull_id = Int64Col()   # dito
+        feature_id = Int64Col()   # dito
 
     class HitData(IsDescription):
 
@@ -165,7 +177,6 @@ class CompressedDataWriter(object):
                                                         "HitsPerAASequenceCounter",
                                                         filters=filters)
 
-        """ pytables has no variable length string arrays, so we split strings into chunks """
         self.base_name_table = self.file_.create_table(self.root,
                                                        'base_names',
                                                        self.BaseName,
@@ -178,17 +189,23 @@ class CompressedDataWriter(object):
                                                       "Spectra",
                                                       filters=filters)
 
-        self.convex_hull_table = self.file_.create_table(self.root,
-                                                         'convex_hulls',
-                                                         self.ConvexHull,
-                                                         "ConvexHulls",
-                                                         filters=filters)
+        self.feature_table = self.file_.create_table(self.root,
+                                                     'features',
+                                                     self.Feature,
+                                                     "Features",
+                                                     filters=filters)
 
-        self.hit_convex_hull_link_table = self.file_.create_table(self.root,
-                                                                  'hit_convex_hulls_links',
-                                                                  self.HitConvexHullLink,
-                                                                  "HitConvexHullLink",
-                                                                  filters=filters)
+        self.mass_trace_table = self.file_.create_table(self.root,
+                                                        'mass_traces',
+                                                        self.MassTrace,
+                                                        "MassTraces",
+                                                        filters=filters)
+
+        self.hit_feature_link_table = self.file_.create_table(self.root,
+                                                              'hit_feature_links',
+                                                               self.HitFeatureLink,
+                                                               "HitFeatureLink",
+                                                               filters=filters)
 
         self.hit_data_table = self.file_.create_table(self.root,
                                                       "hit_data",
@@ -219,7 +236,8 @@ class CompressedDataWriter(object):
         self.peak_imin = 0
         self.peak_imax = 0
         self.spec_id_provider = IdProvider()
-        self.convex_hull_id_provider = IdProvider()
+        self.feature_id_provider = IdProvider()
+        self.mass_trace_id_provider = IdProvider()
 
     @staticmethod
     def add_string(table, id_col, id_, string):
@@ -329,26 +347,50 @@ class CompressedDataWriter(object):
         row["hit_id"] = hit_id
         row.append()
 
-    def add_convex_hull(self, hull):
-        assert isinstance(hull, np.ndarray)
-        assert hull.shape == (4, 2)   # 4 points, 2 coordinates
-        rt_min, mz_min = hull.min(axis=0)
-        rt_max, mz_max = hull.max(axis=0)
-        row = self.convex_hull_table.row
-        row["convex_hull_id"] = self.convex_hull_id_provider.next_id()
+    def add_feature(self, feature, base_name):
+        hull = feature.getConvexHull()
+        rt_min, rt_max, mz_min, mz_max = self._range(hull)
+        row = self.feature_table.row
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        feature_id_from_file = np.uint64(feature.getUniqueId())
+        feature_id = self.feature_id_provider.next_id()
+        row["feature_id"] = feature_id
+        row["feature_id_from_file"] = feature_id_from_file
+        row["base_name_id"] = base_name_id
         row["rt_min"] = rt_min
         row["rt_max"] = rt_max
         row["mz_min"] = mz_min
         row["mz_max"] = mz_max
-        id_ = row["convex_hull_id"]  # row.append() below destroys content of row !
+        row["area"] = (rt_max - rt_min) * (mz_max - mz_min)
         row.append()
-        return id_
 
-    def link_convex_hull_with_hit(self, hull_id, hit):
-        row = self.hit_convex_hull_link_table.row
+        for hull in feature.getConvexHulls():
+            rt_min, rt_max, mz_min, mz_max = self._range(hull)
+            row = self.mass_trace_table.row
+            row["mass_trace_id"] = self.mass_trace_id_provider.next_id()
+            row["feature_id"] = feature_id
+            row["rt_min"] = rt_min
+            row["rt_max"] = rt_max
+            row["mz_min"] = mz_min
+            row["mz_max"] = mz_max
+            row["area"] = (rt_max - rt_min) * (mz_max - mz_min)
+            row.append()
+
+        return feature_id
+
+    @staticmethod
+    def _range(hull):
+        hull_points = hull.getHullPoints()
+        assert isinstance(hull_points, np.ndarray)
+        assert hull_points.shape == (4, 2)   # 4 points, 2 coordinates
+        rt_min, mz_min = hull_points.min(axis=0)
+        rt_max, mz_max = hull_points.max(axis=0)
+        return rt_min, rt_max, mz_min, mz_max
+
+    def link_feature_with_hit(self, feature_id, hit):
+        row = self.hit_feature_link_table.row
+        row["feature_id"] = feature_id
         row["hit_id"] = hit.id_
-        row["base_name_id"] = self.base_name_id_provider.lookup_id(hit.base_name)
-        row["convex_hull_id"] = hull_id
         row.append()
 
     def close(self):
@@ -373,17 +415,31 @@ class CompressedDataWriter(object):
         self.hit_spectrum_link_table.flush()
         self.hit_spectrum_link_table.close()
 
-        self.convex_hull_table.flush()
-        self.convex_hull_table.cols.convex_hull_id.create_index()
-        self.convex_hull_table.flush()
-        self.convex_hull_table.close()
+        self.mass_trace_table.flush()
+        self.mass_trace_table.cols.mass_trace_id.create_index()
+        self.mass_trace_table.cols.feature_id.create_index()
+        self.mass_trace_table.cols.rt_min.create_index()
+        self.mass_trace_table.cols.rt_max.create_index()
+        self.mass_trace_table.cols.mz_min.create_index()
+        self.mass_trace_table.cols.mz_max.create_index()
+        self.mass_trace_table.flush()
+        self.mass_trace_table.close()
 
-        self.hit_convex_hull_link_table.flush()
-        self.hit_convex_hull_link_table.cols.hit_id.create_index()
-        self.hit_convex_hull_link_table.cols.convex_hull_id.create_index()
-        self.hit_convex_hull_link_table.cols.base_name_id.create_index()
-        self.hit_convex_hull_link_table.flush()
-        self.hit_convex_hull_link_table.close()
+        self.feature_table.flush()
+        self.feature_table.cols.feature_id.create_index()
+        self.feature_table.cols.rt_min.create_index()
+        self.feature_table.cols.rt_max.create_index()
+        self.feature_table.cols.mz_min.create_index()
+        self.feature_table.cols.mz_max.create_index()
+        self.feature_table.flush()
+        self.feature_table.close()
+
+
+        self.hit_feature_link_table.flush()
+        self.hit_feature_link_table.cols.hit_id.create_index()
+        self.hit_feature_link_table.cols.feature_id.create_index()
+        self.hit_feature_link_table.flush()
+        self.hit_feature_link_table.close()
 
         self.mz_array.flush()
         self.mz_array.close()
@@ -405,11 +461,12 @@ class CompressedDataReader(object):
         self.intensity_array = self.file_.root.intensities
         self.base_name_table = self.file_.root.base_names
         self.aa_sequence_table = self.file_.root.aa_sequences
-        self.convex_hull_table = self.file_.root.convex_hulls
+        self.feature_table = self.file_.root.features
+        self.mass_trace_table = self.file_.root.mass_traces
         self.hit_data_table = self.file_.root.hit_data
         self.hit_counts_table = self.file_.root.hit_counts
         self.hit_spectrum_link_table = self.file_.root.hit_spectrum_links
-        self.hit_convex_hull_link_table = self.file_.root.hit_convex_hulls_links
+        self.hit_feature_link_table = self.file_.root.hit_feature_links
 
         self._read_base_names()
         self._read_aa_sequences()
@@ -495,56 +552,128 @@ class CompressedDataReader(object):
                 spec = Spectrum(hit.rt, mzs, intensities, [precursor], 2)
                 yield spec
 
-    def fetch_convex_hulls_for_hit(self, hit):
-        rows0 = self.hit_convex_hull_link_table.where("hit_id == %d" % hit.id_)
+    def fetch_mass_traces_for_hit(self, hit):
+        rows0 = self.hit_feature_link_table.where("hit_id == %d" % hit.id_)
         for row0 in rows0:
-            hull_id = row0["convex_hull_id"]
-            rows = self.convex_hull_table.where("convex_hull_id == %d" % hull_id)
+            feature_id = row0["feature_id"]
+            rows = self.mass_trace_table.where("feature_id == %d" % feature_id)
             for row in rows:
                 rt_min = row["rt_min"]
                 rt_max = row["rt_max"]
                 mz_min = row["mz_min"]
                 mz_max = row["mz_max"]
-                yield ConvexHull(rt_min, rt_max, mz_min, mz_max)
+                yield PeakRange(rt_min, rt_max, mz_min, mz_max)
 
-    def fetch_convex_hulls_for_base_name(self, base_name):
-        base_name_id = self.base_name_id_provider.lookup_id(base_name)
-        rows0 = self.hit_convex_hull_link_table.where("base_name_id == %d" % base_name_id)
-        for row0 in rows0:
-            hull_id = row0["convex_hull_id"]
-            rows = self.convex_hull_table.where("convex_hull_id == %d" % hull_id)
-            for row in rows:
-                rt_min = row["rt_min"]
-                rt_max = row["rt_max"]
-                mz_min = row["mz_min"]
-                mz_max = row["mz_max"]
-                yield ConvexHull(rt_min, rt_max, mz_min, mz_max)
+    def fetch_features_in_range(self, base_name, rt_min, rt_max, mz_min, mz_max):
+        condition = """(%f <= rt_min) & (rt_max <= %f)\
+                       & (%f <= mz_min) & (mz_max <= %f)""" % (rt_min, rt_max, mz_min, mz_max)
+        return self._fetch_features(base_name, condition)
 
-    def fetch_overall_hulls_for_base_name(self, base_name):
+    def fetch_features_intersecting(self, base_name, rt_0, rt_1, mz_0, mz_1):
+        condition = self._intersecting_condition(rt_0, rt_1, mz_0, mz_1)
+        return self._fetch_features(base_name, condition)
+
+    def _intersecting_condition(self, rt_0, rt_1, mz_0, mz_1):
+        """
+           (rt_min, mz_min) is in rect (rt_0, mz_0, rt_1, mz_1)
+        or
+           (rt_max, mz_max) is in rect (rt_0, mz_0, rt_1, mz_1)
+
+        that is:
+
+           rt_0 <= rt_min <= rt_1 and mz_0 <= mz_min <= mz_1
+        or
+           rt_0 <= rt_max <= rt_1 and mz_0 <= mz_max <= mz_1
+        """
+        cond_min = """({rt_0} <= rt_min) & (rt_min <= {rt_1}) \
+                     &({mz_0} <= mz_min) & (mz_min <= {mz_1}) """.format(**locals())
+        cond_max = """({rt_0} <= rt_max) & (rt_max <= {rt_1}) \
+                     &({mz_0} <= mz_max) & (mz_max <= {mz_1}) """.format(**locals())
+
+        condition = "({cond_min}) | ({cond_max})".format(**locals())
+        return condition
+
+    def _fetch_features(self, base_name, condition):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
-        rows0 = self.hit_convex_hull_link_table.where("base_name_id == %d" % base_name_id)
-        for row0 in rows0:
-            hull_id = row0["convex_hull_id"]
-            rows = self.convex_hull_table.where("convex_hull_id == %d" % hull_id)
-            rt_mins = []
-            rt_maxs = []
-            mz_mins = []
-            mz_maxs = []
-            for row in rows:
-                rt_min = row["rt_min"]
-                rt_max = row["rt_max"]
-                mz_min = row["mz_min"]
-                mz_max = row["mz_max"]
-                rt_mins.append(rt_min)
-                rt_maxs.append(rt_max)
-                mz_mins.append(mz_min)
-                mz_maxs.append(mz_max)
-            yield ConvexHull(min(rt_mins), max(rt_maxs), min(mz_mins), max(mz_maxs))
+        full_condition = "(base_name_id == %d) & (%s)" % (base_name_id, condition)
+        rows = self.feature_table.where(full_condition)
+        for row in rows:
+            rt_min = row["rt_min"]
+            rt_max = row["rt_max"]
+            mz_min = row["mz_min"]
+            mz_max = row["mz_max"]
+            feature_id = row["feature_id"]
+            feature_id_from_file = row["feature_id_from_file"]
+            mass_traces = list(self._fetch_mass_traces_for_feature(feature_id))
+            yield Feature(feature_id, base_name, feature_id_from_file,
+                          rt_min, rt_max, mz_min, mz_max, mass_traces)
+
+    def _fetch_mass_traces_for_feature(self, feature_id):
+        rows = self.mass_trace_table.where("feature_id == %d" % feature_id)
+        for row in rows:
+            rt_min = row["rt_min"]
+            rt_max = row["rt_max"]
+            mz_min = row["mz_min"]
+            mz_max = row["mz_max"]
+            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+
+    def fetch_mass_traces_in_range(self, base_name, rt_min, rt_max, mz_min, mz_max):
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        rows = self.mass_trace_table.where("""(base_name_id == %d) \
+                                               & (%f <= rt_min) & (rt_max <= %f) \
+                                               & (%f <= mz_min) & (mz_max <= %f) \
+                                           """ % (base_name_id, rt_min, rt_max, mz_min, mz_max)
+                                           )
+        for row in rows:
+            rt_min = row["rt_min"]
+            rt_max = row["rt_max"]
+            mz_min = row["mz_min"]
+            mz_max = row["mz_max"]
+            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+
+    def fetch_mass_traces_intersecting(self, base_name, rt_0, rt_1, mz_0, mz_1):
+        """
+           (rt_min, mz_min) is in rect (rt_0, mz_0, rt_1, mz_1)
+        or
+           (rt_max, mz_max) is in rect (rt_0, mz_0, rt_1, mz_1)
+
+        that is:
+
+           rt_0 <= rt_min <= rt_1 and mz_0 <= mz_min <= mz_1
+        or
+           rt_0 <= rt_max <= rt_1 and mz_0 <= mz_max <= mz_1
+        """
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        cond_base_name = "base_name_id == {base_name_id}".format(base_name_id=base_name_id)
+        is_condition = self._intersecting_condition(rt_0, rt_1, mz_0, mz_1)
+        condition = "({cond_base_name}) & ({is_condition}) ".format(**locals())
+        rows = self.mass_trace_table.where(condition)
+        for row in rows:
+            rt_min = row["rt_min"]
+            rt_max = row["rt_max"]
+            mz_min = row["mz_min"]
+            mz_max = row["mz_max"]
+            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+
+    def fetch_feature_ranges_for_base_name(self, base_name):
+        base_name_id = self.base_name_id_provider.lookup_id(base_name)
+        rows = self.feature_table.where("base_name_id == %d" % base_name_id)
+        for row in rows:
+            rt_min = row["rt_min"]
+            rt_max = row["rt_max"]
+            mz_min = row["mz_min"]
+            mz_max = row["mz_max"]
+            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+
+# todo: test coverage !
+#       profiling
+#       concept profiler  -> filtering of hits (aa_sequence, oder feature_id !)
+#       feature_id im hit-baum mit anzeigen !
 
     def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
         rows = self.spectrum_table.where(
-            """(base_name_id == %d) & (%d <= rt) & (rt <= %d) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
+            """(base_name_id == %d) & (%f <= rt) & (rt <= %f) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
         rts = []
         ion_counts = []
         for row in rows:

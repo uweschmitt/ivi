@@ -1,5 +1,5 @@
 import pdb
-#encoding: utf-8
+# encoding: utf-8
 
 import pyopenms as oms
 from collections import defaultdict
@@ -18,7 +18,7 @@ def _find_pep_xml_files(root_dir):
     return glob.glob(os.path.join(root_dir, "*", "*.pep.xml"))
 
 
-def _find_xxx_files(root_dir, pattern):
+def _find_files(root_dir, pattern):
     rv = dict()
     for p in glob.glob(os.path.join(root_dir, "*", pattern)):
         base_name, __ = os.path.splitext(os.path.basename(p))
@@ -27,18 +27,24 @@ def _find_xxx_files(root_dir, pattern):
 
 
 def _find_mz_ml_files(root_dir):
-    return _find_xxx_files(root_dir, "*.mzML")
+    return _find_files(root_dir, "*.mzML")
 
 
 def _find_mz_xml_files(root_dir):
-    return _find_xxx_files(root_dir, "*.mzXML")
+    return _find_files(root_dir, "*.mzXML")
 
 
 def _find_feature_xml_files(root_dir):
-    return _find_xxx_files(root_dir, "*.featureXML")
+    return _find_files(root_dir, "*.featureXML")
 
 
 class HitFinder(object):
+
+    """ fast rt / mz pair search with given tolerances
+
+        internally maps floating point rt / mz values to bin integer indices which serve as
+        dictionary keys.
+    """
 
     def __init__(self, rt_tolerance_s, mz_tolerance_ppm):
         self.rt_tolerance_s = rt_tolerance_s
@@ -51,6 +57,8 @@ class HitFinder(object):
         self.binned_hits.setdefault(bin_id_rt, dict()).setdefault(bin_id_mz, []).append(hit)
 
     def _bin_id(self, rt, mz):
+        # this mapping is "compressing", aka "non injective", as it maps
+        # different rt / mz values to the same bin_id pair:
         return int(rt / self.rt_tolerance_s), int(mz / self.max_mz_tol_abs)
 
     def find_hits(self, rt, mz):
@@ -193,19 +201,17 @@ class CollectHitsData(object):
     def _collect(self, out_file, unmatched_hits_file, mz_tolerance_ppm, rt_tolerance_s):
         writer = CompressedDataWriter(out_file)
 
+        # extract and write all hits from pep xml file:
         prots, peps = self._read_identifcations()
-
         hits, hit_finders = self._extract_hits(peps, mz_tolerance_ppm, rt_tolerance_s)
-
         writer.write_hits(hits)
         logger.info("wrote hits")
 
+        # find features related to hits
         self._match_and_write_features(hits, hit_finders, writer)
 
-        # todo:
-        # visualisation
-
-        self._collect_spectra(hits, hit_finders, unmatched_hits_file, writer)
+        # collect ms1 spectra and find ms2 spectra related to hits
+        self._match_and_write_spectra(hits, hit_finders, unmatched_hits_file, writer)
 
         writer.close()
 
@@ -223,6 +229,7 @@ class CollectHitsData(object):
     def _match_and_write_features(self, hits, hit_finders, writer):
         for p in self.feature_map_files.values():
             with measure_time("match features from %s" % p):
+                feature_counter = 0
                 feature_map = oms.FeatureMap()
                 oms.FeatureXMLFile().load(p, feature_map)
                 base_file_name, __, __ = os.path.basename(p).partition("~")
@@ -232,8 +239,8 @@ class CollectHitsData(object):
                     logger.warn("no hits in .pep.xml for features in %s" % p)
                     continue
                 for feature in feature_map:
-                    hull_points = [hull.getHullPoints() for hull in feature.getConvexHulls()]
-                    hull_ids = [writer.add_convex_hull(points) for points in hull_points]
+                    feature_id = writer.add_feature(feature, base_name)
+                    feature_counter += 1
                     for pep_id in feature.getPeptideIdentifications():
                         rt = pep_id.getRT()
                         mz = pep_id.getMZ()
@@ -243,7 +250,7 @@ class CollectHitsData(object):
                                 if hit.aa_sequence == oms_hit.getSequence().toString():
                                     break
                             else:
-                                # create new hit
+                                # no hit found in for loop, so create new hit:
                                 hit_id = self.hit_id_provider.next_id()
                                 aa_sequence = oms_hit.getSequence().toString()
                                 score = oms_hit.getScore()
@@ -252,9 +259,9 @@ class CollectHitsData(object):
                                           is_higher_score_better)
                                 hits.append(hit)
                                 writer.add_hit(hit)
-                            # write convex hull for this hit
-                            for hull_id in hull_ids:
-                                writer.link_convex_hull_with_hit(hull_id, hit)
+                            writer.link_feature_with_hit(feature_id, hit)
+
+            logger.info("inserted %d features" % feature_counter)
 
     def _report_size_of_final_file(self, out_file):
 
@@ -265,7 +272,7 @@ class CollectHitsData(object):
         factor = float(self.summed_sizes) / final_bytes
         logger.info("compression factor is %.1f" % factor)
 
-    def _collect_spectra(self, hits, hit_finders, unmatched_hits_file, writer):
+    def _match_and_write_spectra(self, hits, hit_finders, unmatched_hits_file, writer):
         matched_hit_ids = set()
         for base_name, path in self.peak_map_files.items():
             hit_finder = hit_finders[base_name]

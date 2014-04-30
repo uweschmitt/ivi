@@ -42,7 +42,7 @@ def test_0(data_path, tmpdir):
     spectra = list(reader.fetch_spectra(hit))
     assert len(spectra) == 0
 
-    ch = list(reader.fetch_convex_hulls_for_hit(hit))
+    ch = list(reader.fetch_mass_traces_for_hit(hit))
     assert len(ch) == 0
 
     hit = hits[0]
@@ -53,7 +53,7 @@ def test_0(data_path, tmpdir):
     spectra = list(reader.fetch_spectra(hit))
     assert len(spectra) == 1
 
-    ch = list(reader.fetch_convex_hulls_for_hit(hit))
+    ch = list(reader.fetch_mass_traces_for_hit(hit))
     assert len(ch) == 3
     tobe = [(360.3659973144531, 372.4840087890625, 457.7884216308594, 457.7892761230469),
             (360.3659973144531, 372.4840087890625, 458.2905578613281, 458.29132080078125),
@@ -92,8 +92,32 @@ def test_0(data_path, tmpdir):
     assert len(pm.spectra[0].precursors) == 0
     assert abs(pm.spectra[0].rt - 0.5800) < 1e-4
 
-    hulls = list(reader.fetch_convex_hulls_for_base_name("reduced"))
-    assert len(hulls) == 160
+    hulls = list(reader.fetch_feature_ranges_for_base_name("reduced"))
+    assert len(hulls) == 40
 
     hits = list(reader.get_hits_for_base_name("reduced"))
     assert len(hits) == 910
+
+    ranges = list(reader.fetch_mass_traces_in_range("reduced", 0, 1000, 0, 5000))
+    assert len(ranges) == 160
+
+    ranges = list(reader.fetch_mass_traces_in_range("reduced", 100, 300, 200, 500))
+    assert len(ranges) == 2
+
+    ranges = list(reader.fetch_mass_traces_intersecting("reduced", 100, 300, 200, 500))
+    assert len(ranges) == 5
+
+    ranges = list(reader.fetch_mass_traces_intersecting("reduced", 100, 300, 458, 460))
+    assert len(ranges) == 2
+
+    features = list(reader.fetch_features_in_range("reduced", 100, 300,  200, 500))
+    assert len(features) == 1
+    feature = features[0]
+    assert len(feature.mass_traces) == 2
+
+    features = list(reader.fetch_features_intersecting("reduced", 100, 300,  200, 500))
+    assert len(features) == 2
+    feature = features[0]
+    assert len(feature.mass_traces) == 3
+    feature = features[1]
+    assert len(feature.mass_traces) == 2
