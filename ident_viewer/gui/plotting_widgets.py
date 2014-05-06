@@ -6,7 +6,7 @@ from guiqwt.annotations import AnnotatedPoint
 from modified_guiqwt import *
 from config import setupStyleRangeMarker, setupCommonStyle, setupStyleRtMarker
 
-from PyQt4.Qwt5 import QwtScaleDraw, QwtText
+from PyQt4.Qwt5 import QwtText
 from PyQt4.QtGui import QWidget
 from PyQt4 import QtGui
 
@@ -17,6 +17,8 @@ import new
 from helpers import protect_signal_handler
 
 from emzed_optimizations.sample import sample_peaks
+
+from utils import set_x_axis_scale_draw, set_y_axis_scale_draw
 
 
 def getColor(i):
@@ -33,6 +35,7 @@ class PlotWidget(QWidget):
         self.layout = QtGui.QGridLayout(self)
 
         self.widget = CurveWidget(parent, xlabel=xlabel, ylabel=ylabel)
+        set_y_axis_scale_draw(self.widget) 
         # inject modified behaviour of widgets plot:
         if modified_parent_class is not None:
             self.widget.plot.__class__ = modified_parent_class
