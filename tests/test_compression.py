@@ -42,7 +42,7 @@ def test_0(data_path, tmpdir):
     spectra = list(reader.fetch_spectra(hit))
     assert len(spectra) == 0
 
-    ch = list(reader.fetch_mass_traces_for_hit(hit))
+    ch = list(reader.fetch_features_for_hit(hit))
     assert len(ch) == 0
 
     hit = hits[0]
@@ -53,7 +53,8 @@ def test_0(data_path, tmpdir):
     spectra = list(reader.fetch_spectra(hit))
     assert len(spectra) == 1
 
-    ch = list(reader.fetch_mass_traces_for_hit(hit))
+    hits = list(reader.fetch_features_for_hit(hit))
+    ch = hits[0].mass_traces
     assert len(ch) == 3
     tobe = [(360.3659973144531, 372.4840087890625, 457.7884216308594, 457.7892761230469),
             (360.3659973144531, 372.4840087890625, 458.2905578613281, 458.29132080078125),
@@ -98,6 +99,18 @@ def test_0(data_path, tmpdir):
     hits = list(reader.get_hits_for_base_name("reduced"))
     assert len(hits) == 910
 
+
+    hits.sort(key=lambda k:hit.id_)
+    count = 0
+    for h in hits:
+        f = reader.fetch_features_for_hit(h)
+        for fi in f:
+            count += 1
+
+    assert count == 40
+    assert fi.id_ == 39
+    assert fi.fid == 8921995772518139576L
+
     ranges = list(reader.fetch_mass_traces_in_range("reduced", 0, 1000, 0, 5000))
     assert len(ranges) == 160
 
@@ -121,3 +134,5 @@ def test_0(data_path, tmpdir):
     assert len(feature.mass_traces) == 3
     feature = features[1]
     assert len(feature.mass_traces) == 2
+
+

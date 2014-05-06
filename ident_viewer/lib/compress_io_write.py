@@ -90,7 +90,7 @@ class CompressedDataWriter(object):
     class HitFeatureLink(IsDescription):
 
         hit_id = Int64Col()           # no uint, as pytables can not index uints
-        feature_id = Int64Col()   # dito
+        feature_id = Int64Col()       # dito
 
     class HitData(IsDescription):
 
@@ -307,10 +307,10 @@ class CompressedDataWriter(object):
         rt_min, rt_max, mz_min, mz_max = self._range(hull)
         row = self.feature_table.row
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
-        feature_id_from_file = np.uint64(feature.getUniqueId())
+        fid = np.uint64(feature.getUniqueId())
         feature_id = self.feature_id_provider.next_id()
         row["feature_id"] = feature_id
-        row["feature_id_from_file"] = feature_id_from_file
+        row["feature_id_from_file"] = fid
         row["base_name_id"] = base_name_id
         row["rt_min"] = rt_min
         row["rt_max"] = rt_max

@@ -1,6 +1,9 @@
-from PyQt4.QtCore import QVariant, QAbstractItemModel, QModelIndex, Qt, pyqtSignal
 
 import sys
+import collections
+import time
+
+from PyQt4.QtCore import QVariant, QAbstractItemModel, QModelIndex, Qt, pyqtSignal
 
 from ..lib import PeptideHitAssigner
 
@@ -50,27 +53,34 @@ class HitItem(TreeItem):
         if col == 0:
             return "HIT: %s" % hit.base_name
         elif col == 1:
+            return "%d" % hit.id_
+        elif col == 2:
             if hit.rt is None:
                 return "-"
             return "%.1fs" % hit.rt
-        elif col == 2:
+        elif col == 3:
             if hit.mz is None:
                 return "-"
             return "%.5f" % hit.mz
-        elif col == 3:
+        elif col == 4:
             if hit.score is None:
                 return "-"
             return "%.4f" % hit.score
 
     def childCount(self):
-        return self.reader().count_spectra_for(self.data())
+        hit = self.data()
+        return self.reader().count_spectra_for(hit) + self.reader().count_features_for(hit)
 
     def get_child(self, row):
         r = self.reader()
         if self.children is None:
-            spectra = list(r.fetch_spectra(self.data()))
+            hit = self.data()
+            spectra = list(r.fetch_spectra(hit))
             spectra.sort(lambda spec: (spec.rt, spec.precursors[0].mz))
             self.children = [SpectrumItem(self, i, s, r) for (i, s) in enumerate(spectra)]
+            features = list(r.fetch_features_for_hit(hit))
+            n = len(self.children)
+            self.children += [FeatureItem(self, i + n, f, r) for (i, f) in enumerate(features)]
         return self.children[row]
 
 
@@ -83,10 +93,24 @@ class SpectrumItem(TreeItem):
         spectrum = self.data()
         if col == 0:
             return "MS2:"
-        if col == 1:
+        if col == 2:
             return "%.1fs" % spectrum.rt
-        elif col == 2:
+        elif col == 3:
             return "%.5f" % spectrum.precursors[0].mz
+        return ""
+
+
+class FeatureItem(TreeItem):
+
+    def __init__(self, parent, row, feature, reader):
+        super(FeatureItem, self).__init__(parent, row, feature, reader)
+
+    def data_in_column(self, col):
+        feature = self.data()
+        if col == 0:
+            return "FEATURE:"
+        if col == 1:
+            return str(feature.fid)
         return ""
 
 
@@ -132,7 +156,8 @@ class RootItem(TreeItem):
 
 class TreeModel(QAbstractItemModel):
 
-    peptideSelected = pyqtSignal(object, object)
+    spectrumSelected = pyqtSignal(object, object)
+    featureSelected = pyqtSignal(object, object, str)
 
     def __init__(self, reader, parent=None):
         super(TreeModel, self).__init__(parent)
@@ -193,7 +218,7 @@ class TreeModel(QAbstractItemModel):
 
     def headerData(self, section, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            return ["Hit", "RT", "MZ", "Score"][section]
+            return ["Hit", "ID", "RT", "MZ", "Score"][section]
         return QVariant()
 
     def select(self, index):
@@ -202,7 +227,39 @@ class TreeModel(QAbstractItemModel):
             hit = item.parent().data()
             spectrum = item.data()
             assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
-            self.peptideSelected.emit(spectrum, assignment)
+            self.spectrumSelected.emit(spectrum, assignment)
+        elif isinstance(item, FeatureItem):
+            hit = item.parent().data()
+            feature = item.data()
+            pm = PeakMapCache.get(item.reader(), feature.base_name)
+            self.featureSelected.emit(pm, feature, hit.aa_sequence)
+
+
+class PeakMapCache(object):
+
+    max_size = 10
+
+    cache = collections.OrderedDict()
+
+    @staticmethod
+    def get(reader, base_name):
+        cache = PeakMapCache.cache
+        if base_name in cache:
+            return cache[base_name]
+        if len(cache) > PeakMapCache.max_size:
+            cache.popitem(0)
+        s = time.time()
+        pm = reader.fetch_peak_map(base_name)
+        cache[base_name] = pm
+        print "loading needed %.1f s" % (time.time() - s)
+        return pm
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":

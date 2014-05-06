@@ -179,8 +179,8 @@ class CollectHitsData(object):
             li = []
             pep.getKeys(li)
             rt = pep.getRT()
-            if rt == 0.0:
-                continue
+            #  if rt == 0.0:
+            #      continue
             mz = pep.getMZ()
             base_name = pep.getBaseName()
             base_name = os.path.basename(base_name)

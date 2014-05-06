@@ -93,6 +93,10 @@ class CompressedDataReader(object):
         rows = self.hit_spectrum_link_table.where("hit_id == %d" % hit.id_)
         return len(list(rows))
 
+    def count_features_for(self, hit):
+        rows = self.hit_feature_link_table.where("hit_id == %d" % hit.id_)
+        return len(list(rows))
+
     def fetch_spectra(self, hit):
         rows0 = self.hit_spectrum_link_table.where("hit_id == %d" % hit.id_)
         # no look up with  base name needed, as hit has unique base name which is
@@ -109,17 +113,22 @@ class CompressedDataReader(object):
                 spec = Spectrum(hit.rt, mzs, intensities, [precursor], 2)
                 yield spec
 
-    def fetch_mass_traces_for_hit(self, hit):
+    def fetch_features_for_hit(self, hit):
         rows0 = self.hit_feature_link_table.where("hit_id == %d" % hit.id_)
         for row0 in rows0:
             feature_id = row0["feature_id"]
-            rows = self.mass_trace_table.where("feature_id == %d" % feature_id)
+            rows = self.feature_table.where("feature_id == %d" % feature_id)
             for row in rows:
+                base_name_id = row["base_name_id"]
+                fid = row["feature_id_from_file"]
+                base_name = self.base_name_id_provider.lookup_item(base_name_id)
                 rt_min = row["rt_min"]
                 rt_max = row["rt_max"]
                 mz_min = row["mz_min"]
                 mz_max = row["mz_max"]
-                yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+                mass_traces = list(self._fetch_mass_traces_for_feature(feature_id))
+                yield Feature(feature_id, base_name, fid, rt_min, rt_max, mz_min, mz_max,
+                              mass_traces)
 
     def fetch_features_in_range(self, base_name, rt_min, rt_max, mz_min, mz_max):
         condition = """(%f <= rt_min) & (rt_max <= %f)\
@@ -160,10 +169,9 @@ class CompressedDataReader(object):
             mz_min = row["mz_min"]
             mz_max = row["mz_max"]
             feature_id = row["feature_id"]
-            feature_id_from_file = row["feature_id_from_file"]
+            fid = row["feature_id_from_file"]
             mass_traces = list(self._fetch_mass_traces_for_feature(feature_id))
-            yield Feature(feature_id, base_name, feature_id_from_file,
-                          rt_min, rt_max, mz_min, mz_max, mass_traces)
+            yield Feature(feature_id, base_name, fid, rt_min, rt_max, mz_min, mz_max, mass_traces)
 
     def _fetch_mass_traces_for_feature(self, feature_id):
         rows = self.mass_trace_table.where("feature_id == %d" % feature_id)
@@ -221,11 +229,6 @@ class CompressedDataReader(object):
             mz_min = row["mz_min"]
             mz_max = row["mz_max"]
             yield PeakRange(rt_min, rt_max, mz_min, mz_max)
-
-# todo: test coverage !
-#       profiling
-#       concept profiler  -> filtering of hits (aa_sequence, oder feature_id !)
-#       feature_id im hit-baum mit anzeigen !
 
     def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)

@@ -14,9 +14,21 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>1</horstretch>
+     <verstretch>1</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter">
+     <widget class="QSplitter" name="splitter_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>1</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -24,7 +36,7 @@
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
          <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
+         <verstretch>1</verstretch>
         </sizepolicy>
        </property>
        <property name="alternatingRowColors">
@@ -37,13 +49,32 @@
         <enum>QAbstractItemView::SelectRows</enum>
        </property>
       </widget>
-      <widget class="SpectrumPlotter" name="spectrum_plotter" native="true">
+      <widget class="QSplitter" name="splitter">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>2</horstretch>
-         <verstretch>0</verstretch>
+        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+         <horstretch>1</horstretch>
+         <verstretch>1</verstretch>
         </sizepolicy>
        </property>
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <widget class="SpectrumPlotter" name="spectrum_plotter" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>2</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+       <widget class="PeakmapPlotter" name="peakmap_plotter" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>2</horstretch>
+          <verstretch>1</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>
@@ -55,7 +86,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuIdent_Viewer">
@@ -102,6 +133,12 @@
    <class>SpectrumPlotter</class>
    <extends>QWidget</extends>
    <header>spectrumplotter.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PeakmapPlotter</class>
+   <extends>QWidget</extends>
+   <header>peakmapplotter.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
