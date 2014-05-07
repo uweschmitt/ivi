@@ -227,10 +227,14 @@ class RtPlotWidget(PlotWidget):
         manager = PlotManager(self.widget)
         manager.add_plot(self.plot)
 
+        self.marker = Marker(label_cb=None, constraint_cb=None)
+        self.marker.attach(self.plot)
+
     def plot_chromatograms(self, chromatograms):
 
         self.plot.del_all_items()
         self.plot.add_item(make.legend("TR"))
+        self.plot.add_item(self.marker)
 
         for i, (rts, iis, title) in enumerate(chromatograms):
             curve = make_chromatorgram_curve(rts, iis, title, getColor(i, True))
