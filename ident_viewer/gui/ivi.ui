@@ -22,7 +22,7 @@
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QSplitter" name="splitter_2">
+     <widget class="QSplitter" name="splitter_3">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>1</horstretch>
@@ -39,6 +39,9 @@
          <verstretch>1</verstretch>
         </sizepolicy>
        </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
        <property name="alternatingRowColors">
         <bool>false</bool>
        </property>
@@ -49,7 +52,7 @@
         <enum>QAbstractItemView::SelectRows</enum>
        </property>
       </widget>
-      <widget class="QSplitter" name="splitter">
+      <widget class="QSplitter" name="splitter_2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>1</horstretch>
@@ -61,19 +64,56 @@
        </property>
        <widget class="SpectrumPlotter" name="spectrum_plotter" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-          <horstretch>2</horstretch>
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
           <verstretch>1</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>300</height>
+         </size>
         </property>
        </widget>
-       <widget class="PeakmapPlotter" name="peakmap_plotter" native="true">
+       <widget class="QSplitter" name="splitter">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-          <horstretch>2</horstretch>
+          <horstretch>1</horstretch>
           <verstretch>1</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>400</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="PeakmapPlotter" name="peakmap_plotter" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>1</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+        <widget class="ChromatogramPlotter" name="chromatogram_plotter" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>1</horstretch>
+           <verstretch>1</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </widget>
       </widget>
      </widget>
@@ -139,6 +179,12 @@
    <class>PeakmapPlotter</class>
    <extends>QWidget</extends>
    <header>peakmapplotter.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ChromatogramPlotter</class>
+   <extends>QWidget</extends>
+   <header>chromatogramplotter.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

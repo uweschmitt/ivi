@@ -612,7 +612,7 @@ class FeatureShape(QwtPlotItem):
     # </IBasePlotItem API>
 
     # somehow light blue which contasts to the yellow/red/black colors of the peakmap:
-    color = (150, 220, 255)
+    color = (170, 220, 255)
 
     def _set_inner_pen_and_brush(self, painter, xMap, yMap):
         r, g, b = self.color
@@ -687,9 +687,6 @@ class PeakmapPlotter(QWidget):
         self.layout.addWidget(self.widget, 0, 0, 1, 1)
 
     def plot_hit(self, peakmap, feature, aa_sequence):
-        #rects = [(mt.rt_min, mt.rt_max, mt.mz_min, mt.mz_max, "") for mt in feature.mass_traces]
-        #rects += [(feature.rt_min - 1.0 , feature.rt_max + 1.0, feature.mz_min - 0.1,
-                   #feature.mz_max + 0.1, aa_sequence)]
         self.set_peakmaps(peakmap, None, [(feature, aa_sequence)])
         self.widget.plot.set_initial_image_limits(feature.rt_min - 30.0, feature.rt_max + 30.0,
                                                   feature.mz_min - 10.0, feature.mz_max + 10.0)

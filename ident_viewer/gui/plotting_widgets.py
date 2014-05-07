@@ -6,7 +6,7 @@ from guiqwt.annotations import AnnotatedPoint
 from modified_guiqwt import *
 from config import setupStyleRangeMarker, setupCommonStyle, setupStyleRtMarker
 
-from PyQt4.Qwt5 import QwtText
+from PyQt4.Qwt5 import QwtText, QwtScaleDraw
 from PyQt4.QtGui import QWidget
 from PyQt4 import QtGui
 
@@ -21,10 +21,18 @@ from emzed_optimizations.sample import sample_peaks
 from utils import set_x_axis_scale_draw, set_y_axis_scale_draw
 
 
-def getColor(i):
-    colors = "bgrkm"
-    return colors[i % len(colors)]
 
+def getColor(i, light=False):
+    colors = [(0, 0, 200), (70, 70, 70), (0, 150, 0), (200, 0, 0), (200, 200, 0), (100, 70, 0)]
+    c = colors[i % len(colors)]
+    if light:
+        c = tuple([min(ii + 50, 255) for ii in c])
+
+    # create hex string  "#rrggbb":
+    return "#" + "".join("%02x" % v for v in c)
+
+def formatSeconds(seconds):
+    return "%.2fm" % (seconds / 60.0)
 
 
 class PlotWidget(QWidget):
@@ -63,7 +71,7 @@ class PlotWidget(QWidget):
 class MzCursorInfo(ObjectInfo):
 
     def __init__(self, marker, line):
-        ObjectInfo.__init__(self)
+        super(MzCursorInfo, self).__init__()
         self.marker = marker
         self.line = line
 
@@ -78,6 +86,18 @@ class MzCursorInfo(ObjectInfo):
         return "<pre>%s</pre>" % txt
 
 
+class RtCursorInfo(ObjectInfo):
+
+    def __init__(self, marker):
+        super(RtCursorInfo, self).__init__()
+        self.marker = marker
+
+    def get_text(self):
+        rt = self.marker.xValue()
+        txt = "%.2fm" % (rt / 60.0)
+        return txt
+
+
 def add_marker(plot):
     """ Marker is the red dot aka "peak ursor" """
     marker = Marker(label_cb=plot.label_info, constraint_cb=plot.on_plot)
@@ -89,6 +109,14 @@ def make_peak_curve(mzs, iis):
     # inject modified behaviour:
     curve.__class__ = CurveWithoutPointSelection
     curve.set_data(mzs, iis)
+    return curve
+
+
+def make_chromatorgram_curve(rts, iis, color):
+    curve = make.curve([], [], color=color, linewidth=1.5)
+    # inject modified behaviour:
+    curve.__class__ = CurveWithoutPointSelection
+    curve.set_data(rts, iis)
     return curve
 
 
@@ -136,8 +164,6 @@ class MzPlotWidget(PlotWidget):
         tool.activate()
         manager.set_default_tool(tool)
 
-        #self.plot.add_item(Annotation(300.0, 100.0, "y++\nKAR(*)", "red"))
-
         self.plot.add_item(self.marker)
         self.plot.add_item(self.label)
         self.plot.add_item(self.line)
@@ -182,3 +208,27 @@ class MzPlotWidget(PlotWidget):
 
     def plot_spectrum(self, spectrum):
         self.plot_spectra([spectrum])
+
+
+class RtPlotWidget(PlotWidget):
+
+    def __init__(self, parent):
+        super(RtPlotWidget, self).__init__(parent, "rt", "I", RtPlot)
+        self.configure_plot()
+
+    def configure_plot(self):
+
+        set_x_axis_scale_draw(self.widget)
+        manager = PlotManager(self.widget)
+        manager.add_plot(self.plot)
+
+    def plot_chromatograms(self, chromatograms):
+
+        self.plot.del_all_items()
+
+        for i, (rts, iis) in enumerate(chromatograms):
+            curve = make_chromatorgram_curve(rts, iis, getColor(i, True))
+            self.plot.add_item(curve)
+
+        self.plot.reset_all_axes()
+        self.replot()

@@ -32,6 +32,7 @@ class IdentViewer(MainWindow):
         self.peptide_hits.clicked.connect(self.tree_model.select)
         self.tree_model.spectrumSelected.connect(self.spectrum_plotter.plot_hit)
         self.tree_model.featureSelected.connect(self.peakmap_plotter.plot_hit)
+        self.tree_model.featureSelected.connect(self.chromatogram_plotter.plot_feature)
 
     def row_chosen(self, i):
         self.peptide_hits.selectRow(i)

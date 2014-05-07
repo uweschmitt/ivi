@@ -238,8 +238,11 @@ class CurvePlotWithModifiedZoomHandling(CurvePlot):
         self.emit(SIG_PLOT_AXIS_CHANGED, self)
 
     @protect_signal_handler
-    def reset_all_axes(self, filter, evt):
+    def reset_all_axes_evt(self, filter, evt):
         """ reset axes of plot """
+        self.reset_x_limits()
+
+    def reset_all_axes(self):
         self.reset_x_limits()
 
     def get_items_of_class(self, clz):
@@ -467,20 +470,6 @@ class MzPlot(CurvePlotWithModifiedZoomHandling):
 
     def reset_all_axes(self):
         self.reset_x_limits()
-        return 
-        """
-        all_peaks = []
-        for i, (pm, rtmin, rtmax, mzmin, mzmax, npeaks) in enumerate(self.data):
-            peaks = sample_peaks(pm, rtmin, rtmax, mzmin, mzmax, npeaks)
-            curve = self.curves[i]
-            curve.set_data(peaks[:, 0], peaks[:, 1])
-            all_peaks.append(peaks)
-        if len(all_peaks):
-            self.all_peaks = np.vstack(all_peaks)
-        else:
-            self.all_peaks = np.zeros((0, 2))
-        self.reset_x_limits()
-        """
 
     def next_peak_to(self, mz, I=None):
         if self.all_peaks.shape[0] == 0:
@@ -513,26 +502,6 @@ class MzPlot(CurvePlotWithModifiedZoomHandling):
             and zooms to them
         """
         return
-
-        """
-        if not hasattr(self, "centralMz") or self.centralMz is None:
-            mz = self.get_unique_item(Marker).xValue()
-            mz = self.marker.xValue()
-        else:
-            mz = self.centralMz
-
-        self.update_plot_xlimits(mz - self.halfWindowWidth,
-                                 mz + self.halfWindowWidth)
-        """
-
-    #def set_half_window_width(self, w2):
-        #self.halfWindowWidth = w2
-
-    #def set_central_mz(self, mz):
-        #self.centralMz = mz
-
-    #def register_c_callback(self, cb):
-        #self.c_call_back = cb
 
     @protect_signal_handler
     def do_c_pressed(self, filter, evt):

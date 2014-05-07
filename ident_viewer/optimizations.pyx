@@ -5,11 +5,68 @@ import numpy as np
 
 from libc.stdlib cimport malloc, free, calloc
 
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+def extract_chromatogram(peak_map, float rtmin, float rtmax, double mzmin, double mzmax, 
+                         int ms_level):
+
+    assert mzmax >= mzmin, "mzmax < mzmin"
+    assert rtmax >= rtmin, "rtmax < rtmin"
+
+    cdef np.float64_t[:] mzs
+    cdef np.float32_t[:] intensities
+
+    cdef list spectra = peak_map.spectra
+    cdef size_t ns = len(spectra)
+
+    cdef size_t nt, i, j, k, n
+    cdef float ii, rt
+    cdef double mz
+
+    cdef int smsl
+
+    nt = 0
+    for i in range(ns):
+        spec = spectra[i]
+        rt = spec.rt
+        if rtmin <= rt <= rtmax:
+            smsl = spec.ms_level
+            if smsl == ms_level:
+                nt += 1
+
+    cdef np.ndarray rts = np.zeros((nt,), dtype=np.float32)
+    cdef np.ndarray iis = np.zeros((nt,), dtype=np.float32)
+
+    cdef np.float32_t[:] rts_view = rts
+    cdef np.float32_t[:] iis_view = iis
+
+    j = 0
+    for i in range(ns):
+        spec = spectra[i]
+        rt = spec.rt
+        if rtmin <= rt <= rtmax:
+            smsl = spec.ms_level
+            if smsl == ms_level:
+                mzs = spec.mzs
+                intensities = spec.intensities
+                ii = 0.0
+                n = mzs.shape[0]
+                for k in range(n):
+                    mz = mzs[k]
+                    if mzmin <= mz and mz <= mzmax:
+                        ii += intensities[k]
+                rts_view[j] = rt
+                iis_view[j] = ii
+                j += 1
+
+    return rts, iis
+
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 @cython.cdivision(True)
-def sample_image(peak_map, double rtmin, double rtmax, double mzmin, double mzmax, size_t w,
+def sample_image(peak_map, float rtmin, float rtmax, double mzmin, double mzmax, size_t w,
                  size_t h, int ms_level):
 
     # avoid zero division later
@@ -19,13 +76,15 @@ def sample_image(peak_map, double rtmin, double rtmax, double mzmin, double mzma
     cdef np.ndarray img = np.zeros((h, w), dtype=np.float64)
     cdef np.float64_t[:, :] img_view = img
     cdef size_t rt_bin
-    cdef float rt, mz
+    cdef float rt
+    cdef double mz
     cdef size_t n, i, j, mz_bin
     cdef np.float64_t[:] mzs
     cdef np.float32_t[:] intensities
 
     cdef list spectra = peak_map.spectra
     cdef size_t ns = len(spectra)
+    cdef int smsl
 
     for i in range(ns):
         spec = spectra[i]
@@ -34,7 +93,8 @@ def sample_image(peak_map, double rtmin, double rtmax, double mzmin, double mzma
             continue
         if rt > rtmax:
             break
-        if spec.ms_level != ms_level:
+        smsl = spec.ms_level
+        if smsl != ms_level:
             continue
         rt_bin = int((rt - rtmin) / (rtmax - rtmin) * (w - 1))
         mzs = spec.mzs
@@ -46,6 +106,7 @@ def sample_image(peak_map, double rtmin, double rtmax, double mzmin, double mzma
                 mz_bin = int((mz - mzmin) / (mzmax - mzmin) * (h - 1))
                 img_view[mz_bin, rt_bin] += intensities[j]
     return img
+
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
@@ -61,6 +122,7 @@ def get_ranges(peak_map, int ms_level):
     cdef np.float64_t[:] mzs
     cdef np.float32_t[:] iis
     cdef int found_spec = 0
+    cdef int smsl
 
     rt_max = -DBL_MAX
     rt_min = +DBL_MAX
@@ -71,7 +133,8 @@ def get_ranges(peak_map, int ms_level):
 
     for i in range(n):
         spectrum = spectra[i]
-        if spectrum.ms_level == ms_level:
+        smsl = spectrum.ms_level
+        if smsl == ms_level:
             found_spec = 1
             mzs = spectrum.mzs
             iis = spectrum.intensities

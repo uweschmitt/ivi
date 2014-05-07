@@ -255,13 +255,6 @@ class PeakMapCache(object):
         return pm
 
 
-
-
-
-
-
-
-
 if __name__ == "__main__":
 
     from PyQt4.QtGui import QApplication
