@@ -116,8 +116,8 @@ def make_peak_curve(mzs, iis):
     return curve
 
 
-def make_chromatorgram_curve(rts, iis, color):
-    curve = make.curve([], [], color=color, linewidth=1.5)
+def make_chromatorgram_curve(rts, iis, title, color):
+    curve = make.curve([], [], title=title, color=color, linewidth=1.5)
     # inject modified behaviour:
     curve.__class__ = CurveWithoutPointSelection
     curve.set_data(rts, iis)
@@ -230,10 +230,13 @@ class RtPlotWidget(PlotWidget):
     def plot_chromatograms(self, chromatograms):
 
         self.plot.del_all_items()
+        self.plot.add_item(make.legend("TR"))
 
-        for i, (rts, iis) in enumerate(chromatograms):
-            curve = make_chromatorgram_curve(rts, iis, getColor(i, True))
+        for i, (rts, iis, title) in enumerate(chromatograms):
+            curve = make_chromatorgram_curve(rts, iis, title, getColor(i, True))
             self.plot.add_item(curve)
 
         self.plot.reset_all_axes()
         self.replot()
+
+
