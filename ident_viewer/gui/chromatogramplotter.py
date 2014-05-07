@@ -8,7 +8,7 @@ from ..optimizations import extract_chromatogram
 
 class ChromatogramPlotter(RtPlotWidget):
 
-    def plot_feature(self, peakmap, feature, aa_sequence):
+    def plot_feature(self, peakmap, feature):
         chromos = [] 
         for mt in feature.mass_traces:
             rts, iis = extract_chromatogram(peakmap, mt.rt_min, mt.rt_max, mt.mz_min, mt.mz_max, 1)

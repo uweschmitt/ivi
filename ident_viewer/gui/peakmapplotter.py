@@ -723,6 +723,10 @@ class PeakmapPlotter(QWidget):
         t = self.widget.add_tool(PeakmapZoomTool)
         t.activate()
 
+    def clear_plot(self):
+        self.widget.plot.del_all_items()
+        self.widget.plot.replot()
+
     def replot(self):
         self.widget.plot.replot()
 

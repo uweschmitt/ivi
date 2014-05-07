@@ -157,11 +157,15 @@ class RootItem(TreeItem):
 class TreeModel(QAbstractItemModel):
 
     spectrumSelected = pyqtSignal(object, object)
+    spectrumInvalid = pyqtSignal()
+
     featureSelected = pyqtSignal(object, object, str)
+    featureInvalid = pyqtSignal()
 
     def __init__(self, reader, parent=None):
         super(TreeModel, self).__init__(parent)
         self.root_item = RootItem(reader)
+        self.last_hit_id = None
 
     def set_preferences(self, preferences):
         self.preferences = preferences
@@ -225,14 +229,23 @@ class TreeModel(QAbstractItemModel):
         item = index.internalPointer()
         if isinstance(item, SpectrumItem):
             hit = item.parent().data()
+            hit_changed = hit.id_ != self.last_hit_id
+            self.last_hit_id = hit.id_
             spectrum = item.data()
             assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
             self.spectrumSelected.emit(spectrum, assignment)
+            if hit_changed:
+                self.featureInvalid.emit()
+
         elif isinstance(item, FeatureItem):
             hit = item.parent().data()
+            hit_changed = hit.id_ != self.last_hit_id
+            self.last_hit_id = hit.id_
             feature = item.data()
             pm = PeakMapCache.get(item.reader(), feature.base_name)
             self.featureSelected.emit(pm, feature, hit.aa_sequence)
+            if hit_changed:
+                self.spectrumInvalid.emit()
 
 
 class PeakMapCache(object):

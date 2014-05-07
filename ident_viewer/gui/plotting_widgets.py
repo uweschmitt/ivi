@@ -67,6 +67,10 @@ class PlotWidget(QWidget):
     def replot(self):
         self.plot.replot()
 
+    def clear_plot(self):
+        self.plot.del_all_items()
+        self.replot()
+
 
 class MzCursorInfo(ObjectInfo):
 
@@ -208,6 +212,7 @@ class MzPlotWidget(PlotWidget):
 
     def plot_spectrum(self, spectrum):
         self.plot_spectra([spectrum])
+
 
 
 class RtPlotWidget(PlotWidget):
