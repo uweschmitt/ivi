@@ -217,6 +217,8 @@ class MzPlotWidget(PlotWidget):
 
 class RtPlotWidget(PlotWidget):
 
+    rtCursorMoved = pyqtSignal(float)
+
     def __init__(self, parent):
         super(RtPlotWidget, self).__init__(parent, "rt", "I", RtPlot)
         self.configure_plot()
@@ -227,8 +229,23 @@ class RtPlotWidget(PlotWidget):
         manager = PlotManager(self.widget)
         manager.add_plot(self.plot)
 
-        self.marker = Marker(label_cb=None, constraint_cb=None)
-        self.marker.attach(self.plot)
+        tool = manager.add_tool(RtSelectionTool)
+        tool.activate()
+        manager.set_default_tool(tool)
+
+        self.marker = add_marker(self.plot)
+        setupStyleRtMarker(self.marker)
+        self.marker.rts = (0, )
+        self.plot.moveMarker.connect(self.marker.move_local_point_to)
+        self.plot.moveMarker.connect(self.move_rt_cursor)
+
+    def move_rt_cursor(self, hnd, pos):
+        rt = self.plot.invTransform(self.plot.xBottom, pos.x())
+        self.rtCursorMoved.emit(rt)
+
+    def move_marker(self, rt, mz):
+        self.marker.setXValue(rt)
+        self.replot()
 
     def plot_chromatograms(self, chromatograms):
 
@@ -236,9 +253,14 @@ class RtPlotWidget(PlotWidget):
         self.plot.add_item(make.legend("TR"))
         self.plot.add_item(self.marker)
 
+        rtall = set()
+
         for i, (rts, iis, title) in enumerate(chromatograms):
             curve = make_chromatorgram_curve(rts, iis, title, getColor(i, True))
             self.plot.add_item(curve)
+            rtall.update(rts)
+
+        self.marker.rts = sorted(rtall)
 
         self.plot.reset_all_axes()
         self.replot()

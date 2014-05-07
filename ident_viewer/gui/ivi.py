@@ -38,6 +38,9 @@ class IdentViewer(MainWindow):
         self.tree_model.featureInvalid.connect(self.peakmap_plotter.clear_plot)
         self.tree_model.featureInvalid.connect(self.chromatogram_plotter.clear_plot)
 
+        self.chromatogram_plotter.rtCursorMoved.connect(self.peakmap_plotter.move_marker_to_rt)
+        self.peakmap_plotter.cursorMoved.connect(self.chromatogram_plotter.move_marker)
+
     def row_chosen(self, i):
         self.peptide_hits.selectRow(i)
 

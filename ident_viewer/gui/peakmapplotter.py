@@ -498,6 +498,15 @@ class ModifiedImagePlot(ImagePlot):
         self.replot()
         self.emit(SIG_PLOT_AXIS_CHANGED, self)
 
+    cursorMoved = pyqtSignal(float, float)
+
+    @protect_signal_handler
+    def do_move_marker(self, evt):
+        super(ModifiedImagePlot, self).do_move_marker(evt)
+        rt = self.invTransform(self.xBottom, evt.x())
+        mz = self.invTransform(self.yLeft, evt.y())
+        self.cursorMoved.emit(rt, mz)
+
 
 def get_range(peakmap, peakmap2):
     rt_min, rt_max, mz_min, mz_max, imin, imax = peakmap.get_ranges()
@@ -527,52 +536,6 @@ def create_image_widget():
 
     return widget
 
-
-def create_peakmap_labels(plot):
-    rect_marker = RectangleShape()
-    rect_label = make.info_label("TR", [PeakmapCursorRangeInfo(rect_marker)], title=None)
-    rect_label.labelparam.label = ""
-    rect_label.setVisible(1)
-    plot.rect_label = rect_label
-    plot.add_item(rect_label)
-
-    params = {
-        "shape/drag/symbol/size": 0,
-        "shape/drag/line/color": "#cccccc",
-        "shape/drag/line/width": 1.5,
-        "shape/drag/line/alpha": 0.4,
-        "shape/drag/line/style": "SolidLine",
-
-    }
-    CONF.update_defaults(dict(plot=params))
-    rect_marker.shapeparam.read_config(CONF, "plot", "shape/drag")
-    rect_marker.shapeparam.update_shape(rect_marker)
-    rect_marker.setVisible(0)
-    rect_marker.set_rect(0, 0, np.nan, np.nan)
-    plot.add_item(rect_marker)
-
-    plot.canvas_pointer = True  # x-cross marker on
-    # we hack label_cb for updating legend:
-
-    def label_cb(rt, mz):
-        # passing None here arives as np.nan if you call get_rect later, so we use
-        # np.nan here:
-        rect_marker.set_rect(rt, mz, np.nan, np.nan)
-        return ""
-
-    cross_marker = plot.cross_marker
-    cross_marker.label_cb = label_cb
-    params = {
-        "marker/cross/line/color": "#cccccc",
-        "marker/cross/line/width": 1.5,
-        "marker/cross/line/alpha": 0.4,
-        "marker/cross/line/style": "DashLine",
-        "marker/cross/symbol/marker": "NoSymbol",
-        "marker/cross/markerstyle": "Cross",
-    }
-    CONF.update_defaults(dict(plot=params))
-    cross_marker.markerparam.read_config(CONF, "plot", "marker/cross")
-    cross_marker.markerparam.update_marker(cross_marker)
 
 
 class FeatureShape(QwtPlotItem):
@@ -686,6 +649,17 @@ class PeakmapPlotter(QWidget):
         self.layout.setContentsMargins(left, top, right, bottom)
         self.layout.addWidget(self.widget, 0, 0, 1, 1)
 
+        self.widget.plot.cursorMoved.connect(self.marker_moved)
+
+    cursorMoved = pyqtSignal(float, float)
+    cursorMovedRt = pyqtSignal(float)
+    cursorMovedMz = pyqtSignal(float)
+
+    def marker_moved(self, rt, mz):
+        self.cursorMoved.emit(rt, mz)
+        self.cursorMovedRt.emit(rt)
+        self.cursorMovedMz.emit(mz)
+
     def plot_hit(self, peakmap, feature, aa_sequence):
         self.set_peakmaps(peakmap, None, [(feature, aa_sequence)])
         self.widget.plot.set_initial_image_limits(feature.rt_min - 30.0, feature.rt_max + 30.0,
@@ -714,7 +688,7 @@ class PeakmapPlotter(QWidget):
             for feature, label in features:
                 self.widget.plot.add_item(FeatureShape(feature, label))
         # widget.plot.reset_history()
-        create_peakmap_labels(self.widget.plot)
+        self.create_peakmap_labels() # 
         # for zooming and panning with mouse drag:
         t = self.widget.add_tool(SelectTool)
         self.widget.set_default_tool(t)
@@ -723,9 +697,65 @@ class PeakmapPlotter(QWidget):
         t = self.widget.add_tool(PeakmapZoomTool)
         t.activate()
 
+    def move_marker_to_rt(self, rt):
+        __, mz = self.cross_marker.get_pos()
+        self.cross_marker.set_pos(rt, mz)
+        self.replot()
+
+    def create_peakmap_labels(self):
+        plot = self.widget.plot
+        rect_marker = RectangleShape()
+        rect_label = make.info_label("TR", [PeakmapCursorRangeInfo(rect_marker)], title=None)
+        rect_label.labelparam.label = ""
+        rect_label.setVisible(1)
+        plot.rect_label = rect_label
+        plot.add_item(rect_label)
+
+        params = {
+            "shape/drag/symbol/size": 0,
+            "shape/drag/line/color": "#cccccc",
+            "shape/drag/line/width": 1.5,
+            "shape/drag/line/alpha": 0.4,
+            "shape/drag/line/style": "SolidLine",
+
+        }
+        CONF.update_defaults(dict(plot=params))
+        rect_marker.shapeparam.read_config(CONF, "plot", "shape/drag")
+        rect_marker.shapeparam.update_shape(rect_marker)
+        rect_marker.setVisible(0)
+        rect_marker.set_rect(0, 0, np.nan, np.nan)
+        plot.add_item(rect_marker)
+
+        plot.canvas_pointer = True  # x-cross marker on
+        # we hack label_cb for updating legend:
+
+        def label_cb(rt, mz):
+            # passing None here arives as np.nan if you call get_rect later, so we use
+            # np.nan here:
+            rect_marker.set_rect(rt, mz, np.nan, np.nan)
+            return ""
+
+        cross_marker = plot.cross_marker
+        cross_marker.label_cb = label_cb
+        params = {
+            "marker/cross/line/color": "#cccccc",
+            "marker/cross/line/width": 1.5,
+            "marker/cross/line/alpha": 0.4,
+            "marker/cross/line/style": "DashLine",
+            "marker/cross/symbol/marker": "NoSymbol",
+            "marker/cross/markerstyle": "Cross",
+        }
+        CONF.update_defaults(dict(plot=params))
+        cross_marker.markerparam.read_config(CONF, "plot", "marker/cross")
+        cross_marker.markerparam.update_marker(cross_marker)
+
+        self.cross_marker = cross_marker
+        self.rect_marker = rect_marker
+
+
     def clear_plot(self):
         self.widget.plot.del_all_items()
-        self.widget.plot.replot()
+        self.replot()
 
     def replot(self):
         self.widget.plot.replot()

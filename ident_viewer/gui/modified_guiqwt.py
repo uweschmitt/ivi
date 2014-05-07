@@ -322,6 +322,7 @@ class RtPlot(CurvePlotWithModifiedZoomHandling):
             - right crsr + left csrs + shift and alt modifiers move
               boundaries of selection tool
     """
+    moveMarker = pyqtSignal(int, QPoint)
 
     @protect_signal_handler
     def do_space_pressed(self, filter, evt):
@@ -345,13 +346,12 @@ class RtPlot(CurvePlotWithModifiedZoomHandling):
         item.move_point_to(1, (mid, 0), None)
         filter.plot.replot()
 
+
     @protect_signal_handler
     def do_move_marker(self, evt):
-        marker = self.get_unique_item(Marker)
-        if marker is not None:
-            marker.move_local_point_to(0, evt.pos())
-            marker.setVisible(True)
-            self.replot()
+        """ this means: mouse has moved handle this ! """
+        self.moveMarker.emit(0, evt.pos())
+        self.replot()
 
     def move_selection_bounds(self, evt, filter_, selector):
         shift_pressed = evt.modifiers() == Qt.ShiftModifier
@@ -442,27 +442,6 @@ class MzPlot(CurvePlotWithModifiedZoomHandling):
 
     def do_finish_zoom_view(self, dx, dy):
         return
-
-        """
-
-        dx = (-1,) + dx  # adding direction to tuple dx
-        dy = (1,) + dy  # adding direction to tuple dy
-        axes_to_update = self.get_axes_to_update(dx, dy)
-
-        mzmins = []
-        mzmaxs = []
-
-        axis_ids_horizontal = (self.get_axis_id("bottom"), self.get_axis_id("top"))
-        for __, id_ in axes_to_update:
-            if id_ in axis_ids_horizontal:
-                mzmin, mzmax = self.get_axis_limits(id_)
-                mzmins.append(mzmin)
-                mzmaxs.append(mzmax)
-
-        self.update_plot_xlimits(min(mzmins), max(mzmaxs), rescale_y=False)
-        self.replot()
-
-        """
 
     def reset_all_axes_evt(self, filter, evt):
         """ reset axes of plot """
