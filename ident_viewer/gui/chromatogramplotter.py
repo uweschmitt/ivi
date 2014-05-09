@@ -17,7 +17,7 @@ class ChromatogramPlotter(RtPlotWidget):
         max_i = 0.0
         max_idx = 0
         for i, (rts, iis) in enumerate(chromos):
-            if iis:
+            if len(iis):
                 m = max(iis)
                 if m > max_i:
                     max_i = m
