@@ -18,14 +18,6 @@ from helpers import protect_signal_handler
 from emzed_optimizations import sample_peaks
 
 
-class CurveWithoutPointSelection(CurveItem):
-    """ modification(s):
-          selection (which plots a square at each (x,y) ) is turned off
-    """
-
-    def can_select(self):
-        return False
-
 
 class RtSelectionTool(InteractiveTool):
     """

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ivi.ui'
 #
-# Created: Tue May  6 19:09:38 2014
+# Created: Fri May  9 13:11:31 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -99,6 +99,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1200, 22))
+        self.menubar.setNativeMenuBar(False)
         self.menubar.setObjectName(_fromUtf8("menubar"))
         self.menuIdent_Viewer = QtGui.QMenu(self.menubar)
         self.menuIdent_Viewer.setObjectName(_fromUtf8("menuIdent_Viewer"))
@@ -122,6 +123,8 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QObject.connect(self.action_quit, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.close)
+        QtCore.QObject.connect(self.action_preferences, QtCore.SIGNAL(_fromUtf8("triggered()")),
+                MainWindow.edit_preferences)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -134,10 +137,9 @@ class Ui_MainWindow(object):
         self.action_open_file.setText(_translate("MainWindow", "Open File", None))
         self.action_open_file.setShortcut(_translate("MainWindow", "Ctrl+O", None))
 
-# from chromatogramplotter import ChromatogramPlotter
+from chromatogramplotter import ChromatogramPlotter
 from peakmapplotter import PeakmapPlotter
 from spectrumplotter import SpectrumPlotter
-from chromatogramplotter import ChromatogramPlotter
 
 class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None, f=QtCore.Qt.WindowFlags()):

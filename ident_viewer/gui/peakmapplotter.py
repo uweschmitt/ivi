@@ -89,7 +89,10 @@ class PeakMapImageBase(object):
     def get_gamma(self):
         return self.gama
 
+
     @lru_cache(maxsize=100)
+    # NX = 400, NX = 300 -> per image 300 * 400 * 1 byte = 12e4 bytes
+    # 100 images in cache: 12e6 bytes = 12 mb
     def compute_image(self, idx, NX, NY, rt_min, rt_max, mz_min, mz_max):
 
         if rt_min >= rt_max or mz_min >= mz_max:
@@ -329,12 +332,7 @@ class ModifiedImagePlot(ImagePlot):
 
     @protect_signal_handler
     def reset_zoom_to_initial_view(self, filter_, evt):
-        #self.set_plot_limits(self.rt_min, self.rt_max, self.mz_min, self.mz_max, "bottom", "right")
-        #self.set_plot_limits(self.rt_min, self.rt_max, self.mz_min, self.mz_max, "top", "left")
         self.update_image_limits(self.rt_min, self.rt_max, self.mz_min, self.mz_max)
-
-        # self.replot()
-        # self.emit(SIG_PLOT_AXIS_CHANGED, self)
 
     @protect_signal_handler
     def start_drag_mode(self, filter_, evt):
@@ -786,6 +784,7 @@ class PeakmapPlotter(QWidget):
     def set_processing_parameters(self, parameters):
         self.image_item.set_processing_parameters(parameters)
         self.replot()
+
 
 class PeakMapExplorer(QDialog):
 

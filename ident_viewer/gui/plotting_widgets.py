@@ -1,20 +1,20 @@
+import types
+import new
+
 from guiqwt.plot import CurveWidget, PlotManager
 from guiqwt.builder import make
 from guiqwt.label import ObjectInfo
 from guiqwt.annotations import AnnotatedPoint
 
-from modified_guiqwt import *
-from config import setupStyleRangeMarker, setupCommonStyle, setupStyleRtMarker
-
 from PyQt4.Qwt5 import QwtText, QwtScaleDraw
 from PyQt4.QtGui import QWidget
 from PyQt4 import QtGui
 
-
 import numpy as np
-import new
 
 from helpers import protect_signal_handler
+from modified_guiqwt import *
+from config import setupStyleRangeMarker, setupCommonStyle, setupStyleRtMarker
 
 from emzed_optimizations.sample import sample_peaks
 
@@ -108,18 +108,27 @@ def add_marker(plot):
     return marker
 
 
+def make_curve_without_point_selection(**kwargs):
+    curve = make.curve([], [], **kwargs)
+    curve.can_select = types.MethodType(lambda self: False, curve, CurveItem)
+    return curve
+
+
 def make_peak_curve(mzs, iis):
-    curve = make.curve([], [], color='b', curvestyle="Sticks")
-    # inject modified behaviour:
-    curve.__class__ = CurveWithoutPointSelection
+    curve = make_curve_without_point_selection(color='b', curvestyle='Sticks')
+    #curve = make.curve([], [], color='b', curvestyle="Sticks")
+    #curve.__class__ = CurveWithoutPointSelection
+    #curve.can_select = types.MethodType(lambda self: False, curve, CurveItem)
     curve.set_data(mzs, iis)
     return curve
 
 
 def make_chromatorgram_curve(rts, iis, title, color):
-    curve = make.curve([], [], title=title, color=color, linewidth=1.5)
+    curve = make_curve_without_point_selection(color=color, linewidth=1.5)
+    #curve = make.curve([], [], title=title, color=color, linewidth=1.5)
     # inject modified behaviour:
-    curve.__class__ = CurveWithoutPointSelection
+    # curve.__class__ = CurveWithoutPointSelection
+    #urve.can_select = types.MethodType(lambda self: False, curve, CurveItem)
     curve.set_data(rts, iis)
     return curve
 
@@ -261,6 +270,7 @@ class RtPlotWidget(PlotWidget):
             rtall.update(rts)
 
         self.marker.rts = sorted(rtall)
+
 
         self.plot.reset_all_axes()
         self.replot()

@@ -73,8 +73,8 @@ def sample_image(peak_map, float rtmin, float rtmax, double mzmin, double mzmax,
     assert mzmax >= mzmin, "mzmax < mzmin"
     assert rtmax >= rtmin, "rtmax < rtmin"
 
-    cdef np.ndarray img = np.zeros((h, w), dtype=np.float64)
-    cdef np.float64_t[:, :] img_view = img
+    cdef np.ndarray img = np.zeros((h, w), dtype=np.float32)
+    cdef np.float32_t[:, :] img_view = img
     cdef size_t rt_bin
     cdef float rt
     cdef double mz

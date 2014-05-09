@@ -129,6 +129,9 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="nativeMenuBar">
+    <bool>false</bool>
+   </property>
    <widget class="QMenu" name="menuIdent_Viewer">
     <property name="title">
      <string>Ident Viewer</string>
@@ -206,5 +209,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_preferences</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>edit_preferences()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>399</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>edit_preferences()</slot>
+ </slots>
 </ui>
