@@ -4,7 +4,6 @@ import new
 from guiqwt.plot import CurveWidget, PlotManager
 from guiqwt.builder import make
 from guiqwt.label import ObjectInfo
-from guiqwt.annotations import AnnotatedPoint
 
 from PyQt4.Qwt5 import QwtText, QwtScaleDraw
 from PyQt4.QtGui import QWidget
@@ -58,6 +57,15 @@ class PlotWidget(QWidget):
         self.layout.setContentsMargins(left, top, right, bottom)
         self.layout.addWidget(self.widget, 0, 0, 1, 1)
 
+        self.background_items = []
+        self.foreground_items = []
+
+    def add_background_item(self, item):
+        self.background_items.append(item)
+
+    def add_foreground_item(self, item):
+        self.foreground_items.append(item)
+
     def reset_x_limits(self, xmin=None, xmax=None, fac=1.2):
         self.plot.reset_x_limits(xmin, xmax, fac)
 
@@ -71,6 +79,13 @@ class PlotWidget(QWidget):
         self.plot.del_all_items()
         self.replot()
 
+    def plot_background_items(self):
+        for item in self.background_items:
+            self.plot.add_item(item)
+
+    def plot_foreground_items(self):
+        for item in self.foreground_items:
+            self.plot.add_item(item)
 
 class MzCursorInfo(ObjectInfo):
 
@@ -116,19 +131,12 @@ def make_curve_without_point_selection(**kwargs):
 
 def make_peak_curve(mzs, iis):
     curve = make_curve_without_point_selection(color='b', curvestyle='Sticks')
-    #curve = make.curve([], [], color='b', curvestyle="Sticks")
-    #curve.__class__ = CurveWithoutPointSelection
-    #curve.can_select = types.MethodType(lambda self: False, curve, CurveItem)
     curve.set_data(mzs, iis)
     return curve
 
 
 def make_chromatorgram_curve(rts, iis, title, color):
-    curve = make_curve_without_point_selection(color=color, linewidth=1.5)
-    #curve = make.curve([], [], title=title, color=color, linewidth=1.5)
-    # inject modified behaviour:
-    # curve.__class__ = CurveWithoutPointSelection
-    #urve.can_select = types.MethodType(lambda self: False, curve, CurveItem)
+    curve = make_curve_without_point_selection(title=title, color=color, linewidth=1.5)
     curve.set_data(rts, iis)
     return curve
 
@@ -140,19 +148,6 @@ def make_label(marker, line):
 
 
 
-class Annotation(AnnotatedPoint):
-
-    def __init__(self, x, y, text, color="white"):
-        super(Annotation, self).__init__(x, y)
-        self.label.labelparam.color = color
-        self.label.labelparam.bgalpha = 0.1
-        self.label.labelparam.font.size = 8
-        self.label.labelparam.border.width = 0
-        self.label.labelparam.update_label(self.label)
-        self.text = text
-
-    def get_text(self):
-        return self.text
 
 
 class MzPlotWidget(PlotWidget):
@@ -187,14 +182,6 @@ class MzPlotWidget(PlotWidget):
         self.plot.moveMarker.connect(self.marker.move_local_point_to)
         self.line.updated.connect(self.plot.replot)
 
-        self.annotations = []
-
-    def set_annotations(self, annotations):
-        self.annotations = []
-        for (mz, I, text, color) in annotations:
-            self.annotations.append(Annotation(mz, I, text, color))
-
-
     def plot_spectra(self, spectra):
 
         self.plot.del_all_items()
@@ -203,9 +190,10 @@ class MzPlotWidget(PlotWidget):
         self.plot.add_item(self.label)
         self.plot.add_item(self.line)
 
+        self.plot_background_items()
+
         all_peaks = []
-        for spectrum in spectra:
-            mzs, iis = spectrum.get_peaks()
+        for (mzs, iis) in spectra:
             peaks = np.vstack((mzs, iis)).T
             all_peaks.append(peaks)
             curve = make_peak_curve(mzs, iis)
@@ -213,9 +201,7 @@ class MzPlotWidget(PlotWidget):
 
         self.plot.all_peaks = np.vstack(all_peaks)
 
-        for annotation in self.annotations:
-            self.plot.add_item(annotation)
-
+        self.plot_foreground_items()
         self.plot.reset_all_axes()
         self.replot()
 
@@ -262,6 +248,8 @@ class RtPlotWidget(PlotWidget):
         self.plot.add_item(make.legend("TR"))
         self.plot.add_item(self.marker)
 
+        self.plot_background_items()
+
         rtall = set()
 
         for i, (rts, iis, title) in enumerate(chromatograms):
@@ -271,6 +259,7 @@ class RtPlotWidget(PlotWidget):
 
         self.marker.rts = sorted(rtall)
 
+        self.plot_foreground_items()
 
         self.plot.reset_all_axes()
         self.replot()

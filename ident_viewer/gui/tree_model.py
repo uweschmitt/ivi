@@ -57,7 +57,7 @@ class HitItem(TreeItem):
         elif col == 2:
             if hit.rt is None:
                 return "-"
-            return "%.1fs" % hit.rt
+            return "%.2fm" % (hit.rt / 60.0)
         elif col == 3:
             if hit.mz is None:
                 return "-"
@@ -94,7 +94,7 @@ class SpectrumItem(TreeItem):
         if col == 0:
             return "MS2:"
         if col == 2:
-            return "%.1fs" % spectrum.rt
+            return "%.2fm" % (spectrum.rt / 60.0)
         elif col == 3:
             return "%.5f" % spectrum.precursors[0].mz
         return ""
@@ -159,7 +159,7 @@ class TreeModel(QAbstractItemModel):
     spectrumSelected = pyqtSignal(object, object)
     spectrumInvalid = pyqtSignal()
 
-    featureSelected = pyqtSignal(object, object, str)
+    featureSelected = pyqtSignal(object, object, object)
     featureInvalid = pyqtSignal()
 
     def __init__(self, reader, parent=None):
@@ -243,7 +243,7 @@ class TreeModel(QAbstractItemModel):
             self.last_hit_id = hit.id_
             feature = item.data()
             pm = PeakMapCache.get(item.reader(), feature.base_name)
-            self.featureSelected.emit(pm, feature, hit.aa_sequence)
+            self.featureSelected.emit(pm, feature, hit)
             if hit_changed:
                 self.spectrumInvalid.emit()
 

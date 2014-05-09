@@ -18,13 +18,6 @@ from helpers import protect_signal_handler
 from emzed_optimizations import sample_peaks
 
 
-class PanHandlerWithKey(PanHandler):
-
-    def __init__(self, filter, btn, start_state):
-        super(PanHandlerWithKey, self).__init__(filter, btn, mod=Qt.ControlModifier, start_state)
-
-
-
 
 class RtSelectionTool(InteractiveTool):
     """
@@ -115,18 +108,10 @@ class MzSelectionTool(InteractiveTool):
 
         # Bouton du milieu
         PanHandler(filter_, Qt.MidButton, start_state=start_state)
+        PanHandler(filter_, Qt.LeftButton, mods=Qt.AltModifier, start_state=start_state)
 
-        PanHandlerWithKey(filter_, Qt.LeftButton, start_state=start_state)
-
-
-        # Bouton droit
-        class ZoomHandlerWithStopingEvent(ZoomHandler):
-            def stop_moving(self, filter_, event):
-                x_state, y_state = self.get_move_state(filter_, event.pos())
-                filter_.plot.do_finish_zoom_view(x_state, y_state)
-
-        #ZoomHandlerWithStopingEvent(filter_, Qt.RightButton, start_state=start_state)
         ZoomHandler(filter_, Qt.RightButton, start_state=start_state)
+        ZoomHandler(filter_, Qt.LeftButton, mods=Qt.ControlModifier, start_state=start_state)
 
         # Autres (touches, move)
         MoveHandler(filter_, start_state=start_state)
@@ -249,7 +234,7 @@ class CurvePlotWithModifiedZoomHandling(CurvePlot):
 
     def get_items_of_class(self, clz):
         for item in self.items:
-            if isinstance(item, clz):
+            if item.__class__ == clz:
                 yield item
 
     def get_unique_item(self, clz):
@@ -612,7 +597,6 @@ class MeasurementLine(SegmentShape):
         painter.setBrush(brush)
 
         points = self.transform_points(xMap, yMap)
-        print points
         if self.ADDITIONNAL_POINTS:
             shape_points = points[:-self.ADDITIONNAL_POINTS]
             other_points = points[-self.ADDITIONNAL_POINTS:]
@@ -621,7 +605,6 @@ class MeasurementLine(SegmentShape):
             other_points = []
 
         for i in xrange(points.size()):
-            print points[i].toPoint()
             symbol.draw(painter, points[i].toPoint())
 
         painter.setRenderHint(QPainter.Antialiasing)

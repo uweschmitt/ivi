@@ -231,43 +231,45 @@ class PeakmapZoomTool(InteractiveTool):
     CURSOR = Qt.CrossCursor
 
     def setup_filter(self, baseplot):
-        filter = baseplot.filter
+        filter_ = baseplot.filter
         # Initialisation du filtre
 
-        start_state = filter.new_state()
-        filter.add_event(start_state,
+        start_state = filter_.new_state()
+        filter_.add_event(start_state,
                          KeyEventMatch((Qt.Key_Backspace, Qt.Key_Escape, Qt.Key_Home)),
                          baseplot.reset_zoom_to_full_map, start_state)
 
-        filter.add_event(start_state,
+        filter_.add_event(start_state,
                          KeyEventMatch((Qt.Key_Space,)), baseplot.reset_zoom_to_initial_view,
                          start_state)
 
-        handler = QtDragHandler(filter, Qt.LeftButton, start_state=start_state)
+        handler = QtDragHandler(filter_, Qt.LeftButton, start_state=start_state)
         self.connect(handler, SIG_MOVE, baseplot.move_in_drag_mode)
         self.connect(handler, SIG_START_TRACKING, baseplot.start_drag_mode)
         self.connect(handler, SIG_STOP_NOT_MOVING, baseplot.stop_drag_mode)
         self.connect(handler, SIG_STOP_MOVING, baseplot.stop_drag_mode)
 
         handler = QtDragHandler(
-            filter, Qt.LeftButton, start_state=start_state, mods=Qt.ShiftModifier)
+            filter_, Qt.LeftButton, start_state=start_state, mods=Qt.ShiftModifier)
         self.connect(handler, SIG_MOVE, baseplot.move_in_drag_mode)
         self.connect(handler, SIG_START_TRACKING, baseplot.start_drag_mode)
         self.connect(handler, SIG_STOP_NOT_MOVING, baseplot.stop_drag_mode)
         self.connect(handler, SIG_STOP_MOVING, baseplot.stop_drag_mode)
 
         # Bouton du milieu
-        PanHandler(filter, Qt.MidButton, start_state=start_state)
-        # AutoZoomHandler(filter, Qt.MidButton, start_state=start_state)
+        PanHandler(filter_, Qt.MidButton, start_state=start_state)
+        PanHandler(filter_, Qt.LeftButton, mods=Qt.AltModifier, start_state=start_state)
+        # AutoZoomHandler(filter_, Qt.MidButton, start_state=start_state)
 
         # Bouton droit
-        ZoomHandler(filter, Qt.RightButton, start_state=start_state)
-        # MenuHandler(filter, Qt.RightButton, start_state=start_state)
+        ZoomHandler(filter_, Qt.RightButton, start_state=start_state)
+        ZoomHandler(filter_, Qt.LeftButton, mods=Qt.ControlModifier, start_state=start_state)
+        # MenuHandler(filter_, Qt.RightButton, start_state=start_state)
 
         # Autres (touches, move)
-        MoveHandler(filter, start_state=start_state)
-        MoveHandler(filter, start_state=start_state, mods=Qt.ShiftModifier)
-        MoveHandler(filter, start_state=start_state, mods=Qt.AltModifier)
+        MoveHandler(filter_, start_state=start_state)
+        MoveHandler(filter_, start_state=start_state, mods=Qt.ShiftModifier)
+        MoveHandler(filter_, start_state=start_state, mods=Qt.AltModifier)
 
         return start_state
 
@@ -615,7 +617,7 @@ class FeatureShape(QwtPlotItem):
     def _draw_label(self, painter, xMap, yMap):
         self.text = QTextDocument()
         self.text.setDefaultStyleSheet("""div { color: rgb(%d, %d, %d); }""" % self.color)
-        self.text.setHtml("<div>%s</div>" % self.label)
+        self.text.setHtml("<div>%s</div>" % (self.label, ))
 
         x0 = xMap.transform(self.feature.rt_max)
         # y0: height between m0 and m1 masstrace if m1 exists, else at height of m0
@@ -672,8 +674,8 @@ class PeakmapPlotter(QWidget):
         self.cursorMovedRt.emit(rt)
         self.cursorMovedMz.emit(mz)
 
-    def plot_hit(self, peakmap, feature, aa_sequence):
-        self.set_peakmaps(peakmap, None, [(feature, aa_sequence)])
+    def plot_hit(self, peakmap, feature, hit):
+        self.set_peakmaps(peakmap, None, [(feature, hit.aa_sequence)])
         self.widget.plot.set_initial_image_limits(feature.rt_min - 30.0, feature.rt_max + 30.0,
                                                   feature.mz_min - 10.0, feature.mz_max + 10.0)
 
