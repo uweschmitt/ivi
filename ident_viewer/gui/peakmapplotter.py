@@ -44,17 +44,21 @@ class PeakMapImageBase(object):
 
     def __init__(self, peakmaps):
         self.peakmaps = peakmaps
-        ranges = [pm.get_ranges() for pm in peakmaps]
-        rt_mins, rt_maxs, mz_mins, mz_maxs, iimins, iimaxs = zip(*ranges)
-        self.rt_min = min(rt_mins)
-        self.rt_max = max(rt_maxs)
-        self.mz_min = min(mz_mins)
-        self.mz_max = max(mz_maxs)
+        ranges = [pm.get_ranges() for pm in peakmaps if len(pm)]
+        if ranges:  # list might be empty
+            rt_mins, rt_maxs, mz_mins, mz_maxs, iimins, iimaxs = zip(*ranges)
+            self.rt_min = min(rt_mins)
+            self.rt_max = max(rt_maxs)
+            self.mz_min = min(mz_mins)
+            self.mz_max = max(mz_maxs)
+            self.imax = max(iimaxs)
+
+        else:
+            self.rt_min = self.rt_max = self.mz_min = self.mz_max = self.imax = 0.0
 
         self.bounds = QRectF(QPointF(self.rt_min, self.mz_min), QPointF(self.rt_max, self.mz_max))
 
         self.imin = 0.0
-        self.imax = max(iimaxs)
         self.upper_limit_imax = self.imax
         self.gamma = 1.0
         self.log_scale = 1
@@ -508,17 +512,27 @@ class ModifiedImagePlot(ImagePlot):
         self.cursorMoved.emit(rt, mz)
 
 
-def get_range(peakmap, peakmap2):
-    rt_min, rt_max, mz_min, mz_max, imin, imax = peakmap.get_ranges()
-    if peakmap2 is not None:
-        rt_min2, rt_max2, mz_min2, mz_max2, imin2, imax2 = peakmap.get_ranges()
-        rt_min = min(rt_min, rt_min2)
-        rt_max = max(rt_max, rt_max2)
-        mz_min = min(mz_min, mz_min2)
-        mz_max = max(mz_max, mz_max2)
-        imax = max(imax, imax2)
-        imin = min(imin, imin2)
-    return rt_min, rt_max, mz_min, mz_max, imin, imax
+def get_range(*peakmaps):
+
+    rtmins = []
+    rtmaxs = []
+    mzmins = []
+    mzmaxs = []
+    iimins = []
+    iimaxs = []
+    for peakmap in peakmaps:
+        if peakmap is not None and len(peakmap):
+            ranges = peakmap.get_ranges()
+            rtmins.append(ranges[0])
+            rtmaxs.append(ranges[1])
+            mzmins.append(ranges[2])
+            mzmaxs.append(ranges[3])
+            iimins.append(ranges[4])
+            iimaxs.append(ranges[5])
+
+    if len(rtmins):
+        return min(rtmins), max(rtmaxs), min(mzmins), max(mzmaxs), min(iimins), max(iimaxs)
+    return 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
 
 
 def create_image_widget():

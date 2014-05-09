@@ -14,13 +14,14 @@ class ChromatogramPlotter(RtPlotWidget):
         for mt in feature.mass_traces:
             rts, iis = extract_chromatogram(peakmap, mt.rt_min, mt.rt_max, mt.mz_min, mt.mz_max, 1)
             chromos.append((rts, iis))
-        max_i = -1
-        max_idx = -1
+        max_i = 0.0
+        max_idx = 0
         for i, (rts, iis) in enumerate(chromos):
-            m = max(iis)
-            if m > max_i:
-                max_i = m
-                max_idx = i
+            if iis:
+                m = max(iis)
+                if m > max_i:
+                    max_i = m
+                    max_idx = i
         labeled_chromos = []
         for i, (rts, iis) in enumerate(chromos):
             labeled_chromos.append((rts, iis, str(i - max_idx)))

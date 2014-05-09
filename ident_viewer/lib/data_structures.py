@@ -18,6 +18,9 @@ class PeakMap(namedtuple("PeakMap", "spectra")):
     def sample_image(self, rt_min, rt_max, mz_min, mz_max, w, h, ms_level):
         return optimizations.sample_image(self, rt_min, rt_max, mz_min, mz_max, w, h, ms_level)
 
+    def __len__(self):
+        return len(self.spectra)
+
 
 class Spectrum(namedtuple("Spectrum", "rt, mzs, intensities, precursors, ms_level")):
 
