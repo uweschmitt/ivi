@@ -7,7 +7,7 @@ from guiqwt.events import ObjectHandler, KeyEventMatch, QtDragHandler
 from guiqwt.signals import (SIG_MOVE, SIG_START_TRACKING, SIG_STOP_NOT_MOVING, SIG_STOP_MOVING,
                             SIG_RANGE_CHANGED, SIG_PLOT_AXIS_CHANGED)
 
-from guiqwt.events import ZoomHandler, PanHandler, MoveHandler
+from guiqwt.events import ZoomHandler, PanHandler, MoveHandler, DragHandler
 
 from guiqwt.tools import InteractiveTool, SelectTool
 
@@ -16,6 +16,13 @@ import numpy as np
 
 from helpers import protect_signal_handler
 from emzed_optimizations import sample_peaks
+
+
+class PanHandlerWithKey(PanHandler):
+
+    def __init__(self, filter, btn, start_state):
+        super(PanHandlerWithKey, self).__init__(filter, btn, mod=Qt.ControlModifier, start_state)
+
 
 
 
@@ -108,6 +115,9 @@ class MzSelectionTool(InteractiveTool):
 
         # Bouton du milieu
         PanHandler(filter_, Qt.MidButton, start_state=start_state)
+
+        PanHandlerWithKey(filter_, Qt.LeftButton, start_state=start_state)
+
 
         # Bouton droit
         class ZoomHandlerWithStopingEvent(ZoomHandler):
