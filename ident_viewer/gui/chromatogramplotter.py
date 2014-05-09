@@ -25,4 +25,5 @@ class ChromatogramPlotter(RtPlotWidget):
         for i, (rts, iis) in enumerate(chromos):
             labeled_chromos.append((rts, iis, str(i - max_idx)))
 
-        self.plot_chromatograms(labeled_chromos)
+        # reverse list in order to have nicer legend in plot:
+        self.plot_chromatograms(labeled_chromos[::-1])
