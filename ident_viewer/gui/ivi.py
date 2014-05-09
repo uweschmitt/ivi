@@ -1,4 +1,7 @@
+import sys
+
 from PyQt4 import QtGui, QtCore
+
 from ivi_ui import MainWindow
 from preferences_dialog import PreferencesDialog
 
@@ -13,6 +16,9 @@ class IdentViewer(MainWindow):
 
     def __init__(self, reader):
         super(IdentViewer, self).__init__()
+        # fix mac
+        if sys.platform == "darwin":
+            self.menubar.setNativeMenuBar(False)
         self.reader = reader
         self.setup()
         self.connect_signals()
