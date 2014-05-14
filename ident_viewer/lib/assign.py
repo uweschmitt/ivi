@@ -105,7 +105,9 @@ class PeptideHitAssigner(object):
         aligner = oms.SpectrumAlignment()
 
         params = aligner.getDefaults()
-        tolerance = self.preferences.get("tolerance")
+        tolerance = self.preferences.get("ms2_tolerance")
+        unit = self.preferences.get("ms2_unit")
         params["tolerance"] = tolerance
+        params["is_relative_tolerance"] = (unit == "ppm")
         aligner.setParameters(params)
         return aligner

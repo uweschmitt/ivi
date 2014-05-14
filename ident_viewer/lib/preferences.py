@@ -6,8 +6,11 @@ def default_preferences():
                 show_x_ion=0,
                 show_y_ion=1,
                 show_z_ion=0,
-                tolerance=0.3,
+                ms2_tolerance=0.3,
+                ms2_tolerance_unit = "Da",
                 max_isotope=2,
                 add_losses=0,
                 add_isotopes=0,
+                ms1_tolerance=50,
+                ms1_tolerance_unit = "ppm",
                 )
