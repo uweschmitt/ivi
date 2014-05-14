@@ -56,8 +56,13 @@ class PlotWidget(QWidget):
         self.widget.setContentsMargins(left, top, right, bottom)
         self.layout.setContentsMargins(left, top, right, bottom)
         self.layout.addWidget(self.widget, 0, 0, 1, 1)
+        self.del_foreground_items()
+        self.del_background_items()
 
+    def del_background_items(self):
         self.background_items = []
+
+    def del_foreground_items(self):
         self.foreground_items = []
 
     def add_background_item(self, item):

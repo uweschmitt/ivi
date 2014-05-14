@@ -69,7 +69,7 @@ class HitItem(TreeItem):
 
     def childCount(self):
         hit = self.data()
-        return self.reader().count_spectra_for(hit) + self.reader().count_features_for(hit)
+        return self.reader().count_spectra_for(hit) + self.reader().count_features_for(hit) + 1
 
     def get_child(self, row):
         r = self.reader()
@@ -81,6 +81,7 @@ class HitItem(TreeItem):
             features = list(r.fetch_features_for_hit(hit))
             n = len(self.children)
             self.children += [FeatureItem(self, i + n, f, r) for (i, f) in enumerate(features)]
+            self.children += [MassTraceItem(self, i + n, hit, r)]
         return self.children[row]
 
 
@@ -111,6 +112,22 @@ class FeatureItem(TreeItem):
             return "FEATURE:"
         if col == 1:
             return str(feature.fid)
+        return ""
+
+
+class MassTraceItem(TreeItem):
+
+    def __init__(self, parent, row, hit, reader):
+        super(MassTraceItem, self).__init__(parent, row, hit, reader)
+
+    def data_in_column(self, col):
+        hit = self.data()
+        if col == 0:
+            return "MASSTRACE:"
+        if col == 2:
+            return "%.2fm" % (hit.rt / 60.0)
+        elif col == 3:
+            return "%.5f" % hit.mz
         return ""
 
 
@@ -157,10 +174,13 @@ class RootItem(TreeItem):
 class TreeModel(QAbstractItemModel):
 
     spectrumSelected = pyqtSignal(object, object)
-    spectrumInvalid = pyqtSignal()
 
     featureSelected = pyqtSignal(object, object, object)
-    featureInvalid = pyqtSignal()
+
+    massTraceSelected = pyqtSignal(object, object)
+
+    ms1HitChanged = pyqtSignal()
+    ms2HitChanged = pyqtSignal()
 
     def __init__(self, reader, parent=None):
         super(TreeModel, self).__init__(parent)
@@ -235,20 +255,29 @@ class TreeModel(QAbstractItemModel):
             assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
             self.spectrumSelected.emit(spectrum, assignment)
             if hit_changed:
-                self.featureInvalid.emit()
+                self.ms1HitChanged.emit()
 
         elif isinstance(item, FeatureItem):
             hit = item.parent().data()
             hit_changed = hit.id_ != self.last_hit_id
             self.last_hit_id = hit.id_
             feature = item.data()
-            pm = PeakMapCache.get(item.reader(), feature.base_name)
+            pm = PeakMapLRUCache.get(item.reader(), feature.base_name)
             self.featureSelected.emit(pm, feature, hit)
             if hit_changed:
-                self.spectrumInvalid.emit()
+                self.ms2HitChanged.emit()
 
+        elif isinstance(item, MassTraceItem):
+            hit = item.parent().data()
+            hit_changed = hit.id_ != self.last_hit_id
+            self.last_hit_id = hit.id_
+            hit = item.data()
+            pm = PeakMapLRUCache.get(item.reader(), hit.base_name)
+            self.massTraceSelected.emit(pm, hit)
+            if hit_changed:
+                self.ms2HitChanged.emit()
 
-class PeakMapCache(object):
+class PeakMapLRUCache(object):
 
     max_size = 10
 
@@ -256,10 +285,10 @@ class PeakMapCache(object):
 
     @staticmethod
     def get(reader, base_name):
-        cache = PeakMapCache.cache
+        cache = PeakMapLRUCache.cache
         if base_name in cache:
             return cache[base_name]
-        if len(cache) > PeakMapCache.max_size:
+        if len(cache) > PeakMapLRUCache.max_size:
             cache.popitem(0)
         s = time.time()
         pm = reader.fetch_peak_map(base_name)

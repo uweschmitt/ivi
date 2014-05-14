@@ -36,13 +36,19 @@ class IdentViewer(MainWindow):
 
     def connect_signals(self):
         self.peptide_hits.clicked.connect(self.tree_model.select)
-        self.tree_model.spectrumSelected.connect(self.spectrum_plotter.plot_hit)
-        self.tree_model.spectrumInvalid.connect(self.spectrum_plotter.clear_plot)
 
-        self.tree_model.featureSelected.connect(self.peakmap_plotter.plot_hit)
-        self.tree_model.featureSelected.connect(self.chromatogram_plotter.plot_feature)
-        self.tree_model.featureInvalid.connect(self.peakmap_plotter.clear_plot)
-        self.tree_model.featureInvalid.connect(self.chromatogram_plotter.clear_plot)
+        self.tree_model.spectrumSelected.connect(self.spectrum_plotter.plot_spectrum)
+
+        self.tree_model.featureSelected.connect(self.peakmap_plotter.plot_feature)
+        self.tree_model.featureSelected.connect(self.chromatogram_plotter.plot_chromatograms_from_feature)
+
+        self.tree_model.massTraceSelected.connect(self.peakmap_plotter.plot_mass_trace)
+        self.tree_model.massTraceSelected.connect(self.chromatogram_plotter.plot_chromatogram_from_masstrace)
+
+        self.tree_model.ms1HitChanged.connect(self.peakmap_plotter.clear_plot)
+        self.tree_model.ms1HitChanged.connect(self.chromatogram_plotter.clear_plot)
+
+        self.tree_model.ms2HitChanged.connect(self.spectrum_plotter.clear_plot)
 
         self.chromatogram_plotter.rtCursorMoved.connect(self.peakmap_plotter.move_marker_to_rt)
         self.peakmap_plotter.cursorMoved.connect(self.chromatogram_plotter.move_marker)

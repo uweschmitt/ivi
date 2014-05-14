@@ -25,8 +25,10 @@ class SpectrumPlotter(MzPlotWidget):
         self.last_hit_id = None
 
 
-    def plot_hit(self, spectrum, assignment):
+    def plot_spectrum(self, spectrum, assignment):
+        self.del_foreground_items()
+        self.del_background_items()
         for mz, ii, ion_name, info in assignment:
             color = dict(y="red", b="green").get(ion_name[0], "black")
             self.add_foreground_item(Annotation(mz, ii, "%s<br>%s" % (ion_name, info or ""), color))
-        self.plot_spectrum((spectrum.mzs, spectrum.intensities))
+        super(SpectrumPlotter, self).plot_spectrum((spectrum.mzs, spectrum.intensities))

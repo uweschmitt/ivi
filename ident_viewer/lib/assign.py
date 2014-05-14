@@ -108,6 +108,6 @@ class PeptideHitAssigner(object):
         tolerance = self.preferences.get("ms2_tolerance")
         unit = self.preferences.get("ms2_unit")
         params["tolerance"] = tolerance
-        params["is_relative_tolerance"] = (unit == "ppm")
+        params["is_relative_tolerance"] = "true" if unit == "ppm" else "false"
         aligner.setParameters(params)
         return aligner

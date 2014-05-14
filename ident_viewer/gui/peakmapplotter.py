@@ -34,6 +34,7 @@ from guiqwt.transitional import QwtSymbol
 
 from helpers import protect_signal_handler
 
+from ..lib.data_structures import Feature, PeakRange
 
 from utils import set_x_axis_scale_draw, set_y_axis_scale_draw
 
@@ -88,7 +89,6 @@ class PeakMapImageBase(object):
 
     def get_gamma(self):
         return self.gama
-
 
     @lru_cache(maxsize=100)
     # NX = 400, NX = 300 -> per image 300 * 400 * 1 byte = 12e4 bytes
@@ -551,8 +551,7 @@ def create_image_widget():
     return widget
 
 
-
-class FeatureShape(QwtPlotItem):
+class LabeledPolygonShape(QwtPlotItem):
 
     __implements__ = (IBasePlotItem,)
 
@@ -560,10 +559,10 @@ class FeatureShape(QwtPlotItem):
     # although we have to implement many empty methods below for conforming to IBasePlotItem
     # API.
 
-    def __init__(self, feature, label=None):
-        super(FeatureShape, self).__init__() # feature.rtmin, feature.rt_max,
-                                           #  feature.mz_min, feature.mz_max)
-        self.feature = feature
+    def __init__(self, item, label=None):
+        super(LabeledPolygonShape, self).__init__()  # feature.rtmin, feature.rt_max,
+                                                     # feature.mz_min, feature.mz_max)
+        self.item = item
         self.label = label
 
     # <IBasePlotItem API>
@@ -605,23 +604,71 @@ class FeatureShape(QwtPlotItem):
         painter.setPen(pen)
         painter.setBrush(brush)
 
-    def _draw_polygon(self, painter, xMap, yMap, rect):
+    def _draw_polygon(self, painter, xMap, yMap, range_tuple):
+        # range_tuple might contain more then four values !
+        rt_min, rt_max, mz_min, mz_max = range_tuple[:4]
         points = QPolygonF()
-        points.append(QPointF(xMap.transform(rect.rt_min), yMap.transform(rect.mz_min)))
-        points.append(QPointF(xMap.transform(rect.rt_min), yMap.transform(rect.mz_max)))
-        points.append(QPointF(xMap.transform(rect.rt_max), yMap.transform(rect.mz_max)))
-        points.append(QPointF(xMap.transform(rect.rt_max), yMap.transform(rect.mz_min)))
+        points.append(QPointF(xMap.transform(rt_min), yMap.transform(mz_min)))
+        points.append(QPointF(xMap.transform(rt_min), yMap.transform(mz_max)))
+        points.append(QPointF(xMap.transform(rt_max), yMap.transform(mz_max)))
+        points.append(QPointF(xMap.transform(rt_max), yMap.transform(mz_min)))
         painter.drawPolygon(points)
         return points
+
+    def _setup_painter(self, painter):
+        painter.setRenderHint(QPainter.Antialiasing)
+
+
+class PeakRangeShape(LabeledPolygonShape):
+
+    def draw(self, painter, xMap, yMap, canvasRect):
+        self._setup_painter(painter)
+        self._set_inner_pen_and_brush(painter, xMap, yMap)
+        self._draw_polygon(painter, xMap, yMap, self.item)
+
+        if self.label is not None:
+            self._draw_label(painter, xMap, yMap)
 
     def _draw_label(self, painter, xMap, yMap):
         self.text = QTextDocument()
         self.text.setDefaultStyleSheet("""div { color: rgb(%d, %d, %d); }""" % self.color)
         self.text.setHtml("<div>%s</div>" % (self.label, ))
 
-        x0 = xMap.transform(self.feature.rt_max)
+        x0 = xMap.transform(self.item.rt_max)
         # y0: height between m0 and m1 masstrace if m1 exists, else at height of m0
-        yi = sorted(m.mz_min for m in self.feature.mass_traces)
+        y0 = yMap.transform(0.5 * self.item.mz_min + 0.5 * self.item.mz_max)
+        h = self.text.size().height()
+        painter.translate(x0, y0 - 0.5 * h)
+        self.text.drawContents(painter)
+
+
+class FeatureShape(LabeledPolygonShape):
+
+    def draw(self, painter, xMap, yMap, canvasRect):
+        self._setup_painter(painter)
+
+        self._set_outer_pen_and_brush(painter, xMap, yMap)
+        rt_min = self.item.rt_min
+        rt_max = self.item.rt_max
+        mz_min = self.item.mz_min
+        mz_max = self.item.mz_max
+        self._draw_polygon(painter, xMap, yMap, (rt_min, rt_max, mz_min, mz_max))
+
+        self._set_inner_pen_and_brush(painter, xMap, yMap)
+        for mass_trace in self.item.mass_traces:
+            self._draw_polygon(painter, xMap, yMap, mass_trace)
+
+        if self.label is not None:
+            self._draw_label(painter, xMap, yMap)
+
+    def _draw_label(self, painter, xMap, yMap):
+        self.text = QTextDocument()
+        self.text.setDefaultStyleSheet("""div { color: rgb(%d, %d, %d); }""" % self.color)
+        self.text.setHtml("<div>%s</div>" % (self.label, ))
+
+        x0 = xMap.transform(self.item.rt_max)
+        # y0: height between m0 and m1 masstrace if m1 exists, else at height of m0
+        yi = sorted(m.mz_min for m in self.item.mass_traces)
         if len(yi) >= 2:
             y0 = yMap.transform(0.5 * yi[0] + 0.5 * yi[1])
         else:
@@ -630,22 +677,6 @@ class FeatureShape(QwtPlotItem):
         painter.translate(x0, y0 - 0.5 * h)
         self.text.drawContents(painter)
 
-    def draw(self, painter, xMap, yMap, canvasRect):
-        painter.setRenderHint(QPainter.Antialiasing)
-
-        self._set_outer_pen_and_brush(painter, xMap, yMap)
-        # feature has attributes rt_min, rt_max, mz_min and mz_max:
-        self._draw_polygon(painter, xMap, yMap, self.feature)
-
-        self._set_inner_pen_and_brush(painter, xMap, yMap)
-        for mass_trace in self.feature.mass_traces:
-            # mass_trace has attributes rt_min, rt_max, mz_min and mz_max:
-            self._draw_polygon(painter, xMap, yMap, mass_trace)
-
-        if self.label is not None:
-            self._draw_label(painter, xMap, yMap)
-
-
 class PeakmapPlotter(QWidget):
 
     def __init__(self, parent):
@@ -653,7 +684,7 @@ class PeakmapPlotter(QWidget):
         self.layout = QGridLayout(self)
         self.widget = create_image_widget()
         self.image_item = None
-        self.features = []
+        self.extra_items = []
 
         sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.widget.setSizePolicy(sizePolicy)
@@ -674,12 +705,25 @@ class PeakmapPlotter(QWidget):
         self.cursorMovedRt.emit(rt)
         self.cursorMovedMz.emit(mz)
 
-    def plot_hit(self, peakmap, feature, hit):
+    def plot_feature(self, peakmap, feature, hit):
         self.set_peakmaps(peakmap, None, [(feature, hit.aa_sequence)])
         self.widget.plot.set_initial_image_limits(feature.rt_min - 30.0, feature.rt_max + 30.0,
                                                   feature.mz_min - 10.0, feature.mz_max + 10.0)
 
-    def set_peakmaps(self, peakmap, peakmap2, features=None):
+    def plot_mass_trace(self, peakmap, hit):
+        # TODO: delta mz aus config
+        #       rtlimits besser bestimmen: 2 konsekutive "non peaks" oder so
+        #
+        rt_min = hit.rt - 10.0
+        rt_max = hit.rt + 10.0
+        mz_min = hit.mz - 0.005
+        mz_max = hit.mz + 0.005
+        item = PeakRange(rt_min, rt_max, mz_min, mz_max)
+        self.set_peakmaps(peakmap, None, [(item, hit.aa_sequence)])
+        self.widget.plot.set_initial_image_limits(rt_min - 30.0, rt_max + 30.0, mz_min - 5.0,
+                                                  mz_max + 5.0)
+
+    def set_peakmaps(self, peakmap, peakmap2, extra_items=None):
 
         self.peakmap = peakmap
         self.peakmap2 = peakmap2
@@ -692,17 +736,18 @@ class PeakmapPlotter(QWidget):
             #self.image_item = RGBPeakMapImageItem(peakmap, peakmap2)
         else:
             self.image_item = PeakMapImageItem(peakmap)
-        self.set_image_plot(peakmap, peakmap2, features)
 
-    def set_image_plot(self, peakmap, peakmap2, features=None):
         self.widget.plot.peakmap_range = get_range(peakmap, peakmap2)
         self.widget.plot.del_all_items()
         self.widget.plot.add_item(self.image_item)
-        if features is not None:
-            for feature, label in features:
-                self.widget.plot.add_item(FeatureShape(feature, label))
+        if extra_items is not None:
+            for item, label in extra_items:
+                if isinstance(item, Feature):
+                    self.widget.plot.add_item(FeatureShape(item, label))
+                if isinstance(item, PeakRange):
+                    self.widget.plot.add_item(PeakRangeShape(item, label))
         # widget.plot.reset_history()
-        self.create_peakmap_labels() # 
+        self.create_peakmap_labels()
         # for zooming and panning with mouse drag:
         t = self.widget.add_tool(SelectTool)
         self.widget.set_default_tool(t)
@@ -800,10 +845,10 @@ class PeakMapExplorer(QDialog):
         if e.key() != Qt.Key_Escape:
             super(PeakMapExplorer, self).keyPressEvent(e)
 
-    def setup(self, peakmap, peakmap2=None, features=None):
+    def setup(self, peakmap, peakmap2=None, extra_items=None):
         self.setup_widgets_and_layout()
         self.connect_signals_and_slots()
-        self.setup_peakmap_plotter(peakmap, peakmap2, features)
+        self.setup_peakmap_plotter(peakmap, peakmap2, extra_items)
         self.setup_processing_parameters()
         self.plot_peakmap()
 
@@ -818,7 +863,7 @@ class PeakMapExplorer(QDialog):
                                          imin=self.imin,
                                          imax=self.imax)
 
-    def setup_peakmap_plotter(self, peakmap, peakmap2, features):
+    def setup_peakmap_plotter(self, peakmap, peakmap2, extra_items):
 
         self.peakmap = peakmap  # .getDominatingPeakmap()
         self.dual_mode = peakmap2 is not None
@@ -870,14 +915,14 @@ class PeakMapExplorer(QDialog):
 
 
 
-def inspectPeakMap(peakmap, peakmap2=None, features=None, table=None, modal=True, parent=None):
+def inspectPeakMap(peakmap, peakmap2=None, extra_items=None, table=None, modal=True, parent=None):
     """
     allows the visual inspection of a peakmap
     """
 
     app = guidata.qapplication()  # singleton !
     win = PeakMapExplorer(parent=parent)
-    win.setup(peakmap, peakmap2, features)
+    win.setup(peakmap, peakmap2, extra_items)
     if modal:
         win.raise_()
         win.exec_()
@@ -901,7 +946,7 @@ if __name__ == "__main__":
                 if len(features) < 50:
                     for f in dr.fetch_features_for_hit(hit):
                         features.append(f)
-            inspectPeakMap(pm, features=features)
+            inspectPeakMap(pm, extra_items=features)
             break
     else:
         raise Exception("peakmap is empty")
