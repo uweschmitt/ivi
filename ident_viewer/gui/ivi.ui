@@ -32,7 +32,7 @@
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
-      <widget class="QTreeView" name="peptide_hits">
+      <widget class="QTreeView" name="tree_view">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
          <horstretch>0</horstretch>

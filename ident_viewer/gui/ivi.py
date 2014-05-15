@@ -25,17 +25,21 @@ class IdentViewer(MainWindow):
 
     def setup(self):
         self.preferences = default_preferences()
-        self.setup_tree_view_size()
 
         self.tree_model = TreeModel(self.reader)
         self.tree_model.set_preferences(self.preferences)
-        self.peptide_hits.setModel(self.tree_model)
+        self.tree_view.setModel(self.tree_model)
+        self.setup_tree_view_size()
 
     def setup_tree_view_size(self):
-        self.peptide_hits.setMinimumWidth(400)
+        self.tree_view.setMinimumWidth(400)
+        self.tree_view.setColumnWidth(0, 200)
+        self.tree_view.resizeColumnToContents(1)
+        self.tree_view.resizeColumnToContents(2)
+        self.tree_view.resizeColumnToContents(3)
 
     def connect_signals(self):
-        self.peptide_hits.clicked.connect(self.tree_model.select)
+        self.tree_view.clicked.connect(self.tree_model.select)
 
         self.tree_model.spectrumSelected.connect(self.spectrum_plotter.plot_spectrum)
 
@@ -54,7 +58,7 @@ class IdentViewer(MainWindow):
         self.peakmap_plotter.cursorMoved.connect(self.chromatogram_plotter.move_marker)
 
     def row_chosen(self, i):
-        self.peptide_hits.selectRow(i)
+        self.tree_view.selectRow(i)
 
     def edit_preferences(self):
         dlg = PreferencesDialog(self.preferences, parent=self)

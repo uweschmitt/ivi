@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ivi.ui'
 #
-# Created: Fri May  9 13:11:31 2014
+# Created: Thu May 15 15:15:26 2014
 #      by: PyQt4 UI code generator 4.10.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -44,17 +44,17 @@ class Ui_MainWindow(object):
         self.splitter_3.setSizePolicy(sizePolicy)
         self.splitter_3.setOrientation(QtCore.Qt.Horizontal)
         self.splitter_3.setObjectName(_fromUtf8("splitter_3"))
-        self.peptide_hits = QtGui.QTreeView(self.splitter_3)
+        self.tree_view = QtGui.QTreeView(self.splitter_3)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(1)
-        sizePolicy.setHeightForWidth(self.peptide_hits.sizePolicy().hasHeightForWidth())
-        self.peptide_hits.setSizePolicy(sizePolicy)
-        self.peptide_hits.setAutoFillBackground(False)
-        self.peptide_hits.setAlternatingRowColors(False)
-        self.peptide_hits.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
-        self.peptide_hits.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
-        self.peptide_hits.setObjectName(_fromUtf8("peptide_hits"))
+        sizePolicy.setHeightForWidth(self.tree_view.sizePolicy().hasHeightForWidth())
+        self.tree_view.setSizePolicy(sizePolicy)
+        self.tree_view.setAutoFillBackground(False)
+        self.tree_view.setAlternatingRowColors(False)
+        self.tree_view.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self.tree_view.setSelectionBehavior(QtGui.QAbstractItemView.SelectRows)
+        self.tree_view.setObjectName(_fromUtf8("tree_view"))
         self.splitter_2 = QtGui.QSplitter(self.splitter_3)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(1)
@@ -123,8 +123,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QObject.connect(self.action_quit, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.close)
-        QtCore.QObject.connect(self.action_preferences, QtCore.SIGNAL(_fromUtf8("triggered()")),
-                MainWindow.edit_preferences)
+        QtCore.QObject.connect(self.action_preferences, QtCore.SIGNAL(_fromUtf8("triggered()")), MainWindow.edit_preferences)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
