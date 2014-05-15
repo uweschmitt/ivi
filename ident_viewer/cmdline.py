@@ -6,8 +6,12 @@ def main():
     from gui.ivi import IdentViewer
 
     from lib import CompressedDataReader
-    assert len(sys.argv) >= 2
-    reader = CompressedDataReader(sys.argv[1])
+    import argparse
+
+    parser = argparse.ArgumentParser(description='navigate and viualize data from ivi file')
+    parser.add_argument('ivi_file_path')
+    args = parser.parse_args()
+    reader = CompressedDataReader(args.ivi_file_path)
 
     app = QtGui.QApplication(sys.argv)
     window = IdentViewer(reader)
