@@ -2,7 +2,7 @@ from collections import defaultdict, Counter
 
 from tables import (IsDescription, StringCol, UInt64Col, Float32Col, Int64Col, Float64Atom,
                     Int16Col, Int8Col, Filters, Float32Atom, Float64Col, BoolCol, UInt8Col,
-                    Float16Col, open_file)
+                    open_file)
 
 import numpy as np
 
@@ -62,7 +62,7 @@ class CompressedDataWriter(object):
         spec_id = Int64Col()       # no uint, as pytables can not index uints
         base_name_id = Int64Col()  # no uint, as pytables can not index uints
         ms_level = UInt8Col()
-        rt = Float16Col()
+        rt = Float32Col()
         i_low = UInt64Col()
         i_high = UInt64Col()
 
