@@ -81,7 +81,8 @@ class HitItem(TreeItem):
             features = list(r.fetch_features_for_hit(hit))
             n = len(self.children)
             self.children += [FeatureItem(self, i + n, f, r) for (i, f) in enumerate(features)]
-            self.children += [MassTraceItem(self, i + n, hit, r)]
+            n = len(self.children)
+            self.children += [MassTraceItem(self, n, hit, r)]
         return self.children[row]
 
 
@@ -177,7 +178,7 @@ class TreeModel(QAbstractItemModel):
 
     featureSelected = pyqtSignal(object, object, object)
 
-    massTraceSelected = pyqtSignal(object, object)
+    massTraceSelected = pyqtSignal(object, object, float, int)
 
     ms1HitChanged = pyqtSignal()
     ms2HitChanged = pyqtSignal()
@@ -273,9 +274,12 @@ class TreeModel(QAbstractItemModel):
             self.last_hit_id = hit.id_
             hit = item.data()
             pm = PeakMapLRUCache.get(item.reader(), hit.base_name)
-            self.massTraceSelected.emit(pm, hit)
+            mz_width = self.preferences.get("ms1_tolerance")
+            is_relative = int(self.preferences.get("ms1_tolerance_unit") == "ppm")
+            self.massTraceSelected.emit(pm, hit, mz_width, is_relative)
             if hit_changed:
                 self.ms2HitChanged.emit()
+
 
 class PeakMapLRUCache(object):
 
