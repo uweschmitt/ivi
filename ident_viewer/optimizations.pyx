@@ -134,7 +134,6 @@ def extract_chromatogram(peak_map, float rtmin, float rtmax, double mzmin, doubl
         rt = spec.rt
         if rtmin <= rt <= rtmax:
             smsl = spec.ms_level   # prohibits python rich comp in next line
-            # print i, j, rt, smsl
             if smsl == ms_level:
                 mzs = spec.mzs
                 intensities = spec.intensities

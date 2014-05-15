@@ -6,6 +6,7 @@ import time
 from PyQt4.QtCore import QVariant, QAbstractItemModel, QModelIndex, Qt, pyqtSignal
 
 from ..lib import PeptideHitAssigner
+from ..optimizations import find_chromatogram_rt_limits
 
 
 class TreeItem(object):
@@ -178,7 +179,7 @@ class TreeModel(QAbstractItemModel):
 
     featureSelected = pyqtSignal(object, object, object)
 
-    massTraceSelected = pyqtSignal(object, object, float, int)
+    massTraceSelected = pyqtSignal(object, float, float, float, float, str)
 
     ms1HitChanged = pyqtSignal()
     ms2HitChanged = pyqtSignal()
@@ -275,8 +276,16 @@ class TreeModel(QAbstractItemModel):
             hit = item.data()
             pm = PeakMapLRUCache.get(item.reader(), hit.base_name)
             mz_width = self.preferences.get("ms1_tolerance")
-            is_relative = int(self.preferences.get("ms1_tolerance_unit") == "ppm")
-            self.massTraceSelected.emit(pm, hit, mz_width, is_relative)
+
+            if self.preferences.get("ms1_tolerance_unit") == "ppm":
+                mzmin = hit.mz * (1.0 - mz_width * 1e-6)
+                mzmax = hit.mz * (1.0 + mz_width * 1e-6)
+            else:
+                mzmin = hit.mz - mz_width
+                mzmax = hit.mz + mz_width
+            rtmin, rtmax = find_chromatogram_rt_limits(pm, hit.rt, mzmin, mzmax, 1, 2)
+            self.massTraceSelected.emit(pm, rtmin, rtmax, mzmin, mzmax, hit.aa_sequence)
+
             if hit_changed:
                 self.ms2HitChanged.emit()
 

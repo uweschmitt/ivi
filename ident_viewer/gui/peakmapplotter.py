@@ -710,23 +710,11 @@ class PeakmapPlotter(QWidget):
         self.widget.plot.set_initial_image_limits(feature.rtmin - 30.0, feature.rtmax + 30.0,
                                                   feature.mzmin - 10.0, feature.mzmax + 10.0)
 
-    def plot_mass_trace(self, peakmap, hit, mz_width, is_relative):
-
-        # TODO: rtlimits einsetzen !
-        #
-        rtmin = hit.rt - 10.0
-        rtmax = hit.rt + 10.0
-
-        if is_relative:
-            mzmin = hit.mz * (1.0 - mz_width * 1e-6)   # is ppm
-            mzmax = hit.mz * (1.0 + mz_width * 1e-6)   # is ppm
-        else:
-            mzmin = hit.mz - mz_width
-            mzmax = hit.mz + mz_width
+    def plot_mass_trace(self, peakmap, rtmin, rtmax, mzmin, mzmax, aa_sequence):
         item = PeakRange(rtmin, rtmax, mzmin, mzmax)
-        self.set_peakmaps(peakmap, None, [(item, hit.aa_sequence)])
-        self.widget.plot.set_initial_image_limits(rtmin - 30.0, rtmax + 30.0, mzmin - 5.0,
-                                                  mzmax + 5.0)
+        self.set_peakmaps(peakmap, None, [(item, aa_sequence)])
+        self.widget.plot.set_initial_image_limits(rtmin - 10.0, rtmax + 10.0, mzmin - 3.0,
+                                                  mzmax + 3.0)
 
     def set_peakmaps(self, peakmap, peakmap2, extra_items=None):
 
