@@ -86,9 +86,32 @@ def _prepare():
 
     from lib import CollectHitsData
     from lib.compress_io import CompressedDataReader
+    smiles = r"""
+       _____         _____         _____         _____
+     .'     '.     .'     '.     .'     '.     .'     '.
+    /  o   o  \   /  o   o  \   /  o   o  \   /  o   o  \
+   |           | |           | |           | |           |
+   |  \     /  | |  \     /  | |  \     /  | |  \     /  |
+    \  '---'  /   \  '---'  /   \  '---'  /   \  '---'  /
+ jgs '._____.'     '._____.'     '._____.'     '._____.' """.split("\n")
+
 
     collector = CollectHitsData(root)
     collector.collect(out_file, unmatched_hits_file, mz_tolerance, rt_tolerance)
+    logger.info("")
+    logger.info("")
+    for line in smiles:
+        logger.info("    %s" % line)
+    logger.info("")
+    logger.info("")
+    logger.info("=" * 80)
+    logger.info("you can inspect your data now running")
+    logger.info("")
+    logger.info("ivi %s" % out_file)
+    logger.info("")
+    logger.info("from your commandline")
+    logger.info("=" * 80)
+    logger.info("")
 
     # with measure_time("reading and computing full chromatogram"):
     #   #reader = CompressedDataReader(out_file)
