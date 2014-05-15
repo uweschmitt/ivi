@@ -9,7 +9,7 @@ ext_modules = [
               )
 ]
 
-version = (0, 0, 1)
+version = (0, 0, 2)
 
 setup(name="ident_viewer",
       packages=find_packages(exclude=["tests"]),
