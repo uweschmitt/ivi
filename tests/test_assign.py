@@ -2,14 +2,14 @@ import sys
 import cStringIO
 import cPickle
 
-import ident_viewer as iv
+import ivi
 import pyopenms as oms
 
 
 def test_0(data_path):
 
     # setup hit
-    hit = iv.lib.data_structures.Hit(id_=0,
+    hit = ivi.lib.data_structures.Hit(id_=0,
                                      aa_sequence='SHC(Carbamidomethyl)IAEVEK',
                                      base_name='',
                                      mz=358.174682617188,
@@ -19,11 +19,11 @@ def test_0(data_path):
                                      is_higher_score_better=False)
 
     # setup spectrum
-    pm = iv.lib.io.load_peak_map(data_path("one_spec_peakmap.mzML"))
+    pm = ivi.lib.io.load_peak_map(data_path("one_spec_peakmap.mzML"))
     spectrum = pm.spectra[0]
 
     # create and record ion assignments for regression test ...
-    assigner = iv.lib.PeptideHitAssigner(iv.lib.default_preferences())
+    assigner = ivi.lib.PeptideHitAssigner(ivi.lib.default_preferences())
     fp = cStringIO.StringIO()
     for mz, ii, ion, info in assigner.compute_assignment(hit, spectrum):
         print >> fp, "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info

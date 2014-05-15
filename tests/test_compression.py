@@ -1,6 +1,6 @@
 import os
 import shutil
-from ident_viewer.lib import CollectHitsData, CompressedDataReader
+from ivi.lib import CollectHitsData, CompressedDataReader
 
 
 def test_0(data_path, tmpdir):

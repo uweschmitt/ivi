@@ -1,6 +1,6 @@
 import pyopenms as oms
 from collections import namedtuple
-from ident_viewer.lib import HitFinder
+from ivi.lib import HitFinder
 
 
 TMAX = 400.0

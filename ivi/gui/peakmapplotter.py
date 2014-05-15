@@ -931,7 +931,7 @@ def inspectPeakMap(peakmap, peakmap2=None, extra_items=None, table=None, modal=T
 
 
 if __name__ == "__main__":
-    from ident_viewer.lib.compress_io import CompressedDataReader
+    from ivi.lib.compress_io import CompressedDataReader
     print "open"
     dr = CompressedDataReader("/Users/uweschmitt/data/dose/collected.ivi")
     print "opened"

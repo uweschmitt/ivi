@@ -3,20 +3,20 @@ from distutils.extension import Extension
 import numpy
 
 ext_modules = [
-    Extension("ident_viewer.optimizations",
-              ["ident_viewer/optimizations.c"],
+    Extension("ivi.optimizations",
+              ["ivi/optimizations.c"],
               include_dirs=[numpy.get_include()]
               )
 ]
 
 version = (0, 0, 2)
 
-setup(name="ident_viewer",
+setup(name="ivi",
       packages=find_packages(exclude=["tests"]),
       version="%d.%d.%d" % version,
       entry_points={
-          "gui_scripts": ["ivi = ident_viewer.cmdline:main",
-                          "ivi.prepare = ident_viewer.cmdline:prepare", ]
+          "gui_scripts": ["ivi = ivi.cmdline:main",
+                          "ivi.prepare = ivi.cmdline:prepare", ]
 
       },
       include_package_data=True,

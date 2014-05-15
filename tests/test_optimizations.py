@@ -1,7 +1,7 @@
-from ident_viewer.lib.data_structures import Spectrum, PeakMap
-from ident_viewer.optimizations import (sample_image, get_ranges, find_chromatogram_rt_limits,
+from ivi.lib.data_structures import Spectrum, PeakMap
+from ivi.optimizations import (sample_image, get_ranges, find_chromatogram_rt_limits,
                                         extract_chromatogram)
-from ident_viewer.lib import load_peak_map
+from ivi.lib import load_peak_map
 import numpy as np
 
 
