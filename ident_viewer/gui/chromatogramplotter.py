@@ -12,12 +12,12 @@ from ..optimizations import extract_chromatogram
 def create_rt_ms2_marker():
     marker = make.marker(position=(0, 0),
                          markerstyle="|",
-                         label_cb=lambda x, y: "<div style='color:blue'>rt_ms2</div>",
+                         label_cb=lambda x, y: "<div style='color:red'>rt_ms2</div>",
                          constraint_cb=lambda x, y: (x, y),
                          movable=False,
                          readonly=False,
-                         color="#ddddff",
-                         linewidth=2)
+                         color="#ff7777",
+                         linewidth=1)
 
     # else the get_unique_item methods in modified_guiqwt fail:
     class DummyMarkerAsOnlyOneTrueMarkerIsAllowed(Marker):
@@ -30,15 +30,18 @@ class ChromatogramPlotter(RtPlotWidget):
 
     def __init__(self, parent):
         super(ChromatogramPlotter, self).__init__(parent)
-        self.fix_rt_marker = create_rt_ms2_marker()
-        self.add_background_item(self.fix_rt_marker)
+        self.fixed_rt_marker = create_rt_ms2_marker()
+        self.add_background_item(self.fixed_rt_marker)
 
     def plot_chromatogram_from_masstrace(self, peakmap, rtmin, rtmax, mzmin, mzmax, aa_sequence):
         rts, iis = extract_chromatogram(peakmap, rtmin, rtmax, mzmin, mzmax, 1)
         self.plot_chromatograms([(rts, iis, "0")])
 
+    def set_rt_marker(self, rt):
+        self.fixed_rt_marker.setXValue(rt)
+
     def plot_chromatograms_from_feature(self, peakmap, feature, hit):
-        self.fix_rt_marker.setXValue(hit.rt)
+        # self.fixed_rt_marker.setXValue(hit.rt)
         chromos = []
         for mt in feature.mass_traces:
             rts, iis = extract_chromatogram(peakmap, mt.rtmin, mt.rtmax, mt.mzmin, mt.mzmax, 1)

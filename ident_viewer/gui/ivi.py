@@ -54,6 +54,8 @@ class IdentViewer(MainWindow):
 
         self.tree_model.ms2HitChanged.connect(self.spectrum_plotter.clear_plot)
 
+        self.tree_model.newHitRt.connect(self.chromatogram_plotter.set_rt_marker)
+
         self.chromatogram_plotter.rtCursorMoved.connect(self.peakmap_plotter.move_marker_to_rt)
         self.peakmap_plotter.cursorMoved.connect(self.chromatogram_plotter.move_marker)
 

@@ -4,6 +4,7 @@ import collections
 import time
 
 from PyQt4.QtCore import QVariant, QAbstractItemModel, QModelIndex, Qt, pyqtSignal
+from PyQt4.QtGui  import QApplication, QCursor
 
 from ..lib import PeptideHitAssigner
 from ..optimizations import find_chromatogram_rt_limits
@@ -83,7 +84,7 @@ class HitItem(TreeItem):
             n = len(self.children)
             self.children += [FeatureItem(self, i + n, f, r) for (i, f) in enumerate(features)]
             n = len(self.children)
-            self.children += [MassTraceItem(self, n, hit, r)]
+            self.children += [MassTraceItem(self, n, r)]
         return self.children[row]
 
 
@@ -119,11 +120,11 @@ class FeatureItem(TreeItem):
 
 class MassTraceItem(TreeItem):
 
-    def __init__(self, parent, row, hit, reader):
-        super(MassTraceItem, self).__init__(parent, row, hit, reader)
+    def __init__(self, parent, row, reader):
+        super(MassTraceItem, self).__init__(parent, row, None, reader)
 
     def data_in_column(self, col):
-        hit = self.data()
+        hit = self.parent().data()
         if col == 0:
             return "MASSTRACE:"
         if col == 2:
@@ -180,6 +181,8 @@ class TreeModel(QAbstractItemModel):
     featureSelected = pyqtSignal(object, object, object)
 
     massTraceSelected = pyqtSignal(object, float, float, float, float, str)
+
+    newHitRt = pyqtSignal(float)
 
     ms1HitChanged = pyqtSignal()
     ms2HitChanged = pyqtSignal()
@@ -249,45 +252,40 @@ class TreeModel(QAbstractItemModel):
 
     def select(self, index):
         item = index.internalPointer()
-        if isinstance(item, SpectrumItem):
+        if isinstance(item, (SpectrumItem, FeatureItem, MassTraceItem)):
             hit = item.parent().data()
             hit_changed = hit.id_ != self.last_hit_id
             self.last_hit_id = hit.id_
-            spectrum = item.data()
-            assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
-            self.spectrumSelected.emit(spectrum, assignment)
-            if hit_changed:
-                self.ms1HitChanged.emit()
+            if isinstance(item, SpectrumItem):
+                spectrum = item.data()
+                assignment = PeptideHitAssigner(self.preferences).compute_assignment(hit, spectrum)
+                self.spectrumSelected.emit(spectrum, assignment)
+                if hit_changed:
+                    self.ms1HitChanged.emit()
 
-        elif isinstance(item, FeatureItem):
-            hit = item.parent().data()
-            hit_changed = hit.id_ != self.last_hit_id
-            self.last_hit_id = hit.id_
-            feature = item.data()
-            pm = PeakMapLRUCache.get(item.reader(), feature.base_name)
-            self.featureSelected.emit(pm, feature, hit)
-            if hit_changed:
-                self.ms2HitChanged.emit()
+            elif isinstance(item, FeatureItem):
+                feature = item.data()
+                pm = PeakMapLRUCache.get(item.reader(), feature.base_name)
+                self.featureSelected.emit(pm, feature, hit)
+                if hit_changed:
+                    self.ms2HitChanged.emit()
 
-        elif isinstance(item, MassTraceItem):
-            hit = item.parent().data()
-            hit_changed = hit.id_ != self.last_hit_id
-            self.last_hit_id = hit.id_
-            hit = item.data()
-            pm = PeakMapLRUCache.get(item.reader(), hit.base_name)
-            mz_width = self.preferences.get("ms1_tolerance")
+            elif isinstance(item, MassTraceItem):
+                pm = PeakMapLRUCache.get(item.reader(), hit.base_name)
+                mz_width = self.preferences.get("ms1_tolerance")
 
-            if self.preferences.get("ms1_tolerance_unit") == "ppm":
-                mzmin = hit.mz * (1.0 - mz_width * 1e-6)
-                mzmax = hit.mz * (1.0 + mz_width * 1e-6)
-            else:
-                mzmin = hit.mz - mz_width
-                mzmax = hit.mz + mz_width
-            rtmin, rtmax = find_chromatogram_rt_limits(pm, hit.rt, mzmin, mzmax, 1, 2)
-            self.massTraceSelected.emit(pm, rtmin, rtmax, mzmin, mzmax, hit.aa_sequence)
+                if self.preferences.get("ms1_tolerance_unit") == "ppm":
+                    mzmin = hit.mz * (1.0 - mz_width * 1e-6)
+                    mzmax = hit.mz * (1.0 + mz_width * 1e-6)
+                else:
+                    mzmin = hit.mz - mz_width
+                    mzmax = hit.mz + mz_width
+                rtmin, rtmax = find_chromatogram_rt_limits(pm, hit.rt, mzmin, mzmax, 1, 2)
+                self.massTraceSelected.emit(pm, rtmin, rtmax, mzmin, mzmax, hit.aa_sequence)
 
-            if hit_changed:
-                self.ms2HitChanged.emit()
+                if hit_changed:
+                    self.ms2HitChanged.emit()
+            self.newHitRt.emit(hit.rt)
 
 
 class PeakMapLRUCache(object):
@@ -304,7 +302,9 @@ class PeakMapLRUCache(object):
         if len(cache) > PeakMapLRUCache.max_size:
             cache.popitem(0)
         s = time.time()
+        QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
         pm = reader.fetch_peak_map(base_name)
+        QApplication.restoreOverrideCursor()
         cache[base_name] = pm
         print "loading needed %.1f s" % (time.time() - s)
         return pm
