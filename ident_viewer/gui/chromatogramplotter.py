@@ -32,6 +32,11 @@ class ChromatogramPlotter(RtPlotWidget):
         super(ChromatogramPlotter, self).__init__(parent)
         self.fixed_rt_marker = create_rt_ms2_marker()
         self.add_background_item(self.fixed_rt_marker)
+        self.clear()
+
+    def clear(self):
+        self.plot_chromatograms([])
+        self.set_rt_marker(-1)
 
     def plot_chromatogram_from_masstrace(self, peakmap, rtmin, rtmax, mzmin, mzmax, aa_sequence):
         rts, iis = extract_chromatogram(peakmap, rtmin, rtmax, mzmin, mzmax, 1)

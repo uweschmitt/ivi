@@ -34,7 +34,7 @@ from guiqwt.transitional import QwtSymbol
 
 from helpers import protect_signal_handler
 
-from ..lib.data_structures import Feature, PeakRange
+from ..lib.data_structures import Feature, PeakRange, PeakMap
 
 from utils import set_x_axis_scale_draw, set_y_axis_scale_draw
 
@@ -695,6 +695,13 @@ class PeakmapPlotter(QWidget):
         self.layout.addWidget(self.widget, 0, 0, 1, 1)
 
         self.widget.plot.cursorMoved.connect(self.marker_moved)
+
+        self.clear()
+
+    def clear(self):
+
+        pm = PeakMap([])
+        self.set_peakmaps(pm, None)
 
     cursorMoved = pyqtSignal(float, float)
     cursorMovedRt = pyqtSignal(float)

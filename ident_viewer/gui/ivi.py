@@ -49,10 +49,10 @@ class IdentViewer(MainWindow):
         self.tree_model.massTraceSelected.connect(self.peakmap_plotter.plot_mass_trace)
         self.tree_model.massTraceSelected.connect(self.chromatogram_plotter.plot_chromatogram_from_masstrace)
 
-        self.tree_model.ms1HitChanged.connect(self.peakmap_plotter.clear_plot)
-        self.tree_model.ms1HitChanged.connect(self.chromatogram_plotter.clear_plot)
+        self.tree_model.ms1HitChanged.connect(self.peakmap_plotter.clear)
+        self.tree_model.ms1HitChanged.connect(self.chromatogram_plotter.clear)
 
-        self.tree_model.ms2HitChanged.connect(self.spectrum_plotter.clear_plot)
+        self.tree_model.ms2HitChanged.connect(self.spectrum_plotter.clear)
 
         self.tree_model.newHitRt.connect(self.chromatogram_plotter.set_rt_marker)
 

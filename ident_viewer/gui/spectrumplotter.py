@@ -1,8 +1,8 @@
 from PyQt4.QtGui import QFrame, QGridLayout, QSizePolicy
+from guiqwt.annotations import AnnotatedPoint
 
 from plotting_widgets import MzPlotWidget
 
-from guiqwt.annotations import AnnotatedPoint
 
 class Annotation(AnnotatedPoint):
 
@@ -18,12 +18,16 @@ class Annotation(AnnotatedPoint):
     def get_text(self):
         return self.text
 
+
 class SpectrumPlotter(MzPlotWidget):
 
     def __init__(self, *a, **kw):
         super(SpectrumPlotter, self).__init__(*a, **kw)
         self.last_hit_id = None
+        self.clear()
 
+    def clear(self):
+        super(SpectrumPlotter, self).plot_spectrum(([], []))
 
     def plot_spectrum(self, spectrum, assignment):
         self.del_foreground_items()
