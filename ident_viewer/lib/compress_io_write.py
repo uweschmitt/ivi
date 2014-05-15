@@ -71,20 +71,20 @@ class CompressedDataWriter(object):
         feature_id = Int64Col()     # no uint, as pytables can not index uints
         base_name_id = Int64Col()   # dito
         feature_id_from_file = UInt64Col()  # size_t in OpenMS
-        rt_min = Float32Col()
-        rt_max = Float32Col()
-        mz_min = Float64Col()
-        mz_max = Float64Col()
+        rtmin = Float32Col()
+        rtmax = Float32Col()
+        mzmin = Float64Col()
+        mzmax = Float64Col()
         area = Float32Col()
 
     class MassTrace(IsDescription):
 
         mass_trace_id = Int64Col()     # no uint, as pytables can not index uints
         feature_id = Int64Col()       # dito
-        rt_min = Float32Col()
-        rt_max = Float32Col()
-        mz_min = Float64Col()
-        mz_max = Float64Col()
+        rtmin = Float32Col()
+        rtmax = Float32Col()
+        mzmin = Float64Col()
+        mzmax = Float64Col()
         area = Float32Col()
 
     class HitFeatureLink(IsDescription):
@@ -304,7 +304,7 @@ class CompressedDataWriter(object):
 
     def add_feature(self, feature, base_name):
         hull = feature.getConvexHull()
-        rt_min, rt_max, mz_min, mz_max = self._range(hull)
+        rtmin, rtmax, mzmin, mzmax = self._range(hull)
         row = self.feature_table.row
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
         fid = np.uint64(feature.getUniqueId())
@@ -312,23 +312,23 @@ class CompressedDataWriter(object):
         row["feature_id"] = feature_id
         row["feature_id_from_file"] = fid
         row["base_name_id"] = base_name_id
-        row["rt_min"] = rt_min
-        row["rt_max"] = rt_max
-        row["mz_min"] = mz_min
-        row["mz_max"] = mz_max
-        row["area"] = (rt_max - rt_min) * (mz_max - mz_min)
+        row["rtmin"] = rtmin
+        row["rtmax"] = rtmax
+        row["mzmin"] = mzmin
+        row["mzmax"] = mzmax
+        row["area"] = (rtmax - rtmin) * (mzmax - mzmin)
         row.append()
 
         for hull in feature.getConvexHulls():
-            rt_min, rt_max, mz_min, mz_max = self._range(hull)
+            rtmin, rtmax, mzmin, mzmax = self._range(hull)
             row = self.mass_trace_table.row
             row["mass_trace_id"] = self.mass_trace_id_provider.next_id()
             row["feature_id"] = feature_id
-            row["rt_min"] = rt_min
-            row["rt_max"] = rt_max
-            row["mz_min"] = mz_min
-            row["mz_max"] = mz_max
-            row["area"] = (rt_max - rt_min) * (mz_max - mz_min)
+            row["rtmin"] = rtmin
+            row["rtmax"] = rtmax
+            row["mzmin"] = mzmin
+            row["mzmax"] = mzmax
+            row["area"] = (rtmax - rtmin) * (mzmax - mzmin)
             row.append()
 
         return feature_id
@@ -338,9 +338,9 @@ class CompressedDataWriter(object):
         hull_points = hull.getHullPoints()
         assert isinstance(hull_points, np.ndarray)
         assert hull_points.shape == (4, 2)   # 4 points, 2 coordinates
-        rt_min, mz_min = hull_points.min(axis=0)
-        rt_max, mz_max = hull_points.max(axis=0)
-        return rt_min, rt_max, mz_min, mz_max
+        rtmin, mzmin = hull_points.min(axis=0)
+        rtmax, mzmax = hull_points.max(axis=0)
+        return rtmin, rtmax, mzmin, mzmax
 
     def link_feature_with_hit(self, feature_id, hit):
         row = self.hit_feature_link_table.row
@@ -374,19 +374,19 @@ class CompressedDataWriter(object):
         self.mass_trace_table.flush()
         self.mass_trace_table.cols.mass_trace_id.create_index()
         self.mass_trace_table.cols.feature_id.create_index()
-        self.mass_trace_table.cols.rt_min.create_index()
-        self.mass_trace_table.cols.rt_max.create_index()
-        self.mass_trace_table.cols.mz_min.create_index()
-        self.mass_trace_table.cols.mz_max.create_index()
+        self.mass_trace_table.cols.rtmin.create_index()
+        self.mass_trace_table.cols.rtmax.create_index()
+        self.mass_trace_table.cols.mzmin.create_index()
+        self.mass_trace_table.cols.mzmax.create_index()
         self.mass_trace_table.flush()
         self.mass_trace_table.close()
 
         self.feature_table.flush()
         self.feature_table.cols.feature_id.create_index()
-        self.feature_table.cols.rt_min.create_index()
-        self.feature_table.cols.rt_max.create_index()
-        self.feature_table.cols.mz_min.create_index()
-        self.feature_table.cols.mz_max.create_index()
+        self.feature_table.cols.rtmin.create_index()
+        self.feature_table.cols.rtmax.create_index()
+        self.feature_table.cols.mzmin.create_index()
+        self.feature_table.cols.mzmax.create_index()
         self.feature_table.flush()
         self.feature_table.close()
 

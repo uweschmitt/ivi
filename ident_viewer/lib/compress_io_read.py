@@ -122,17 +122,17 @@ class CompressedDataReader(object):
                 base_name_id = row["base_name_id"]
                 fid = row["feature_id_from_file"]
                 base_name = self.base_name_id_provider.lookup_item(base_name_id)
-                rt_min = row["rt_min"]
-                rt_max = row["rt_max"]
-                mz_min = row["mz_min"]
-                mz_max = row["mz_max"]
+                rtmin = row["rtmin"]
+                rtmax = row["rtmax"]
+                mzmin = row["mzmin"]
+                mzmax = row["mzmax"]
                 mass_traces = list(self._fetch_mass_traces_for_feature(feature_id))
-                yield Feature(feature_id, base_name, fid, rt_min, rt_max, mz_min, mz_max,
+                yield Feature(feature_id, base_name, fid, rtmin, rtmax, mzmin, mzmax,
                               mass_traces)
 
-    def fetch_features_in_range(self, base_name, rt_min, rt_max, mz_min, mz_max):
-        condition = """(%f <= rt_min) & (rt_max <= %f)\
-                       & (%f <= mz_min) & (mz_max <= %f)""" % (rt_min, rt_max, mz_min, mz_max)
+    def fetch_features_in_range(self, base_name, rtmin, rtmax, mzmin, mzmax):
+        condition = """(%f <= rtmin) & (rtmax <= %f)\
+                       & (%f <= mzmin) & (mzmax <= %f)""" % (rtmin, rtmax, mzmin, mzmax)
         return self._fetch_features(base_name, condition)
 
     def fetch_features_intersecting(self, base_name, rt_0, rt_1, mz_0, mz_1):
@@ -141,20 +141,20 @@ class CompressedDataReader(object):
 
     def _intersecting_condition(self, rt_0, rt_1, mz_0, mz_1):
         """
-           (rt_min, mz_min) is in rect (rt_0, mz_0, rt_1, mz_1)
+           (rtmin, mzmin) is in rect (rt_0, mz_0, rt_1, mz_1)
         or
-           (rt_max, mz_max) is in rect (rt_0, mz_0, rt_1, mz_1)
+           (rtmax, mzmax) is in rect (rt_0, mz_0, rt_1, mz_1)
 
         that is:
 
-           rt_0 <= rt_min <= rt_1 and mz_0 <= mz_min <= mz_1
+           rt_0 <= rtmin <= rt_1 and mz_0 <= mzmin <= mz_1
         or
-           rt_0 <= rt_max <= rt_1 and mz_0 <= mz_max <= mz_1
+           rt_0 <= rtmax <= rt_1 and mz_0 <= mzmax <= mz_1
         """
-        cond_min = """({rt_0} <= rt_min) & (rt_min <= {rt_1}) \
-                     &({mz_0} <= mz_min) & (mz_min <= {mz_1}) """.format(**locals())
-        cond_max = """({rt_0} <= rt_max) & (rt_max <= {rt_1}) \
-                     &({mz_0} <= mz_max) & (mz_max <= {mz_1}) """.format(**locals())
+        cond_min = """({rt_0} <= rtmin) & (rtmin <= {rt_1}) \
+                     &({mz_0} <= mzmin) & (mzmin <= {mz_1}) """.format(**locals())
+        cond_max = """({rt_0} <= rtmax) & (rtmax <= {rt_1}) \
+                     &({mz_0} <= mzmax) & (mzmax <= {mz_1}) """.format(**locals())
 
         condition = "({cond_min}) | ({cond_max})".format(**locals())
         return condition
@@ -164,49 +164,49 @@ class CompressedDataReader(object):
         full_condition = "(base_name_id == %d) & (%s)" % (base_name_id, condition)
         rows = self.feature_table.where(full_condition)
         for row in rows:
-            rt_min = row["rt_min"]
-            rt_max = row["rt_max"]
-            mz_min = row["mz_min"]
-            mz_max = row["mz_max"]
+            rtmin = row["rtmin"]
+            rtmax = row["rtmax"]
+            mzmin = row["mzmin"]
+            mzmax = row["mzmax"]
             feature_id = row["feature_id"]
             fid = row["feature_id_from_file"]
             mass_traces = list(self._fetch_mass_traces_for_feature(feature_id))
-            yield Feature(feature_id, base_name, fid, rt_min, rt_max, mz_min, mz_max, mass_traces)
+            yield Feature(feature_id, base_name, fid, rtmin, rtmax, mzmin, mzmax, mass_traces)
 
     def _fetch_mass_traces_for_feature(self, feature_id):
         rows = self.mass_trace_table.where("feature_id == %d" % feature_id)
         for row in rows:
-            rt_min = row["rt_min"]
-            rt_max = row["rt_max"]
-            mz_min = row["mz_min"]
-            mz_max = row["mz_max"]
-            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+            rtmin = row["rtmin"]
+            rtmax = row["rtmax"]
+            mzmin = row["mzmin"]
+            mzmax = row["mzmax"]
+            yield PeakRange(rtmin, rtmax, mzmin, mzmax)
 
-    def fetch_mass_traces_in_range(self, base_name, rt_min, rt_max, mz_min, mz_max):
+    def fetch_mass_traces_in_range(self, base_name, rtmin, rtmax, mzmin, mzmax):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
         rows = self.mass_trace_table.where("""(base_name_id == %d) \
-                                               & (%f <= rt_min) & (rt_max <= %f) \
-                                               & (%f <= mz_min) & (mz_max <= %f) \
-                                           """ % (base_name_id, rt_min, rt_max, mz_min, mz_max)
+                                               & (%f <= rtmin) & (rtmax <= %f) \
+                                               & (%f <= mzmin) & (mzmax <= %f) \
+                                           """ % (base_name_id, rtmin, rtmax, mzmin, mzmax)
                                            )
         for row in rows:
-            rt_min = row["rt_min"]
-            rt_max = row["rt_max"]
-            mz_min = row["mz_min"]
-            mz_max = row["mz_max"]
-            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+            rtmin = row["rtmin"]
+            rtmax = row["rtmax"]
+            mzmin = row["mzmin"]
+            mzmax = row["mzmax"]
+            yield PeakRange(rtmin, rtmax, mzmin, mzmax)
 
     def fetch_mass_traces_intersecting(self, base_name, rt_0, rt_1, mz_0, mz_1):
         """
-           (rt_min, mz_min) is in rect (rt_0, mz_0, rt_1, mz_1)
+           (rtmin, mzmin) is in rect (rt_0, mz_0, rt_1, mz_1)
         or
-           (rt_max, mz_max) is in rect (rt_0, mz_0, rt_1, mz_1)
+           (rtmax, mzmax) is in rect (rt_0, mz_0, rt_1, mz_1)
 
         that is:
 
-           rt_0 <= rt_min <= rt_1 and mz_0 <= mz_min <= mz_1
+           rt_0 <= rtmin <= rt_1 and mz_0 <= mzmin <= mz_1
         or
-           rt_0 <= rt_max <= rt_1 and mz_0 <= mz_max <= mz_1
+           rt_0 <= rtmax <= rt_1 and mz_0 <= mzmax <= mz_1
         """
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
         cond_base_name = "base_name_id == {base_name_id}".format(base_name_id=base_name_id)
@@ -214,26 +214,26 @@ class CompressedDataReader(object):
         condition = "({cond_base_name}) & ({is_condition}) ".format(**locals())
         rows = self.mass_trace_table.where(condition)
         for row in rows:
-            rt_min = row["rt_min"]
-            rt_max = row["rt_max"]
-            mz_min = row["mz_min"]
-            mz_max = row["mz_max"]
-            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+            rtmin = row["rtmin"]
+            rtmax = row["rtmax"]
+            mzmin = row["mzmin"]
+            mzmax = row["mzmax"]
+            yield PeakRange(rtmin, rtmax, mzmin, mzmax)
 
     def fetch_feature_ranges_for_base_name(self, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
         rows = self.feature_table.where("base_name_id == %d" % base_name_id)
         for row in rows:
-            rt_min = row["rt_min"]
-            rt_max = row["rt_max"]
-            mz_min = row["mz_min"]
-            mz_max = row["mz_max"]
-            yield PeakRange(rt_min, rt_max, mz_min, mz_max)
+            rtmin = row["rtmin"]
+            rtmax = row["rtmax"]
+            mzmin = row["mzmin"]
+            mzmax = row["mzmax"]
+            yield PeakRange(rtmin, rtmax, mzmin, mzmax)
 
-    def fetch_chromatogram(self, rt_min, rt_max, mz_min, mz_max, base_name):
+    def fetch_chromatogram(self, rtmin, rtmax, mzmin, mzmax, base_name):
         base_name_id = self.base_name_id_provider.lookup_id(base_name)
         rows = self.spectrum_table.where(
-            """(base_name_id == %d) & (%f <= rt) & (rt <= %f) & (ms_level == 1)""" % (base_name_id, rt_min, rt_max))
+            """(base_name_id == %d) & (%f <= rt) & (rt <= %f) & (ms_level == 1)""" % (base_name_id, rtmin, rtmax))
         rts = []
         ion_counts = []
         for row in rows:
@@ -242,7 +242,7 @@ class CompressedDataReader(object):
             i_high = row["i_high"]
             mzs = self.mz_array[i_low:i_high]
             intensities = self.intensity_array[i_low:i_high]
-            view = (mz_min <= mzs) * (mzs <= mz_max)
+            view = (mzmin <= mzs) * (mzs <= mzmax)
             # dtype conversion from float16 -> float128 in order to avoid overflow when
             # summing up many values:
             ion_count = intensities[view].astype(np.float128).sum()

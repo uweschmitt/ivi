@@ -47,17 +47,17 @@ class PeakMapImageBase(object):
         self.peakmaps = peakmaps
         ranges = [pm.get_ranges() for pm in peakmaps if len(pm)]
         if ranges:  # list might be empty
-            rt_mins, rt_maxs, mz_mins, mz_maxs, iimins, iimaxs = zip(*ranges)
-            self.rt_min = min(rt_mins)
-            self.rt_max = max(rt_maxs)
-            self.mz_min = min(mz_mins)
-            self.mz_max = max(mz_maxs)
+            rtmins, rtmaxs, mzmins, mzmaxs, iimins, iimaxs = zip(*ranges)
+            self.rtmin = min(rtmins)
+            self.rtmax = max(rtmaxs)
+            self.mzmin = min(mzmins)
+            self.mzmax = max(mzmaxs)
             self.imax = max(iimaxs)
 
         else:
-            self.rt_min = self.rt_max = self.mz_min = self.mz_max = self.imax = 0.0
+            self.rtmin = self.rtmax = self.mzmin = self.mzmax = self.imax = 0.0
 
-        self.bounds = QRectF(QPointF(self.rt_min, self.mz_min), QPointF(self.rt_max, self.mz_max))
+        self.bounds = QRectF(QPointF(self.rtmin, self.mzmin), QPointF(self.rtmax, self.mzmax))
 
         self.imin = 0.0
         self.upper_limit_imax = self.imax
@@ -67,7 +67,7 @@ class PeakMapImageBase(object):
         self.cached_matrix = None
 
     def get_peakmap_bounds(self):
-        return self.rt_min, self.rt_max, self.mz_min, self.mz_max
+        return self.rtmin, self.rtmax, self.mzmin, self.mzmax
 
     def set_processing_parameters(self, parameters):
         self.set_gamma(parameters.gamma)
@@ -93,15 +93,15 @@ class PeakMapImageBase(object):
     @lru_cache(maxsize=100)
     # NX = 400, NX = 300 -> per image 300 * 400 * 1 byte = 12e4 bytes
     # 100 images in cache: 12e6 bytes = 12 mb
-    def compute_image(self, idx, NX, NY, rt_min, rt_max, mz_min, mz_max):
+    def compute_image(self, idx, NX, NY, rtmin, rtmax, mzmin, mzmax):
 
-        if rt_min >= rt_max or mz_min >= mz_max:
+        if rtmin >= rtmax or mzmin >= mzmax:
             smoothed = np.zeros((1, 1))
         else:
             # optimized:
             # one additional row / col as we loose one row and col during smoothing:
-            #data = sample_image(self.peakmaps[idx], rt_min, rt_max, mz_min, mz_max, NX + 1, NY + 1)
-            data = self.peakmaps[idx].sample_image(rt_min, rt_max, mz_min, mz_max, NX + 1, NY + 1, 1)
+            #data = sample_image(self.peakmaps[idx], rtmin, rtmax, mzmin, mzmax, NX + 1, NY + 1)
+            data = self.peakmaps[idx].sample_image(rtmin, rtmax, mzmin, mzmax, NX + 1, NY + 1, 1)
 
             # enlarge single pixels to 2 x 2 pixels:
             smoothed = data[:-1, :-1] + data[:-1, 1:] + data[1:, :-1] + data[1:, 1:]
@@ -188,9 +188,9 @@ class PeakMapImageItem(PeakMapImageBase, RawImageItem):
         x2, y2 = canvasRect.right(), canvasRect.bottom()
         NX = x2 - x1
         NY = y2 - y1
-        rt_min, mz_max, rt_max, mz_min = srcRect
+        rtmin, mzmax, rtmax, mzmin = srcRect
 
-        self.data = self.compute_image(0, NX, NY, rt_min, rt_max, mz_min, mz_max)
+        self.data = self.compute_image(0, NX, NY, rtmin, rtmax, mzmin, mzmax)
 
         # draw
         srcRect = (0, 0, NX, NY)
@@ -205,21 +205,21 @@ class PeakmapCursorRangeInfo(ObjectInfo):
         self.marker = marker
 
     def get_text(self):
-        rt_min, mz_min, rt_max, mz_max = self.marker.get_rect()
-        if not np.isnan(rt_max):
-            rt_min, rt_max = sorted((rt_min, rt_max))
-        if not np.isnan(mz_max):
-            mz_min, mz_max = sorted((mz_min, mz_max))
-        if not np.isnan(rt_max):
-            delta_mz = mz_max - mz_min
-            delta_rt = rt_max - rt_min
-            line0 = "mz: %10.5f ..  %10.5f (delta=%5.5f)" % (mz_min, mz_max, delta_mz)
-            line1 = "rt:  %6.2fm   ..   %6.2fm   (delta=%.1fs)" % (rt_min / 60.0,
-                                                                   rt_max / 60.0,
+        rtmin, mzmin, rtmax, mzmax = self.marker.get_rect()
+        if not np.isnan(rtmax):
+            rtmin, rtmax = sorted((rtmin, rtmax))
+        if not np.isnan(mzmax):
+            mzmin, mzmax = sorted((mzmin, mzmax))
+        if not np.isnan(rtmax):
+            delta_mz = mzmax - mzmin
+            delta_rt = rtmax - rtmin
+            line0 = "mz: %10.5f ..  %10.5f (delta=%5.5f)" % (mzmin, mzmax, delta_mz)
+            line1 = "rt:  %6.2fm   ..   %6.2fm   (delta=%.1fs)" % (rtmin / 60.0,
+                                                                   rtmax / 60.0,
                                                                    delta_rt)
             return "<pre>%s</pre>" % "<br>".join((line0, line1))
         else:
-            return """<pre>mz: %9.5f<br>rt: %6.2fm</pre>""" % (mz_min, rt_min / 60.0)
+            return """<pre>mz: %9.5f<br>rt: %6.2fm</pre>""" % (mzmin, rtmin / 60.0)
 
 
 class PeakmapZoomTool(InteractiveTool):
@@ -281,7 +281,7 @@ class ModifiedImagePlot(ImagePlot):
     # as this class is used for patching, the __init__ is never called, so we set default
     # values as class atributes:
 
-    rt_min = rt_max = mz_min = mz_max = imin = imax = None
+    rtmin = rtmax = mzmin = mzmax = imin = imax = None
     peakmap_range = (None, None, None, None, None, None)
     coords = (None, None)
     dragging = False
@@ -289,21 +289,21 @@ class ModifiedImagePlot(ImagePlot):
     chromatogram_plot = None
     mz_plot = None
 
-    def set_initial_image_limits(self, rt_min, rt_max, mz_min, mz_max):
+    def set_initial_image_limits(self, rtmin, rtmax, mzmin, mzmax):
         #  sollte man später durch history funktion ersetzen könnnen..
-        self.rt_min = max(rt_min, self.peakmap_range[0])
-        self.rt_max = min(rt_max, self.peakmap_range[1])
-        self.mz_min = max(mz_min, self.peakmap_range[2])
-        self.mz_max = min(mz_max, self.peakmap_range[3])
-        self.update_image_limits(self.rt_min, self.rt_max, self.mz_min, self.mz_max)
+        self.rtmin = max(rtmin, self.peakmap_range[0])
+        self.rtmax = min(rtmax, self.peakmap_range[1])
+        self.mzmin = max(mzmin, self.peakmap_range[2])
+        self.mzmax = min(mzmax, self.peakmap_range[3])
+        self.update_image_limits(self.rtmin, self.rtmax, self.mzmin, self.mzmax)
 
-    def update_image_limits(self, rt_min, rt_max, mz_min, mz_max):
-        rt_min = max(rt_min, self.peakmap_range[0])
-        rt_max = min(rt_max, self.peakmap_range[1])
-        mz_min = max(mz_min, self.peakmap_range[2])
-        mz_max = min(mz_max, self.peakmap_range[3])
-        self.set_plot_limits(rt_min, rt_max, mz_min, mz_max, "bottom", "right")
-        self.set_plot_limits(rt_min, rt_max, mz_min, mz_max, "top", "left")
+    def update_image_limits(self, rtmin, rtmax, mzmin, mzmax):
+        rtmin = max(rtmin, self.peakmap_range[0])
+        rtmax = min(rtmax, self.peakmap_range[1])
+        mzmin = max(mzmin, self.peakmap_range[2])
+        mzmax = min(mzmax, self.peakmap_range[3])
+        self.set_plot_limits(rtmin, rtmax, mzmin, mzmax, "bottom", "right")
+        self.set_plot_limits(rtmin, rtmax, mzmin, mzmax, "top", "left")
 
         self.replot()
         self.emit(SIG_PLOT_AXIS_CHANGED, self)
@@ -326,15 +326,15 @@ class ModifiedImagePlot(ImagePlot):
 
     @protect_signal_handler
     def reset_zoom_to_full_map(self, filter_, evt):
-        rt_min = self.peakmap_range[0]
-        rt_max = self.peakmap_range[1]
-        mz_min = self.peakmap_range[2]
-        mz_max = self.peakmap_range[3]
-        self.update_image_limits(rt_min, rt_max, mz_min, mz_max)
+        rtmin = self.peakmap_range[0]
+        rtmax = self.peakmap_range[1]
+        mzmin = self.peakmap_range[2]
+        mzmax = self.peakmap_range[3]
+        self.update_image_limits(rtmin, rtmax, mzmin, mzmax)
 
     @protect_signal_handler
     def reset_zoom_to_initial_view(self, filter_, evt):
-        self.update_image_limits(self.rt_min, self.rt_max, self.mz_min, self.mz_max)
+        self.update_image_limits(self.rtmin, self.rtmax, self.mzmin, self.mzmax)
 
     @protect_signal_handler
     def start_drag_mode(self, filter_, evt):
@@ -382,21 +382,21 @@ class ModifiedImagePlot(ImagePlot):
         self.dragging = False
 
         if self.moved and not self.with_shift_key:
-            rt_min, rt_max = self.start_at[0], stop_at[0]
-            # be sure that rt_min <= rt_max:
-            rt_min, rt_max = min(rt_min, rt_max), max(rt_min, rt_max)
+            rtmin, rtmax = self.start_at[0], stop_at[0]
+            # be sure that rtmin <= rtmax:
+            rtmin, rtmax = min(rtmin, rtmax), max(rtmin, rtmax)
 
-            mz_min, mz_max = self.start_at[1], stop_at[1]
-            # be sure that mz_min <= mz_max:
-            mz_min, mz_max = min(mz_min, mz_max), max(mz_min, mz_max)
+            mzmin, mzmax = self.start_at[1], stop_at[1]
+            # be sure that mzmin <= mzmax:
+            mzmin, mzmax = min(mzmin, mzmax), max(mzmin, mzmax)
 
             # keep coordinates in peakmap:
-            rt_min = max(self.peakmap_range[0], min(self.peakmap_range[1], rt_min))
-            rt_max = max(self.peakmap_range[0], min(self.peakmap_range[1], rt_max))
-            mz_min = max(self.peakmap_range[2], min(self.peakmap_range[3], mz_min))
-            mz_max = max(self.peakmap_range[2], min(self.peakmap_range[3], mz_max))
+            rtmin = max(self.peakmap_range[0], min(self.peakmap_range[1], rtmin))
+            rtmax = max(self.peakmap_range[0], min(self.peakmap_range[1], rtmax))
+            mzmin = max(self.peakmap_range[2], min(self.peakmap_range[3], mzmin))
+            mzmax = max(self.peakmap_range[2], min(self.peakmap_range[3], mzmax))
 
-            self.update_image_limits(rt_min, rt_max, mz_min, mz_max)
+            self.update_image_limits(rtmin, rtmax, mzmin, mzmax)
         else:
             self.replot()
 
@@ -560,8 +560,8 @@ class LabeledPolygonShape(QwtPlotItem):
     # API.
 
     def __init__(self, item, label=None):
-        super(LabeledPolygonShape, self).__init__()  # feature.rtmin, feature.rt_max,
-                                                     # feature.mz_min, feature.mz_max)
+        super(LabeledPolygonShape, self).__init__()  # feature.rtmin, feature.rtmax,
+                                                     # feature.mzmin, feature.mzmax)
         self.item = item
         self.label = label
 
@@ -606,12 +606,12 @@ class LabeledPolygonShape(QwtPlotItem):
 
     def _draw_polygon(self, painter, xMap, yMap, range_tuple):
         # range_tuple might contain more then four values !
-        rt_min, rt_max, mz_min, mz_max = range_tuple[:4]
+        rtmin, rtmax, mzmin, mzmax = range_tuple[:4]
         points = QPolygonF()
-        points.append(QPointF(xMap.transform(rt_min), yMap.transform(mz_min)))
-        points.append(QPointF(xMap.transform(rt_min), yMap.transform(mz_max)))
-        points.append(QPointF(xMap.transform(rt_max), yMap.transform(mz_max)))
-        points.append(QPointF(xMap.transform(rt_max), yMap.transform(mz_min)))
+        points.append(QPointF(xMap.transform(rtmin), yMap.transform(mzmin)))
+        points.append(QPointF(xMap.transform(rtmin), yMap.transform(mzmax)))
+        points.append(QPointF(xMap.transform(rtmax), yMap.transform(mzmax)))
+        points.append(QPointF(xMap.transform(rtmax), yMap.transform(mzmin)))
         painter.drawPolygon(points)
         return points
 
@@ -634,9 +634,9 @@ class PeakRangeShape(LabeledPolygonShape):
         self.text.setDefaultStyleSheet("""div { color: rgb(%d, %d, %d); }""" % self.color)
         self.text.setHtml("<div>%s</div>" % (self.label, ))
 
-        x0 = xMap.transform(self.item.rt_max)
+        x0 = xMap.transform(self.item.rtmax)
         # y0: height between m0 and m1 masstrace if m1 exists, else at height of m0
-        y0 = yMap.transform(0.5 * self.item.mz_min + 0.5 * self.item.mz_max)
+        y0 = yMap.transform(0.5 * self.item.mzmin + 0.5 * self.item.mzmax)
         h = self.text.size().height()
         painter.translate(x0, y0 - 0.5 * h)
         self.text.drawContents(painter)
@@ -648,11 +648,11 @@ class FeatureShape(LabeledPolygonShape):
         self._setup_painter(painter)
 
         self._set_outer_pen_and_brush(painter, xMap, yMap)
-        rt_min = self.item.rt_min
-        rt_max = self.item.rt_max
-        mz_min = self.item.mz_min
-        mz_max = self.item.mz_max
-        self._draw_polygon(painter, xMap, yMap, (rt_min, rt_max, mz_min, mz_max))
+        rtmin = self.item.rtmin
+        rtmax = self.item.rtmax
+        mzmin = self.item.mzmin
+        mzmax = self.item.mzmax
+        self._draw_polygon(painter, xMap, yMap, (rtmin, rtmax, mzmin, mzmax))
 
         self._set_inner_pen_and_brush(painter, xMap, yMap)
         for mass_trace in self.item.mass_traces:
@@ -666,9 +666,9 @@ class FeatureShape(LabeledPolygonShape):
         self.text.setDefaultStyleSheet("""div { color: rgb(%d, %d, %d); }""" % self.color)
         self.text.setHtml("<div>%s</div>" % (self.label, ))
 
-        x0 = xMap.transform(self.item.rt_max)
+        x0 = xMap.transform(self.item.rtmax)
         # y0: height between m0 and m1 masstrace if m1 exists, else at height of m0
-        yi = sorted(m.mz_min for m in self.item.mass_traces)
+        yi = sorted(m.mzmin for m in self.item.mass_traces)
         if len(yi) >= 2:
             y0 = yMap.transform(0.5 * yi[0] + 0.5 * yi[1])
         else:
@@ -707,26 +707,26 @@ class PeakmapPlotter(QWidget):
 
     def plot_feature(self, peakmap, feature, hit):
         self.set_peakmaps(peakmap, None, [(feature, hit.aa_sequence)])
-        self.widget.plot.set_initial_image_limits(feature.rt_min - 30.0, feature.rt_max + 30.0,
-                                                  feature.mz_min - 10.0, feature.mz_max + 10.0)
+        self.widget.plot.set_initial_image_limits(feature.rtmin - 30.0, feature.rtmax + 30.0,
+                                                  feature.mzmin - 10.0, feature.mzmax + 10.0)
 
     def plot_mass_trace(self, peakmap, hit, mz_width, is_relative):
 
         # TODO: rtlimits einsetzen !
         #
-        rt_min = hit.rt - 10.0
-        rt_max = hit.rt + 10.0
+        rtmin = hit.rt - 10.0
+        rtmax = hit.rt + 10.0
 
         if is_relative:
-            mz_min = hit.mz * (1.0 - mz_width * 1e-6)   # is ppm
-            mz_max = hit.mz * (1.0 + mz_width * 1e-6)   # is ppm
+            mzmin = hit.mz * (1.0 - mz_width * 1e-6)   # is ppm
+            mzmax = hit.mz * (1.0 + mz_width * 1e-6)   # is ppm
         else:
-            mz_min = hit.mz - mz_width
-            mz_max = hit.mz + mz_width
-        item = PeakRange(rt_min, rt_max, mz_min, mz_max)
+            mzmin = hit.mz - mz_width
+            mzmax = hit.mz + mz_width
+        item = PeakRange(rtmin, rtmax, mzmin, mzmax)
         self.set_peakmaps(peakmap, None, [(item, hit.aa_sequence)])
-        self.widget.plot.set_initial_image_limits(rt_min - 30.0, rt_max + 30.0, mz_min - 5.0,
-                                                  mz_max + 5.0)
+        self.widget.plot.set_initial_image_limits(rtmin - 30.0, rtmax + 30.0, mzmin - 5.0,
+                                                  mzmax + 5.0)
 
     def set_peakmaps(self, peakmap, peakmap2, extra_items=None):
 
@@ -876,7 +876,7 @@ class PeakMapExplorer(QDialog):
         if self.dual_mode:
             self.peakmap2 = peakmap2.getDominatingPeakmap()
 
-        (self.rt_min, self.rt_max, self.mz_min, self.mz_max,
+        (self.rtmin, self.rtmax, self.mzmin, self.mzmax,
                                  self.imin, self.imax) = get_range(peakmap, peakmap2)
 
         # jparam = PeakMapProcessingParameters(self.params.gamma_start, True, 0, self.imax)
@@ -885,7 +885,7 @@ class PeakMapExplorer(QDialog):
 
     def plot_peakmap(self):
         # includes replot:
-        self.peakmap_plotter.update_image_limits(self.rt_min, self.rt_max, self.mz_min, self.mz_max)
+        self.peakmap_plotter.update_image_limits(self.rtmin, self.rtmax, self.mzmin, self.mzmax)
 
     def setup_widgets_and_layout(self):
 

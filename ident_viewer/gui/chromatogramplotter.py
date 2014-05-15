@@ -34,11 +34,11 @@ class ChromatogramPlotter(RtPlotWidget):
         self.add_background_item(self.fix_rt_marker)
 
     def plot_chromatogram_from_masstrace(self, peakmap, hit):
-        rt_min = hit.rt - 10.0
-        rt_max = hit.rt + 10.0
-        mz_min = hit.mz - 0.005
-        mz_max = hit.mz + 0.005
-        rts, iis = extract_chromatogram(peakmap, rt_min, rt_max, mz_min, mz_max, 1)
+        rtmin = hit.rt - 10.0
+        rtmax = hit.rt + 10.0
+        mzmin = hit.mz - 0.005
+        mzmax = hit.mz + 0.005
+        rts, iis = extract_chromatogram(peakmap, rtmin, rtmax, mzmin, mzmax, 1)
         print list(rts)
         self.plot_chromatograms([(rts, iis, "0")])
 
@@ -46,7 +46,7 @@ class ChromatogramPlotter(RtPlotWidget):
         self.fix_rt_marker.setXValue(hit.rt)
         chromos = []
         for mt in feature.mass_traces:
-            rts, iis = extract_chromatogram(peakmap, mt.rt_min, mt.rt_max, mt.mz_min, mt.mz_max, 1)
+            rts, iis = extract_chromatogram(peakmap, mt.rtmin, mt.rtmax, mt.mzmin, mt.mzmax, 1)
             chromos.append((rts, iis))
         max_i = 0.0
         max_idx = 0

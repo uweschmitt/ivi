@@ -18,10 +18,10 @@ def find_chromatogram_rt_limits(peak_map, float rt_start, double mzmin, double m
     # find start i0 where rt_start matches best
     cdef size_t i0 = find_next(spectra, rt_start, ms_level)
     # extend rt upwards
-    cdef float rt_max = march(spectra, i0, +1, n_conscutive_zeros, mzmin, mzmax, ms_level)
+    cdef float rtmax = march(spectra, i0, +1, n_conscutive_zeros, mzmin, mzmax, ms_level)
     # extend rt downwards
-    cdef float rt_min = march(spectra, i0, -1, n_conscutive_zeros, mzmin, mzmax, ms_level)
-    return rt_min, rt_max
+    cdef float rtmin = march(spectra, i0, -1, n_conscutive_zeros, mzmin, mzmax, ms_level)
+    return rtmin, rtmax
 
 
 @cython.boundscheck(False)
@@ -204,7 +204,7 @@ def get_ranges(peak_map, int ms_level):
     cdef int n = len(spectra)
 
     cdef object spectrum
-    cdef double rt_min, rt_max, mz_min, mz_max, rt, ii_min, ii_max
+    cdef double rtmin, rtmax, mzmin, mzmax, rt, iimin, iimax
     cdef np_min = np.min
     cdef np_max = np.max
     cdef np.float64_t[:] mzs
@@ -212,12 +212,12 @@ def get_ranges(peak_map, int ms_level):
     cdef int found_spec = 0
     cdef int smsl
 
-    rt_max = -DBL_MAX
-    rt_min = +DBL_MAX
-    mz_max = -DBL_MAX
-    mz_min = +DBL_MAX
-    ii_max = -DBL_MAX
-    ii_min = +DBL_MAX
+    rtmax = -DBL_MAX
+    rtmin = +DBL_MAX
+    mzmax = -DBL_MAX
+    mzmin = +DBL_MAX
+    iimax = -DBL_MAX
+    iimin = +DBL_MAX
 
     for i in range(n):
         spectrum = spectra[i]
@@ -227,12 +227,12 @@ def get_ranges(peak_map, int ms_level):
             mzs = spectrum.mzs
             iis = spectrum.intensities
             rt = spectrum.rt
-            rt_min = min(rt, rt_min)
-            rt_max = max(rt, rt_min)
-            mz_min = min(mz_min, np_min(mzs))
-            mz_max = max(mz_max, np_max(mzs))
-            ii_min = min(ii_min, np_min(iis))
-            ii_max = max(ii_max, np_max(iis))
+            rtmin = min(rt, rtmin)
+            rtmax = max(rt, rtmin)
+            mzmin = min(mzmin, np_min(mzs))
+            mzmax = max(mzmax, np_max(mzs))
+            iimin = min(iimin, np_min(iis))
+            iimax = max(iimax, np_max(iis))
     if found_spec:
-        return rt_min, rt_max, mz_min, mz_max, ii_min, ii_max
+        return rtmin, rtmax, mzmin, mzmax, iimin, iimax
     return None, None, None, None, None, None
