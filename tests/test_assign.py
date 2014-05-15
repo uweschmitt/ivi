@@ -19,12 +19,13 @@ def test_0(data_path):
                                      is_higher_score_better=False)
 
     # setup spectrum
-    spec = iv.lib.io.load_experiment(data_path("one_spec_peakmap.mzML"))[0]
+    pm = iv.lib.io.load_peak_map(data_path("one_spec_peakmap.mzML"))
+    spectrum = pm.spectra[0]
 
     # create and record ion assignments for regression test ...
     assigner = iv.lib.PeptideHitAssigner(iv.lib.default_preferences())
     fp = cStringIO.StringIO()
-    for mz, ii, ion, info in assigner.compute_assignment(hit, spec):
+    for mz, ii, ion, info in assigner.compute_assignment(hit, spectrum):
         print >> fp, "%10.5f" % mz, "%e" % ii, "%-10s" % ion, info
     output = fp.getvalue()
 

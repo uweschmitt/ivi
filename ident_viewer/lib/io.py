@@ -11,8 +11,8 @@ def load_idxml_file(path):
     return peptide_identifations, protein_identifations
 
 
-def load_experiment(path):
+def load_peak_map(path):
     mse = oms.MSExperiment()
     oms.FileHandler().loadExperiment(path, mse)
     spectra = [data_structures.Spectrum.from_oms_spectrum(spec) for spec in mse]
-    return spectra
+    return data_structures.PeakMap(spectra)

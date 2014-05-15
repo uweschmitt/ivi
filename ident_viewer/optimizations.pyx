@@ -1,14 +1,101 @@
 cimport cython
 from libc.float cimport DBL_MAX
+cimport libc.math
 cimport numpy as np
 import numpy as np
 
 from libc.stdlib cimport malloc, free, calloc
 
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 @cython.cdivision(True)
-def extract_chromatogram(peak_map, float rtmin, float rtmax, double mzmin, double mzmax, 
+def find_chromatogram_rt_limits(peak_map, float rt_start, double mzmin, double mzmax,
+                                int ms_level, int n_conscutive_zeros):
+
+    cdef list spectra = peak_map.spectra
+
+    # find start i0 where rt_start matches best
+    cdef size_t i0 = find_next(spectra, rt_start, ms_level)
+    # extend rt upwards
+    cdef float rt_max = march(spectra, i0, +1, n_conscutive_zeros, mzmin, mzmax, ms_level)
+    # extend rt downwards
+    cdef float rt_min = march(spectra, i0, -1, n_conscutive_zeros, mzmin, mzmax, ms_level)
+    return rt_min, rt_max
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+cdef size_t find_next(list spectra, float rt0, int ms_level):
+    cdef size_t i
+    cdef int  msl
+    cdef float dist
+    cdef float best_dist = 9999999.0
+    cdef float rt
+    cdef size_t best_i = 0
+    cdef size_t ns = len(spectra)
+
+    for i in range(ns):
+        spec = spectra[i]
+        msl = spec.ms_level   # prohibits python rich comp in next line
+        if msl != ms_level:
+            continue
+        rt = spec.rt          # prohibits python substration in next line
+        dist = libc.math.fabs(rt - rt0)
+        if dist < best_dist:
+            best_i = i
+            best_dist = dist
+    return best_i
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+cdef float march(list spectra, size_t i0, int direction, int n_conscutive_zeros, float mzmin,
+                 float mzmax, int ms_level):
+
+    cdef float rt
+    cdef float sumi
+    cdef int msl
+    cdef size_t ns = len(spectra)
+    cdef size_t count_zeros = 0
+    while 0 <= i0 < ns:
+        spec = spectra[i0]
+        i0 += direction
+        msl = spec.ms_level   # prohibits python rich comp in next line
+        if msl != ms_level:
+            continue
+        rt = spec.rt
+
+        sumi = intensity(spec.mzs, spec.intensities, mzmin, mzmax)
+        if sumi == 0.0:
+            count_zeros += 1
+        else:
+            count_zeros = 0
+        if count_zeros >= n_conscutive_zeros:
+            break
+
+    return rt
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+cdef float intensity(np.float64_t[:] mzs,  np.float32_t[:] intensities, float mzmin, float mzmax):
+    cdef float sumi = 0.0
+    cdef int   ns = mzs.shape[0]
+    cdef int   i
+    for i in range(0, ns):
+        if mzmin <= mzs[i] <= mzmax:
+            sumi += intensities[i]
+    return sumi
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.cdivision(True)
+def extract_chromatogram(peak_map, float rtmin, float rtmax, double mzmin, double mzmax,
                          int ms_level):
 
     assert mzmax >= mzmin, "mzmax < mzmin"
@@ -31,7 +118,7 @@ def extract_chromatogram(peak_map, float rtmin, float rtmax, double mzmin, doubl
         spec = spectra[i]
         rt = spec.rt
         if rtmin <= rt <= rtmax:
-            smsl = spec.ms_level
+            smsl = spec.ms_level   # prohibits python rich comp in next line
             if smsl == ms_level:
                 nt += 1
 
@@ -46,7 +133,7 @@ def extract_chromatogram(peak_map, float rtmin, float rtmax, double mzmin, doubl
         spec = spectra[i]
         rt = spec.rt
         if rtmin <= rt <= rtmax:
-            smsl = spec.ms_level
+            smsl = spec.ms_level   # prohibits python rich comp in next line
             # print i, j, rt, smsl
             if smsl == ms_level:
                 mzs = spec.mzs
@@ -94,7 +181,7 @@ def sample_image(peak_map, float rtmin, float rtmax, double mzmin, double mzmax,
             continue
         if rt > rtmax:
             break
-        smsl = spec.ms_level
+        smsl = spec.ms_level   # prohibits python rich comp in next line
         if smsl != ms_level:
             continue
         rt_bin = int((rt - rtmin) / (rtmax - rtmin) * (w - 1))
